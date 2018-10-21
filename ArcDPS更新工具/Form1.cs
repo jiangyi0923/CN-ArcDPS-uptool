@@ -20,7 +20,7 @@ namespace ArcDPS更新工具
         #region 参数
         Thread[] thread = new Thread[6];
         public string 本地路劲 = Application.StartupPath;
-        public string 插件路劲 = Application.StartupPath + "\\addon\\arcdps";
+        public string 插件路劲 = Application.StartupPath + "\\addons\\arcdps";
         public string 下载路劲 = Application.StartupPath + "\\bin64";
         public string 顺网路劲 = Application.StartupPath;
         //1 主程序;2 DB切换;3 附加功能;4团队力学;5 坐骑插件;6汉化文本 
@@ -501,8 +501,8 @@ namespace ArcDPS更新工具
             {
                 if (Regex.IsMatch(本地路劲, @"[\u4e00-\u9fa5]") == true)
                 {
-                    //MessageBox.Show("游戏目录含中文可能导致插件不识别中文请更换");
-                    //Process.GetCurrentProcess().Kill();
+                    MessageBox.Show("游戏目录含中文可能导致插件不识别中文请更换");
+                    Process.GetCurrentProcess().Kill();
                 }
             }
             else
