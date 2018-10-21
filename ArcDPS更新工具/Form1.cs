@@ -36,7 +36,7 @@ namespace ArcDPS更新工具
             @"https://www.deltaconnected.com/arcdps/x64/buildtemplates/d3d9_arcdps_buildtemplates.dll",
             @"https://www.deltaconnected.com/arcdps/x64/extras/d3d9_arcdps_extras.dll",
             @"http://martionlabs.com/wp-content/uploads/d3d9_arcdps_mechanics.dll",
-            @"https://github-production-release-asset-2e65be.s3.amazonaws.com/153068596/7aadeb00-d45f-11e8-81a9-3dac8b131dd1?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20181021%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20181021T052345Z&X-Amz-Expires=300&X-Amz-Signature=ea9f7cc48a7b34e49367e9203c61c5a4e44e95ab8a35da80a8289940b42ccb1f&X-Amz-SignedHeaders=host&actor_id=40364405&response-content-disposition=attachment%3B%20filename%3Dd3d9_chainload.dll&response-content-type=application%2Foctet-stream",
+            @"https://raw.githubusercontent.com/jiangyi0923/ArcDPS-/1.1/ArcDPS%E6%9B%B4%E6%96%B0%E5%B7%A5%E5%85%B7/Resources/d3d9_chainload.dll",
             @"https://raw.githubusercontent.com/Snowy1794/Arcdps-translation-Chinese-simplified/master/arcdps_lang.ini" };
         public bool[] 勾选 = new bool[6];
         public bool 下载中 = false;
@@ -242,7 +242,7 @@ namespace ArcDPS更新工具
                 }
             }
 
-            if (勾选[0])
+            if (勾选[2])
             {
                 项目个数++;
                 thread[2] = new Thread(new ThreadStart(delegate { 下载(网站[2], 进度条(2), 路劲, 文件名[2]); }));
@@ -276,6 +276,7 @@ namespace ArcDPS更新工具
             {
                 项目个数++;
                 thread[4] = new Thread(new ThreadStart(delegate { 坐骑(进度条(4), 路劲, 文件名[4]); }));
+                //thread[4] = new Thread(new ThreadStart(delegate { 下载(网站[4], 进度条(4), 路劲, 文件名[4]); }));
                 thread[4].IsBackground = true;
                 thread[4].Start();
                 Application.DoEvents();
@@ -428,7 +429,6 @@ namespace ArcDPS更新工具
             Thread.BeginThreadAffinity();
             try
             {
-                //MessageBox.Show("下载:" + 文件名 + "总!");
                 HttpWebRequest Myrq = (HttpWebRequest)HttpWebRequest.Create(网站位置);
                 HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
                 Myrq.Timeout = 50000;
@@ -487,9 +487,7 @@ namespace ArcDPS更新工具
             }
             catch (Exception)
             {
-                完成个数++;
-                //MessageBox.Show("下载:"+文件名+"失败!");
-              
+                完成个数++;          
             }
             Thread.EndThreadAffinity();
         }
