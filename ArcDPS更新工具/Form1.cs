@@ -36,7 +36,7 @@ namespace ArcDPS更新工具
             @"https://www.deltaconnected.com/arcdps/x64/buildtemplates/d3d9_arcdps_buildtemplates.dll",
             @"https://www.deltaconnected.com/arcdps/x64/extras/d3d9_arcdps_extras.dll",
             @"http://martionlabs.com/wp-content/uploads/d3d9_arcdps_mechanics.dll",
-            @"https://raw.githubusercontent.com/jiangyi0923/ArcDPS-/1.1/ArcDPS%E6%9B%B4%E6%96%B0%E5%B7%A5%E5%85%B7/Resources/d3d9_chainload.dll",
+            @"http://q53809331.gz01.bdysite.com/wp-content/uploads/d3d9_chainload.dll",
             @"https://raw.githubusercontent.com/Snowy1794/Arcdps-translation-Chinese-simplified/master/arcdps_lang.ini" };
         public bool[] 勾选 = new bool[6];
         public bool 下载中 = false;
@@ -274,12 +274,25 @@ namespace ArcDPS更新工具
             }
             if (勾选[4])
             {
-                项目个数++;
-                thread[4] = new Thread(new ThreadStart(delegate { 坐骑(进度条(4), 路劲, 文件名[4]); }));
-                //thread[4] = new Thread(new ThreadStart(delegate { 下载(网站[4], 进度条(4), 路劲, 文件名[4]); }));
-                thread[4].IsBackground = true;
-                thread[4].Start();
-                Application.DoEvents();
+                if (勾选[0])
+                {
+                    项目个数++;
+                    //thread[4] = new Thread(new ThreadStart(delegate { 坐骑(进度条(4), 路劲, 文件名[4]); }));
+                    thread[4] = new Thread(new ThreadStart(delegate { 下载(网站[4], 进度条(4), 路劲, 文件名[4]); }));
+                    thread[4].IsBackground = true;
+                    thread[4].Start();
+                    Application.DoEvents();
+                }
+                else
+                {
+                    MessageBox.Show("您现在选择单独使用坐骑插件,请注意其他插件将不会被加载");
+                    项目个数++;
+                    thread[4] = new Thread(new ThreadStart(delegate { 下载(网站[4], 进度条(4), 路劲, 文件名[0]); }));
+                    thread[4].IsBackground = true;
+                    thread[4].Start();
+                    Application.DoEvents();
+                }
+                
             }
             else
             {
@@ -408,21 +421,21 @@ namespace ArcDPS更新工具
             }
         }
 
-        public void 坐骑(ProgressBar 进度条 ,string 存储位置,string 文件名 )
-        {
-            if (!File.Exists(存储位置 + 文件名))
-            {
-                byte[] Save = Properties.Resources.d3d9_chainload;
-                FileStream fsObj = new FileStream(存储位置 + 文件名, FileMode.CreateNew);
-                fsObj.Write(Save, 0, Save.Length);
-                fsObj.Close();
-            }
-            for (int i = 0; i <= 100; i++)
-            {
-                进度条.Value = i;
-            }
-            完成个数++;
-        }
+        //public void 坐骑(ProgressBar 进度条 ,string 存储位置,string 文件名 )
+        //{
+        //    if (!File.Exists(存储位置 + 文件名))
+        //    {
+        //        byte[] Save = Properties.Resources.d3d9_chainload;
+        //        FileStream fsObj = new FileStream(存储位置 + 文件名, FileMode.CreateNew);
+        //        fsObj.Write(Save, 0, Save.Length);
+        //        fsObj.Close();
+        //    }
+        //    for (int i = 0; i <= 100; i++)
+        //    {
+        //        进度条.Value = i;
+        //    }
+        //    完成个数++;
+        //}
 
         public void 下载(string 网站位置, ProgressBar 进度条, string 储存位置, string 文件名)
         {
@@ -442,7 +455,7 @@ namespace ArcDPS更新工具
                 {
                     yum = false;
                 }
-                if (File.GetLastWriteTime(储存位置 + 文件名).CompareTo(myrp.LastModified) < 0 || yum == false)
+                if (!File.GetLastWriteTime(储存位置 + 文件名).DayOfYear.Equals(myrp.LastModified.DayOfYear) || yum == false)
                 {
                     if (进度条 != null)
                     {
