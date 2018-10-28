@@ -221,10 +221,13 @@ namespace ArcDPS更新工具
             }
             else
             {
-                if (File.Exists(路劲 + 文件名[0]))
+                if (!勾选[4])
                 {
-                    File.Delete(路劲 + 文件名[0]);
-                }
+                    if (File.Exists(路劲 + 文件名[0]))
+                    {
+                        File.Delete(路劲 + 文件名[0]);
+                    }
+                }        
             }
             if (勾选[1])
             {
