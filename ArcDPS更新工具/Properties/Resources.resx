@@ -124,11 +124,11 @@
   <data name="arcdps_font" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\arcdps_font.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="d3d9_chainload" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\d3d9_chainload.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="dxwebsetup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dxwebsetup.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lang" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lang.ini;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="vcredist_x64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vcredist_x64.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

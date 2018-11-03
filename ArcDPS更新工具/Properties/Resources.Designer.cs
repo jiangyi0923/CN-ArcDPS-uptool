@@ -47,7 +47,7 @@ namespace ArcDPS更新工具.Properties {
         }
         
         /// <summary>
-        ///   使用此强类型资源类，为所有资源查找
+        ///   重写当前线程的 CurrentUICulture 属性
         ///   重写当前线程的 CurrentUICulture 属性。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -83,9 +83,9 @@ namespace ArcDPS更新工具.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] d3d9_chainload {
+        internal static byte[] dxwebsetup {
             get {
-                object obj = ResourceManager.GetObject("d3d9_chainload", resourceCulture);
+                object obj = ResourceManager.GetObject("dxwebsetup", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace ArcDPS更新工具.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] dxwebsetup {
+        internal static byte[] lang {
             get {
-                object obj = ResourceManager.GetObject("dxwebsetup", resourceCulture);
+                object obj = ResourceManager.GetObject("lang", resourceCulture);
                 return ((byte[])(obj));
             }
         }
