@@ -55,6 +55,7 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.progressBar7 = new System.Windows.Forms.ProgressBar();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.progressBar8 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // checkBox1
@@ -297,12 +298,22 @@
             this.checkBox10.UseVisualStyleBackColor = true;
             this.checkBox10.CheckedChanged += new System.EventHandler(this.CheckBox10_CheckedChanged);
             // 
+            // progressBar8
+            // 
+            this.progressBar8.Enabled = false;
+            this.progressBar8.Location = new System.Drawing.Point(249, 12);
+            this.progressBar8.Name = "progressBar8";
+            this.progressBar8.Size = new System.Drawing.Size(138, 16);
+            this.progressBar8.TabIndex = 27;
+            this.progressBar8.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(229, 346);
+            this.ClientSize = new System.Drawing.Size(232, 346);
+            this.Controls.Add(this.progressBar8);
             this.Controls.Add(this.progressBar7);
             this.Controls.Add(this.checkBox10);
             this.Controls.Add(this.linkLabel1);
@@ -330,9 +341,9 @@
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(245, 385);
+            this.MaximumSize = new System.Drawing.Size(248, 385);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(245, 385);
+            this.MinimumSize = new System.Drawing.Size(248, 385);
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -373,6 +384,7 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.ProgressBar progressBar7;
         private System.Windows.Forms.CheckBox checkBox10;
+        private System.Windows.Forms.ProgressBar progressBar8;
     }
 }
 

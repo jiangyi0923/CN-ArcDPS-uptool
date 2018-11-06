@@ -93,16 +93,6 @@ namespace ArcDPS更新工具.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] lang {
-            get {
-                object obj = ResourceManager.GetObject("lang", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
         internal static byte[] vcredist_x64 {
             get {
                 object obj = ResourceManager.GetObject("vcredist_x64", resourceCulture);

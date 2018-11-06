@@ -18,7 +18,7 @@ namespace ArcDPS更新工具
     public partial class Form1 : Form
     {
         #region 参数
-        Thread[] thread = new Thread[7];
+        Thread[] thread = new Thread[8];
         public string 本地路劲 = Application.StartupPath;
         public string 插件路劲 = Application.StartupPath + "\\addons\\arcdps";
         public string 插件路劲B = Application.StartupPath + "\\addons\\sct";
@@ -27,23 +27,25 @@ namespace ArcDPS更新工具
         //1 主程序;2 DB切换;3 附加功能;4团队力学;5 坐骑插件;6汉化文本;7流动插件
         public string 版本检测网址 = "http://q53809331.gz01.bdysite.com/wp-content/uploads/1.txt";
         public string 官方网址 = "http://q53809331.gz01.bdysite.com";
-        public string[] 文件名 = new string[7] 
+        public string[] 文件名 = new string[8]
         {   "\\d3d9.dll",
             "\\d3d9_arcdps_buildtemplates.dll",
             "\\d3d9_arcdps_extras.dll",
             "\\d3d9_arcdps_mechanics.dll",
             "\\d3d9_chainload.dll",
             "\\arcdps_lang.ini",
-            "\\d3d9_arcdps_sct.dll"};
-        public string[] 网站 = new string[7] 
+            "\\d3d9_arcdps_sct.dll",
+            "\\lang.ini"};
+        public string[] 网站 = new string[8] 
         {   @"https://www.deltaconnected.com/arcdps/x64/d3d9.dll",
             @"https://www.deltaconnected.com/arcdps/x64/buildtemplates/d3d9_arcdps_buildtemplates.dll",
             @"https://www.deltaconnected.com/arcdps/x64/extras/d3d9_arcdps_extras.dll",
             @"http://martionlabs.com/wp-content/uploads/d3d9_arcdps_mechanics.dll",
             @"http://q53809331.gz01.bdysite.com/wp-content/uploads/d3d9_chainload.dll",
             @"https://raw.githubusercontent.com/Snowy1794/Arcdps-translation-Chinese-simplified/master/arcdps_lang.ini",
-            @"http://q53809331.gz01.bdysite.com/wp-content/uploads/d3d9_arcdps_sct.dll"};
-        public bool[] 勾选 = new bool[7];
+            @"http://q53809331.gz01.bdysite.com/wp-content/uploads/d3d9_arcdps_sct.dll",
+            @"http://q53809331.gz01.bdysite.com/wp-content/uploads/lang.txt"};
+        public bool[] 勾选 = new bool[8];
         public bool 下载中 = false;
         public int 项目个数 = 0;
         public int 完成个数 = 0;
@@ -344,19 +346,17 @@ namespace ArcDPS更新工具
                 thread[5].Start();
                 Application.DoEvents();
             }
-            else
-            {
-                if (File.Exists(插件路劲 + 文件名[5]))
-                {
-                    File.Delete(插件路劲 + 文件名[5]);
-                }
-            }
             if (勾选[6])
             {
                 项目个数++;
                 thread[6] = new Thread(new ThreadStart(delegate { 下载(网站[6], 进度条(6), 路劲, 文件名[6]); }));
                 thread[6].IsBackground = true;
                 thread[6].Start();
+                Application.DoEvents();
+                项目个数++;
+                thread[7] = new Thread(new ThreadStart(delegate { 下载(网站[7], 进度条(7), 插件路劲B, 文件名[7]); }));
+                thread[7].IsBackground = true;
+                thread[7].Start();
                 Application.DoEvents();
             }
             else
@@ -366,8 +366,6 @@ namespace ArcDPS更新工具
                     File.Delete(插件路劲 + 文件名[6]);
                 }
             }
-
-
         }
 
         public ProgressBar 进度条(int a )
@@ -376,7 +374,7 @@ namespace ArcDPS更新工具
             switch (a)
             {
                 case 0:
-                progressBar = progressBar1;
+                    progressBar = progressBar1;
                     break;
                 case 1:
                     progressBar = progressBar2;
@@ -395,6 +393,9 @@ namespace ArcDPS更新工具
                     break;
                 case 6:
                     progressBar = progressBar7;
+                    break;
+                case 7:
+                    progressBar = progressBar8;
                     break;
                 default:
                     progressBar = null;
@@ -719,11 +720,11 @@ namespace ArcDPS更新工具
                 fsObj2.Close();
                 Application.DoEvents();
 
-                byte[] Save3 = Properties.Resources.lang;
-                FileStream fsObj3 = new FileStream(插件路劲B + "\\lang.ini", FileMode.CreateNew);
-                fsObj3.Write(Save3, 0, Save3.Length);
-                fsObj3.Close();
-                Application.DoEvents();
+                //byte[] Save3 = Properties.Resources.lang;
+                //FileStream fsObj3 = new FileStream(插件路劲B + "\\lang.ini", FileMode.CreateNew);
+                //fsObj3.Write(Save3, 0, Save3.Length);
+                //fsObj3.Close();
+                //Application.DoEvents();
             }
             else if (a == 2)
             {
@@ -755,13 +756,13 @@ namespace ArcDPS更新工具
                     fsObj2.Write(Save2, 0, Save2.Length);
                     fsObj2.Close();
                 }
-                if (!File.Exists(插件路劲B + "\\lang.ini"))
-                {
-                    byte[] Save3 = Properties.Resources.lang;
-                    FileStream fsObj3 = new FileStream(插件路劲B + "\\lang.ini", FileMode.CreateNew);
-                    fsObj3.Write(Save3, 0, Save3.Length);
-                    fsObj3.Close();
-                }
+                //if (!File.Exists(插件路劲B + "\\lang.ini"))
+                //{
+                //    byte[] Save3 = Properties.Resources.lang;
+                //    FileStream fsObj3 = new FileStream(插件路劲B + "\\lang.ini", FileMode.CreateNew);
+                //    fsObj3.Write(Save3, 0, Save3.Length);
+                //    fsObj3.Close();
+                //}
             }
         }
 

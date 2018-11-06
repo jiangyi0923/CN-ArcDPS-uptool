@@ -108,7 +108,6 @@
     <None Include="Resources\dxwebsetup.exe" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\lang.ini" />
     <None Include="Resources\vcredist_x64.exe" />
   </ItemGroup>
   <ItemGroup>
