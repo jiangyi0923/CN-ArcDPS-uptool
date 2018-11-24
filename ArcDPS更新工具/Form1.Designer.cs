@@ -56,6 +56,11 @@
             this.progressBar7 = new System.Windows.Forms.ProgressBar();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.progressBar8 = new System.Windows.Forms.ProgressBar();
+            this.checkBox11 = new System.Windows.Forms.CheckBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // checkBox1
@@ -69,7 +74,7 @@
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Text = "主程序";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.Click += new System.EventHandler(this.CheckBox1_CheckedChanged);
+            this.checkBox1.Click += new System.EventHandler(this.选择事件);
             // 
             // progressBar1
             // 
@@ -94,7 +99,7 @@
             this.checkBox2.TabIndex = 2;
             this.checkBox2.Text = "DB切换";
             this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.Click += new System.EventHandler(this.CheckBox2_CheckedChanged);
+            this.checkBox2.Click += new System.EventHandler(this.选择事件);
             // 
             // progressBar3
             // 
@@ -112,7 +117,7 @@
             this.checkBox3.TabIndex = 4;
             this.checkBox3.Text = "附加功能";
             this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.Click += new System.EventHandler(this.CheckBox3_CheckedChanged);
+            this.checkBox3.Click += new System.EventHandler(this.选择事件);
             // 
             // progressBar4
             // 
@@ -130,7 +135,7 @@
             this.checkBox4.TabIndex = 6;
             this.checkBox4.Text = "团队力学";
             this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.Click += new System.EventHandler(this.CheckBox4_CheckedChanged);
+            this.checkBox4.Click += new System.EventHandler(this.选择事件);
             // 
             // progressBar5
             // 
@@ -148,7 +153,7 @@
             this.checkBox5.TabIndex = 8;
             this.checkBox5.Text = "坐骑插件";
             this.checkBox5.UseVisualStyleBackColor = true;
-            this.checkBox5.Click += new System.EventHandler(this.CheckBox5_CheckedChanged);
+            this.checkBox5.Click += new System.EventHandler(this.选择事件);
             // 
             // progressBar6
             // 
@@ -168,7 +173,7 @@
             this.checkBox6.TabIndex = 10;
             this.checkBox6.Text = "汉化文本";
             this.checkBox6.UseVisualStyleBackColor = true;
-            this.checkBox6.Click += new System.EventHandler(this.CheckBox6_CheckedChanged);
+            this.checkBox6.Click += new System.EventHandler(this.选择事件);
             // 
             // checkBox7
             // 
@@ -179,7 +184,7 @@
             this.checkBox7.TabIndex = 12;
             this.checkBox7.Text = "启动后自动更新";
             this.checkBox7.UseVisualStyleBackColor = true;
-            this.checkBox7.CheckedChanged += new System.EventHandler(this.CheckBox7_CheckedChanged);
+            this.checkBox7.Click += new System.EventHandler(this.选择事件);
             // 
             // checkBox8
             // 
@@ -190,18 +195,18 @@
             this.checkBox8.TabIndex = 13;
             this.checkBox8.Text = "更新完成启动游戏";
             this.checkBox8.UseVisualStyleBackColor = true;
-            this.checkBox8.CheckedChanged += new System.EventHandler(this.CheckBox8_CheckedChanged);
+            this.checkBox8.Click += new System.EventHandler(this.选择事件);
             // 
             // checkBox9
             // 
             this.checkBox9.AutoSize = true;
             this.checkBox9.Location = new System.Drawing.Point(12, 210);
             this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Size = new System.Drawing.Size(72, 16);
+            this.checkBox9.Size = new System.Drawing.Size(132, 16);
             this.checkBox9.TabIndex = 14;
-            this.checkBox9.Text = "顺网用户";
+            this.checkBox9.Text = "顺网(快捷启动无效)";
             this.checkBox9.UseVisualStyleBackColor = true;
-            this.checkBox9.Click += new System.EventHandler(this.CheckBox9_CheckedChanged);
+            this.checkBox9.Click += new System.EventHandler(this.选择事件);
             // 
             // button1
             // 
@@ -296,7 +301,7 @@
             this.checkBox10.TabIndex = 25;
             this.checkBox10.Text = "流动输出";
             this.checkBox10.UseVisualStyleBackColor = true;
-            this.checkBox10.CheckedChanged += new System.EventHandler(this.CheckBox10_CheckedChanged);
+            this.checkBox10.Click += new System.EventHandler(this.选择事件);
             // 
             // progressBar8
             // 
@@ -307,12 +312,63 @@
             this.progressBar8.TabIndex = 27;
             this.progressBar8.Visible = false;
             // 
+            // checkBox11
+            // 
+            this.checkBox11.AutoSize = true;
+            this.checkBox11.Location = new System.Drawing.Point(10, 343);
+            this.checkBox11.Name = "checkBox11";
+            this.checkBox11.Size = new System.Drawing.Size(216, 16);
+            this.checkBox11.TabIndex = 28;
+            this.checkBox11.Text = "快捷启动(需已经正常登陆过的网络)";
+            this.checkBox11.UseVisualStyleBackColor = true;
+            this.checkBox11.Click += new System.EventHandler(this.选择事件);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(45, 365);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(180, 21);
+            this.textBox1.TabIndex = 29;
+            this.textBox1.TextChanged += new System.EventHandler(this.用户名改变);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(10, 368);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.TabIndex = 30;
+            this.label3.Text = "帐号";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(10, 398);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(29, 12);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "密码";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(45, 392);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.PasswordChar = '*';
+            this.textBox2.Size = new System.Drawing.Size(180, 21);
+            this.textBox2.TabIndex = 32;
+            this.textBox2.TextChanged += new System.EventHandler(this.密码改变);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(232, 346);
+            this.ClientSize = new System.Drawing.Size(233, 428);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.checkBox11);
             this.Controls.Add(this.progressBar8);
             this.Controls.Add(this.progressBar7);
             this.Controls.Add(this.checkBox10);
@@ -341,13 +397,13 @@
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(248, 385);
+            this.MaximumSize = new System.Drawing.Size(249, 467);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(248, 385);
+            this.MinimumSize = new System.Drawing.Size(249, 467);
             this.Name = "Form1";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ArcDPS更新工具V3.0";
+            this.Text = "激战2插件更新工具V3";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -385,6 +441,11 @@
         private System.Windows.Forms.ProgressBar progressBar7;
         private System.Windows.Forms.CheckBox checkBox10;
         private System.Windows.Forms.ProgressBar progressBar8;
+        private System.Windows.Forms.CheckBox checkBox11;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }
 

@@ -23,10 +23,10 @@ namespace ArcDPS更新工具
         public string 插件路劲 = Application.StartupPath + "\\addons\\arcdps";
         public string 插件路劲B = Application.StartupPath + "\\addons\\sct";
         public string 下载路劲 = Application.StartupPath + "\\bin64";
-        public string 顺网路劲 = Application.StartupPath;
-        //1 主程序;2 DB切换;3 附加功能;4团队力学;5 坐骑插件;6汉化文本;7流动插件
-        public string 版本检测网址 = "http://q53809331.gz01.bdysite.com/wp-content/uploads/1.txt";
-        public string 官方网址 = "http://q53809331.gz01.bdysite.com";
+        //1 主程序;2 DB切换;3 附加功能;4团队力学;5 坐骑插件;6汉化文本;7流动插件;8流动插件汉化;
+        public string 版本检测网址 = "http://gw2sy.gz01.bdysite.com/wp-content/uploads/1.txt";
+        public string 更新说明 = "http://gw2sy.gz01.bdysite.com/wp-content/uploads/2.txt";
+        public string 官方网址 = "https://www.syupdatetool.top";
         public string[] 文件名 = new string[8]
         {   "\\d3d9.dll",
             "\\d3d9_arcdps_buildtemplates.dll",
@@ -41,10 +41,10 @@ namespace ArcDPS更新工具
             @"https://www.deltaconnected.com/arcdps/x64/buildtemplates/d3d9_arcdps_buildtemplates.dll",
             @"https://www.deltaconnected.com/arcdps/x64/extras/d3d9_arcdps_extras.dll",
             @"http://martionlabs.com/wp-content/uploads/d3d9_arcdps_mechanics.dll",
-            @"http://q53809331.gz01.bdysite.com/wp-content/uploads/d3d9_chainload.dll",
+            @"http://gw2sy.gz01.bdysite.com/wp-content/uploads/d3d9_chainload.dll",
             @"https://raw.githubusercontent.com/Snowy1794/Arcdps-translation-Chinese-simplified/master/arcdps_lang.ini",
-            @"http://q53809331.gz01.bdysite.com/wp-content/uploads/d3d9_arcdps_sct.dll",
-            @"http://q53809331.gz01.bdysite.com/wp-content/uploads/lang.txt"};
+            @"http://gw2sy.gz01.bdysite.com/wp-content/uploads/d3d9_arcdps_sct.dll",
+            @"http://gw2sy.gz01.bdysite.com/wp-content/uploads/lang.txt"};
         public bool[] 勾选 = new bool[8];
         public bool 下载中 = false;
         public int 项目个数 = 0;
@@ -62,9 +62,6 @@ namespace ArcDPS更新工具
 
         }
 
-        
-
-
         private void Form1_Load(object sender, EventArgs e)
         {
             checkBox1.Checked = Properties.Settings.Default.主程序;
@@ -77,14 +74,29 @@ namespace ArcDPS更新工具
             checkBox8.Checked = Properties.Settings.Default.自动启动;
             checkBox9.Checked = Properties.Settings.Default.顺网;
             checkBox10.Checked = Properties.Settings.Default.流动输出;
+            checkBox11.Checked = Properties.Settings.Default.快捷启动;
+            textBox1.Text = Properties.Settings.Default.用户名;
+            textBox2.Text = Properties.Settings.Default.密码;
+            
             int 最新版本 = 版本();
             label4.Text = "当前版本:V"+ Application.ProductVersion;
+            if (最新版本 == 0)
+            {
+                MessageBox.Show("获取最新版本信息失败,官网暂时无法连接");
+                Close();
+            }
             linkLabel1.Text = "最新版本:V"+ 最新版本.ToString();
+
             int.TryParse(Application.ProductVersion, out int 本地版本);
             if (本地版本 < 最新版本)
             {
-                MessageBox.Show("有最新版本V" + 最新版本.ToString() + ",请前往官网下载");
-            }
+                string 说明文档 = 说明();
+                if (说明文档 == "")
+                {
+                    MessageBox.Show("获取最新版本信息失败");
+                }
+                MessageBox.Show("有最新版本V" + 最新版本.ToString() + ",请前往官网下载"+ 说明文档);
+            }//
             
             if (检测环境())
             {
@@ -106,73 +118,49 @@ namespace ArcDPS更新工具
         #endregion
 
         #region 按钮
-        //主程序
-        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.主程序 = checkBox1.Checked;
-            Properties.Settings.Default.Save();
-        }
-        //DB切换
-        private void CheckBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.DB切换 = checkBox2.Checked;
-            Properties.Settings.Default.Save();
-        }
-        //附加功能
-        private void CheckBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.附加功能 = checkBox3.Checked;
-            Properties.Settings.Default.Save();
-        }
-        //团队力学
-        private void CheckBox4_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.团队力学 = checkBox4.Checked;
-            Properties.Settings.Default.Save();
-        }
-        //坐骑插件
-        private void CheckBox5_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.坐骑插件 = checkBox5.Checked;
-            Properties.Settings.Default.Save();
-        }
-        //汉化文本
-        private void CheckBox6_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.汉化文本 = checkBox6.Checked;
-            Properties.Settings.Default.Save();
-        }
-        //自动更新
-        private void CheckBox7_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.自动更新 = checkBox7.Checked;
-            Properties.Settings.Default.Save();
-        }
-        //自动启动
-        private void CheckBox8_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.自动启动 = checkBox8.Checked;
-            Properties.Settings.Default.Save();
 
-        }
-        //顺网
-        private void CheckBox9_CheckedChanged(object sender, EventArgs e)
+        private void 选择事件(object sender, EventArgs e)
         {
-            Properties.Settings.Default.顺网 = checkBox9.Checked;
-            Properties.Settings.Default.Save();
-            if (!下载中)
+            CheckBox check = (CheckBox)sender;
+            switch (check.Text)
             {
-                    禁用();
-                    下载中 = true;
-                    更新();
+                case "主程序":
+                    Properties.Settings.Default.主程序 = check.Checked;
+                    break;
+                case "DB切换":
+                    Properties.Settings.Default.DB切换 = check.Checked;
+                    break;
+                case "附加功能":
+                    Properties.Settings.Default.附加功能 = check.Checked;
+                    break;
+                case "团队力学":
+                    Properties.Settings.Default.团队力学 = check.Checked;
+                    break;
+                case "坐骑插件":
+                    Properties.Settings.Default.坐骑插件 = check.Checked;
+                    break;
+                case "汉化文本":
+                    Properties.Settings.Default.汉化文本 = check.Checked;
+                    break;
+                case "流动输出":
+                    Properties.Settings.Default.流动输出 = check.Checked;
+                    break;
+                case "启动后自动更新":
+                    Properties.Settings.Default.自动更新 = check.Checked;
+                    break;
+                case "更新完成启动游戏":
+                    Properties.Settings.Default.自动启动 = check.Checked;
+                    break;
+                case "快捷启动(需已经正常登陆过的网络)":
+                    Properties.Settings.Default.快捷启动 = check.Checked;
+                    break;
+                case "顺网(快捷启动无效)":
+                    Properties.Settings.Default.顺网 = check.Checked;
+                    break;
+                default:
+                    break;
             }
-        }
-        //流动输出
-        private void CheckBox10_CheckedChanged(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.流动输出 = checkBox10.Checked;
             Properties.Settings.Default.Save();
-
         }
         //更新
         private void Button1_Click(object sender, EventArgs e)
@@ -194,6 +182,16 @@ namespace ArcDPS更新工具
         {
             启动();
         }
+        private void 用户名改变(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.用户名 = textBox1.Text;
+            Properties.Settings.Default.Save();
+        }
+        private void 密码改变(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.密码 = textBox2.Text;
+            Properties.Settings.Default.Save();
+        }
         #endregion
 
         #region 主要代码
@@ -202,38 +200,6 @@ namespace ArcDPS更新工具
         {
             完成个数 = 0;
             项目个数 = 0;
-            string 路劲;
-            if (Properties.Settings.Default.顺网|| checkBox9.Checked)
-            {
-                路劲 = 顺网路劲;
-                try
-                {
-                    for (int i = 0; i <= 6; i++)
-                    {
-                        if (File.Exists(下载路劲 + 文件名[i]))
-                        {
-                            File.Delete(下载路劲 + 文件名[i]);
-                        }
-                        
-                    }
-                }
-                catch (Exception) { }
-            }
-            else
-            {
-                路劲 = 下载路劲;
-                try
-                {
-                    for (int i = 0; i <= 6; i++)
-                    {
-                        if (File.Exists(顺网路劲 + 文件名[i]))
-                        {
-                            File.Delete(顺网路劲 + 文件名[i]);
-                        }
-                    }
-                }
-                catch (Exception){}
-            }
             勾选[0] = Properties.Settings.Default.主程序;
             勾选[1] = Properties.Settings.Default.DB切换;
             勾选[2] = Properties.Settings.Default.附加功能;
@@ -241,130 +207,106 @@ namespace ArcDPS更新工具
             勾选[4] = Properties.Settings.Default.坐骑插件;
             勾选[5] = Properties.Settings.Default.汉化文本;
             勾选[6] = Properties.Settings.Default.流动输出;
-            if (勾选[0])
+
+            if (File.Exists(下载路劲 + "\\d3d9_chainload.dll"))
+            {
+                File.Delete(下载路劲 + "\\d3d9_chainload.dll");
+            }
+            if (File.Exists(下载路劲 + "\\d3d9_chainload_noex.dll"))
+            {
+                File.Delete(下载路劲 + "\\d3d9_chainload_noex.dll");
+            }
+            string d3d9 = "";
+            string 坐骑 = "";
+            string arc路径 = "";
+            string 坐骑路径 = "";
+            if (勾选[0] && 勾选[4])
+            {
+                d3d9 = "\\d3d9_mchain.dll";
+                坐骑 = 文件名[0];
+                arc路径 = 下载路劲;
+                坐骑路径 = 本地路劲;
+
+            }
+            else
+            {
+                if (勾选[0])
+                {
+                    d3d9 = 文件名[0];
+                    arc路径 = 本地路劲;
+                    
+                }
+                if (勾选[4])
+                {
+                    MessageBox.Show("您现在选择的是当坐骑插件模式,请注意其他插件将不会被加载");
+                    坐骑 = 文件名[0];
+                    坐骑路径 = 本地路劲;
+                }
+                if (File.Exists(下载路劲 + "\\d3d9_mchain.dll"))
+                {
+                    File.Delete(下载路劲 + "\\d3d9_mchain.dll");
+                }
+            }
+            if (d3d9 != "")
             {
                 项目个数++;
-                thread[0] = new Thread(new ThreadStart(delegate { 下载(网站[0], 进度条(0), 路劲, 文件名[0]); }));
+                thread[0] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[0], 进度条(0), arc路径, d3d9); }));
                 thread[0].IsBackground = true;
                 thread[0].Start();
                 Application.DoEvents();
             }
-            else
-            {
-                if (!勾选[4])
-                {
-                    if (File.Exists(路劲 + 文件名[0]))
-                    {
-                        File.Delete(路劲 + 文件名[0]);
-                    }
-                }        
-            }
-            if (勾选[1])
+            if (坐骑 != "")
             {
                 项目个数++;
-                thread[1] = new Thread(new ThreadStart(delegate { 下载(网站[1], 进度条(1), 路劲, 文件名[1]); }));
-                thread[1].IsBackground = true;
-                thread[1].Start();
-                Application.DoEvents();
-            }
-            else
-            {
-                if (File.Exists(路劲 + 文件名[1]))
-                {
-                    File.Delete(路劲 + 文件名[1]);
-                }
-            }
-
-            if (勾选[2])
-            {
-                项目个数++;
-                thread[2] = new Thread(new ThreadStart(delegate { 下载(网站[2], 进度条(2), 路劲, 文件名[2]); }));
-                thread[2].IsBackground = true;
-                thread[2].Start();
-                Application.DoEvents();
-            }
-            else
-            {
-                if (File.Exists(路劲 + 文件名[2]))
-                {
-                    File.Delete(路劲 + 文件名[2]);
-                }
-            }
-            if (勾选[3])
-            {
-                项目个数++;
-                thread[3] = new Thread(new ThreadStart(delegate { 下载(网站[3], 进度条(3), 路劲, 文件名[3]); }));
-                thread[3].IsBackground = true;
-                thread[3].Start();
-                Application.DoEvents();
-            }
-            else
-            {
-                if (File.Exists(路劲 + 文件名[3]))
-                {
-                    File.Delete(路劲 + 文件名[3]);
-                }
-            }
-            if (勾选[4])
-            {
-                if (勾选[0])
-                {
-                    项目个数++;
-                    //thread[4] = new Thread(new ThreadStart(delegate { 坐骑(进度条(4), 路劲, 文件名[4]); }));
-                    thread[4] = new Thread(new ThreadStart(delegate { 下载(网站[4], 进度条(4), 路劲, 文件名[4]); }));
-                    thread[4].IsBackground = true;
-                    thread[4].Start();
-                    Application.DoEvents();
-                }
-                else
-                {
-                    MessageBox.Show("您现在选择单独使用坐骑插件,请注意其他插件将不会被加载");
-                    项目个数++;
-                    if (File.Exists(路劲 + 文件名[4]))
-                    {
-                        File.Delete(路劲 + 文件名[4]);
-                    }
-                    thread[4] = new Thread(new ThreadStart(delegate { 下载(网站[4], 进度条(4), 路劲, 文件名[0]); }));
-                    thread[4].IsBackground = true;
-                    thread[4].Start();
-                    Application.DoEvents();
-                }
-                
-            }
-            else
-            {
-                if (File.Exists(路劲 + 文件名[4]))
-                {
-                    File.Delete(路劲 + 文件名[4]);
-                }
-            }
-            if (勾选[5])
-            {
-                项目个数++;
-                thread[5] = new Thread(new ThreadStart(delegate { 下载(网站[5], 进度条(5), 插件路劲, 文件名[5]); }));
-                thread[5].IsBackground = true;
-                thread[5].Start();
+                thread[4] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[4], 进度条(4), 坐骑路径, 坐骑); }));
+                thread[4].IsBackground = true;
+                thread[4].Start();
                 Application.DoEvents();
             }
             if (勾选[6])
             {
                 项目个数++;
-                thread[6] = new Thread(new ThreadStart(delegate { 下载(网站[6], 进度条(6), 路劲, 文件名[6]); }));
+                thread[6] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[6], 进度条(6), 下载路劲, 文件名[6]); }));
                 thread[6].IsBackground = true;
                 thread[6].Start();
                 Application.DoEvents();
                 项目个数++;
-                thread[7] = new Thread(new ThreadStart(delegate { 下载(网站[7], 进度条(7), 插件路劲B, 文件名[7]); }));
+                thread[7] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[7], 进度条(7), 插件路劲B, 文件名[7]); }));
                 thread[7].IsBackground = true;
                 thread[7].Start();
                 Application.DoEvents();
             }
-            else
+            if (勾选[1])
             {
-                if (File.Exists(插件路劲 + 文件名[6]))
-                {
-                    File.Delete(插件路劲 + 文件名[6]);
-                }
+                项目个数++;
+                thread[1] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[1], 进度条(1), 下载路劲, 文件名[1]); }));
+                thread[1].IsBackground = true;
+                thread[1].Start();
+                Application.DoEvents();
+            }
+            if (勾选[2])
+            {
+                项目个数++;
+                thread[2] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[2], 进度条(2), 下载路劲, 文件名[2]); }));
+                thread[2].IsBackground = true;
+                thread[2].Start();
+                Application.DoEvents();
+            }
+            if (勾选[3])
+            {
+                项目个数++;
+                thread[3] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[3], 进度条(3), 下载路劲, 文件名[3]); }));
+                thread[3].IsBackground = true;
+                thread[3].Start();
+                Application.DoEvents();
+            }
+            if (勾选[5])
+            {
+                项目个数++;
+                thread[5] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[5], 进度条(5), 插件路劲, 文件名[5]); }));
+                thread[5].IsBackground = true;
+                thread[5].Start();
+                Application.DoEvents();
             }
         }
 
@@ -404,7 +346,6 @@ namespace ArcDPS更新工具
             return progressBar;
         }
 
-
         public void 禁用()
         {
             checkBox1.Enabled = false;
@@ -417,9 +358,12 @@ namespace ArcDPS更新工具
             checkBox8.Enabled = false;
             checkBox9.Enabled = false;
             checkBox10.Enabled = false;
+            checkBox11.Enabled = false;
             button1.Enabled = false;
             button2.Enabled = false;
             button3.Enabled = false;
+            //textBox1.Enabled = false;
+            //textBox2.Enabled = false;
         }
 
         public void 启用()
@@ -434,25 +378,32 @@ namespace ArcDPS更新工具
             checkBox8.Enabled = true;
             checkBox9.Enabled = true;
             checkBox10.Enabled = true;
+            checkBox11.Enabled = true;
             button1.Enabled = true;
             button2.Enabled = true;
             button3.Enabled = true;
+            //textBox1.Enabled = true;
+            //textBox2.Enabled = true;
         }
 
         public void 卸载()
         {
             try
             {
-                for (int i = 0; i <= 6; i++)
+                for (int i = 0; i <= 7; i++)
                 {
                     if (File.Exists(下载路劲 + 文件名[i]))
                     {
                         File.Delete(下载路劲 + 文件名[i]);
                     }
-                    if (File.Exists(顺网路劲 + 文件名[i]))
+                    if (File.Exists(本地路劲 + 文件名[i]))
                     {
-                        File.Delete(顺网路劲 + 文件名[i]);
+                        File.Delete(本地路劲 + 文件名[i]);
                     }
+                }
+                if (Directory.Exists(Application.StartupPath + "\\addons"))
+                {
+                    Directory.Delete(Application.StartupPath + "\\addons");
                 }
             }
             catch (Exception) { }
@@ -460,29 +411,109 @@ namespace ArcDPS更新工具
 
         public void 启动()
         {
-            if (File.Exists(@".\\Gw2-64.exe"))
+            string 启动代码 = "-maploadinfo";
+            string 程序位置 = @".\\Gw2-64.exe";
+            if (Properties.Settings.Default.顺网)
             {
-                ProcessStartInfo info = new ProcessStartInfo { FileName = @".\\Gw2-64.exe", Arguments = "-maploadinfo" };
-                Process pro = new Process
+                MessageBox.Show("顺网用户快捷登录无效哦!");
+                程序位置 = @".\\GW2Lanucher.exe";
+                if (File.Exists(程序位置))
                 {
-                    StartInfo = info
-                };
-                pro.Start();
-                Close();
+                    ProcessStartInfo info = new ProcessStartInfo { FileName = 程序位置, Arguments = 启动代码 };
+                    Process pro = new Process
+                    {
+                        StartInfo = info
+                    };
+                    pro.Start();
+                    Close();
+                }
+                else
+                {
+                    MessageBox.Show("没有找到 GW2Lanucher.exe !");
+                    Close();
+                }
+
             }
             else
             {
-                MessageBox.Show("没有找到 Gw2-64.exe !");
-                Close();
+                if (File.Exists(程序位置))
+                {
+                    if (Properties.Settings.Default.快捷启动)
+                    {
+                        if (textBox1.Text != "" && textBox1.Text != "")
+                        {
+                            string argument1 = "\"" + "-email" + "\"";
+                            string argument2 = "\"" + textBox1.Text + "\"";
+                            string argument3 = "\"" + "-password" + "\"";
+                            string argument4 = "\"" + textBox2.Text + "\"";
+                            string argument5 = "\"" + "-nopatchui" + "\"";
+                            string argument6 = "\"" + "-maploadinfo" + "\"";
+                            Process process = new Process();
+                            process.StartInfo.FileName = System.Environment.CurrentDirectory + "//Gw2-64.exe";
+                            process.StartInfo.Arguments = argument1 + " " + argument2 + " " + argument3 + " " + argument4 + " " + argument5 + " " + argument6;
+                            process.Start();
+                            Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("你没有输入正确的帐号和密码");
+                            return;
+                        }
+
+                    }
+                    else
+                    {
+                        ProcessStartInfo info = new ProcessStartInfo { FileName = @".\\Gw2-64.exe", Arguments = 启动代码 };
+                        Process pro = new Process
+                        {
+                            StartInfo = info
+                        };
+                        pro.Start();
+                        Close();
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("没有找到 Gw2-64.exe !");
+                    Close();
+                }
             }
+
         }
 
         public int 版本()
         {
-            var wc = new WebClient();
-            var html = wc.DownloadString(版本检测网址);
-            int.TryParse(html, out int a);
-            wc.Dispose();
+            int a =0;
+            try
+            {
+                var wc = new WebClient();
+                var html = wc.DownloadString(版本检测网址);
+                int.TryParse(html, out a);
+                wc.Dispose();
+            }
+            catch (Exception)
+            {
+                 a = 0;
+            }
+            return a;
+        }
+
+        private string 说明()
+        {
+            string a = "";
+            try
+            {
+                var wc = new WebClient();
+                string html = wc.DownloadString(更新说明);
+                a = html;
+                wc.Dispose();
+            }
+            catch (Exception)
+            {
+                a = "";
+            }
+
             return a;
         }
 
@@ -799,7 +830,8 @@ namespace ArcDPS更新工具
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(官方网址);
+            Process.Start(官方网址);
         }
+
     }
 }

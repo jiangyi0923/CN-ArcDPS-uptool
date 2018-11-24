@@ -142,5 +142,41 @@ namespace ArcDPS更新工具.Properties {
                 this["流动输出"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool 快捷启动 {
+            get {
+                return ((bool)(this["快捷启动"]));
+            }
+            set {
+                this["快捷启动"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string 用户名 {
+            get {
+                return ((string)(this["用户名"]));
+            }
+            set {
+                this["用户名"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string 密码 {
+            get {
+                return ((string)(this["密码"]));
+            }
+            set {
+                this["密码"] = value;
+            }
+        }
     }
 }
