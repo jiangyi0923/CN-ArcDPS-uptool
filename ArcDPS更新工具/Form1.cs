@@ -75,6 +75,7 @@ namespace ArcDPS更新工具
             checkBox9.Checked = Properties.Settings.Default.顺网;
             checkBox10.Checked = Properties.Settings.Default.流动输出;
             checkBox11.Checked = Properties.Settings.Default.快捷启动;
+            checkBox12.Checked = Properties.Settings.Default.滤镜;
             textBox1.Text = Properties.Settings.Default.用户名;
             textBox2.Text = Properties.Settings.Default.密码;
             
@@ -157,6 +158,9 @@ namespace ArcDPS更新工具
                 case "顺网(快捷启动无效)":
                     Properties.Settings.Default.顺网 = check.Checked;
                     break;
+                case "使用滤镜插件":
+                    Properties.Settings.Default.滤镜 = check.Checked;
+                    break;
                 default:
                     break;
             }
@@ -207,15 +211,26 @@ namespace ArcDPS更新工具
             勾选[4] = Properties.Settings.Default.坐骑插件;
             勾选[5] = Properties.Settings.Default.汉化文本;
             勾选[6] = Properties.Settings.Default.流动输出;
-
-            if (File.Exists(下载路劲 + "\\d3d9_chainload.dll"))
+            if (!Properties.Settings.Default.滤镜)
             {
-                File.Delete(下载路劲 + "\\d3d9_chainload.dll");
+                if (File.Exists(下载路劲 + "\\d3d9_chainload.dll"))
+                {
+                    File.Copy(下载路劲 + "\\d3d9_chainload.dll", 下载路劲 + "\\d3d9_chainload.dll.back",true);
+                    File.Delete(下载路劲 + "\\d3d9_chainload.dll");
+                }
+            }
+            else
+            {
+                if (File.Exists(下载路劲 + "\\d3d9_chainload.dll.back"))
+                {
+                    File.Copy(下载路劲 + "\\d3d9_chainload.dll.back", 下载路劲 + "\\d3d9_chainload.dll", true);
+                }
             }
             if (File.Exists(下载路劲 + "\\d3d9_chainload_noex.dll"))
             {
                 File.Delete(下载路劲 + "\\d3d9_chainload_noex.dll");
             }
+            ////////////////////////////////////////////////////////////////////////////////////////////
             string d3d9 = "";
             string 坐骑 = "";
             string arc路径 = "";
@@ -226,15 +241,28 @@ namespace ArcDPS更新工具
                 坐骑 = 文件名[0];
                 arc路径 = 下载路劲;
                 坐骑路径 = 本地路劲;
-
             }
             else
             {
+                if (File.Exists(本地路劲 + 文件名[0]))
+                {
+                    if (File.ReadAllBytes(本地路劲 + 文件名[0]).Length < 1000000)
+                    {
+                        File.Copy(本地路劲 + 文件名[0], 插件路劲 + 文件名[0] + "_arc.back", true);
+                        Application.DoEvents();
+                        File.Delete(本地路劲 + 文件名[0]);
+                    }
+                    else
+                    {
+                        File.Copy(本地路劲 + 文件名[0], 插件路劲 + 文件名[0] + "_moumet.back", true);
+                        Application.DoEvents();
+                        File.Delete(本地路劲 + 文件名[0]);
+                    }
+                }
                 if (勾选[0])
                 {
                     d3d9 = 文件名[0];
                     arc路径 = 本地路劲;
-                    
                 }
                 if (勾选[4])
                 {
@@ -244,11 +272,19 @@ namespace ArcDPS更新工具
                 }
                 if (File.Exists(下载路劲 + "\\d3d9_mchain.dll"))
                 {
+                    File.Copy(下载路劲 + "\\d3d9_mchain.dll", 插件路劲 + 文件名[0] + "_arc.back", true);
+                    Application.DoEvents();
                     File.Delete(下载路劲 + "\\d3d9_mchain.dll");
                 }
             }
             if (d3d9 != "")
             {
+                if (File.Exists(插件路劲 + 文件名[0] + "_arc.back"))
+                {
+                    File.Copy(插件路劲 + 文件名[0] + "_arc.back", arc路径 + d3d9, true);
+                    Application.DoEvents();
+                    //File.Delete(本地路劲 + 文件名[0]+ "_arc.back");
+                }
                 项目个数++;
                 thread[0] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[0], 进度条(0), arc路径, d3d9); }));
                 thread[0].IsBackground = true;
@@ -257,14 +293,26 @@ namespace ArcDPS更新工具
             }
             if (坐骑 != "")
             {
+                if (File.Exists(插件路劲 + 文件名[0] + "_moumet.back"))
+                {
+                    File.Copy(插件路劲 + 文件名[0]+ "_moumet.back", 本地路劲 + 文件名[0], true);
+                    Application.DoEvents();
+                    //File.Delete(本地路劲 + 文件名[0] + "_moumet.back");
+                }
                 项目个数++;
                 thread[4] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[4], 进度条(4), 坐骑路径, 坐骑); }));
                 thread[4].IsBackground = true;
                 thread[4].Start();
                 Application.DoEvents();
             }
+            ////////////////////////////////////////////////////////////////////////////////////////
             if (勾选[6])
             {
+                if (File.Exists(插件路劲 + 文件名[6] + ".back"))
+                {
+                    File.Copy(插件路劲 + 文件名[6] + ".back", 下载路劲 + 文件名[6], true);
+                    Application.DoEvents();
+                }
                 项目个数++;
                 thread[6] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[6], 进度条(6), 下载路劲, 文件名[6]); }));
                 thread[6].IsBackground = true;
@@ -273,32 +321,85 @@ namespace ArcDPS更新工具
                 项目个数++;
                 thread[7] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[7], 进度条(7), 插件路劲B, 文件名[7]); }));
                 thread[7].IsBackground = true;
-                thread[7].Start();
+                thread[7].Start(); 
                 Application.DoEvents();
+            }
+            else
+            {
+                if (File.Exists(下载路劲 + 文件名[6]))
+                {
+                    File.Copy(下载路劲 + 文件名[6], 插件路劲 + 文件名[6] + ".back", true);
+                    Application.DoEvents();
+                    File.Delete(下载路劲 + 文件名[6]);
+                }
             }
             if (勾选[1])
             {
+                if (File.Exists(插件路劲 + 文件名[1] + ".back"))
+                {
+                    File.Copy(插件路劲 + 文件名[1] + ".back", 下载路劲 + 文件名[1], true);
+                    Application.DoEvents();
+                    //File.Delete(插件路劲 + 文件名[1]+ ".back");
+                }
                 项目个数++;
                 thread[1] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[1], 进度条(1), 下载路劲, 文件名[1]); }));
                 thread[1].IsBackground = true;
                 thread[1].Start();
                 Application.DoEvents();
             }
+            else
+            {
+                if (File.Exists(下载路劲 + 文件名[1]))
+                {
+                    File.Copy(下载路劲 + 文件名[1], 插件路劲 + 文件名[1] + ".back", true);
+                    File.Delete(下载路劲 + 文件名[1]);
+                }
+            }
             if (勾选[2])
             {
+                if (File.Exists(插件路劲 + 文件名[2] + ".back"))
+                {
+                    File.Copy(插件路劲 + 文件名[2] + ".back", 下载路劲 + 文件名[2], true);
+                    Application.DoEvents();
+                    //File.Delete(下载路劲 + 文件名[2] + ".back");
+                }
                 项目个数++;
                 thread[2] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[2], 进度条(2), 下载路劲, 文件名[2]); }));
                 thread[2].IsBackground = true;
                 thread[2].Start();
                 Application.DoEvents();
             }
+            else
+            {
+                if (File.Exists(下载路劲 + 文件名[2]))
+                {
+                    File.Copy(下载路劲 + 文件名[2], 插件路劲 + 文件名[2] + ".back", true);
+                    Application.DoEvents();
+                    File.Delete(下载路劲 + 文件名[2]);
+                }
+            }
             if (勾选[3])
             {
+                if (File.Exists(插件路劲 + 文件名[3] + ".back"))
+                {
+                    File.Copy(插件路劲 + 文件名[3] + ".back", 下载路劲 + 文件名[3], true);
+                    Application.DoEvents();
+                    //File.Delete(插件路劲 + 文件名[3] + ".back");
+                }
                 项目个数++;
                 thread[3] = new Thread(new ParameterizedThreadStart(delegate { 下载(网站[3], 进度条(3), 下载路劲, 文件名[3]); }));
                 thread[3].IsBackground = true;
                 thread[3].Start();
                 Application.DoEvents();
+            }
+            else
+            {
+                if (File.Exists(下载路劲 + 文件名[3]))
+                {
+                    File.Copy(下载路劲 + 文件名[3], 插件路劲 + 文件名[3] + ".back", true);
+                    Application.DoEvents();
+                    File.Delete(下载路劲 + 文件名[3]);
+                }
             }
             if (勾选[5])
             {
@@ -359,6 +460,7 @@ namespace ArcDPS更新工具
             checkBox9.Enabled = false;
             checkBox10.Enabled = false;
             checkBox11.Enabled = false;
+            checkBox12.Enabled = false;
             button1.Enabled = false;
             button2.Enabled = false;
             button3.Enabled = false;
@@ -379,6 +481,7 @@ namespace ArcDPS更新工具
             checkBox9.Enabled = true;
             checkBox10.Enabled = true;
             checkBox11.Enabled = true;
+            checkBox12.Enabled = true;
             button1.Enabled = true;
             button2.Enabled = true;
             button3.Enabled = true;
@@ -522,7 +625,7 @@ namespace ArcDPS更新工具
             Thread.BeginThreadAffinity();
             try
             {
-                HttpWebRequest Myrq = (HttpWebRequest)HttpWebRequest.Create(网站位置);
+                HttpWebRequest Myrq = (HttpWebRequest)WebRequest.Create(网站位置);
                 HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
                 Myrq.Timeout = 50000;
                 long totalBytes = myrp.ContentLength;
@@ -811,6 +914,20 @@ namespace ArcDPS更新工具
                 if (项目个数 == 完成个数)
                 {
                     下载中 = false;
+                    if (Properties.Settings.Default.主程序 && !Properties.Settings.Default.坐骑插件)
+                    {
+                        if (File.Exists(本地路劲 +文件名[0]))
+                        {
+                            File.Copy(本地路劲 + 文件名[0], 下载路劲 + 文件名[0], true);
+                        }
+                    }
+                    else
+                    {
+                        if (File.Exists(下载路劲 + 文件名[0]))
+                        {
+                            File.Delete(下载路劲 + 文件名[0]);
+                        }
+                    }
                     启用();
                 }
             }
@@ -832,6 +949,5 @@ namespace ArcDPS更新工具
         {
             Process.Start(官方网址);
         }
-
     }
 }

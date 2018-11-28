@@ -178,5 +178,17 @@ namespace ArcDPS更新工具.Properties {
                 this["密码"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool 滤镜 {
+            get {
+                return ((bool)(this["滤镜"]));
+            }
+            set {
+                this["滤镜"] = value;
+            }
+        }
     }
 }
