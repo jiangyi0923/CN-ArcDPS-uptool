@@ -127,10 +127,10 @@
   <data name="dxwebsetup" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dxwebsetup.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="vcredist2015" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\vcredist2015.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="vcredist_x64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vcredist_x64.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="vcredist_x86" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\vcredist_x86.exe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
