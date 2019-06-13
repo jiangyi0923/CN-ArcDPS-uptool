@@ -331,7 +331,7 @@ namespace GW2_Plug_Updatetool
                     if (!week.Equals(Day[3]) && !week.Equals(Day[4]))
                     {
                         textBox1.AppendText("今天是" + week + "可以正常更新\r\n");
-                        //读取后操作();
+                        读取后操作();
                     }
                     else
                     {
