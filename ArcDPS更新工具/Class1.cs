@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace GW2_Plug_Updatetool
 {
-    public class MultiDownload : Form1
+    public class MultiDownload 
     {
         #region 变量
         private int _threadNum;    //线程数量

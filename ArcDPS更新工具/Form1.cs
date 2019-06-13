@@ -107,7 +107,6 @@ namespace GW2_Plug_Updatetool
                 bool 第一次使用 = Properties.Settings.Default.首次使用;
                 if (第一次使用)
                 {
-                    初次运行();
                     Properties.Settings.Default.首次使用 = false;
                     Properties.Settings.Default.Save();
                     MessageBox.Show("欢迎您使用激战2插件更新工具,\r\n" +
@@ -124,7 +123,7 @@ namespace GW2_Plug_Updatetool
                     {
                         string[] Day = new string[] { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
                         string week = Day[Convert.ToInt32(DateTime.Now.DayOfWeek.ToString("d"))].ToString();
-                        if (week != "星期三" || week != "星期四" )
+                        if (!week.Equals(Day[3]) && !week.Equals(Day[4]))
                         {
                             textBox1.AppendText("今天是" + week + "可以正常更新\r\n");
                             读取后操作();
@@ -141,7 +140,7 @@ namespace GW2_Plug_Updatetool
                     }
 
                 }
-
+                初次运行();
             }
         }
         private void 读取后操作()
@@ -327,11 +326,12 @@ namespace GW2_Plug_Updatetool
                 if (Properties.Settings.Default._不更新)
                 {
                     string[] Day = new string[] { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
-                    string week = Day[Convert.ToInt32(DateTime.Now.DayOfWeek.ToString("d"))].ToString();
-                    if (week != "星期三" || week != "星期四" )
+                    ;
+                    string week = Day[Convert.ToInt16(DateTime.Now.DayOfWeek.ToString("d"))];
+                    if (!week.Equals(Day[3]) && !week.Equals(Day[4]))
                     {
                         textBox1.AppendText("今天是" + week + "可以正常更新\r\n");
-                        读取后操作();
+                        //读取后操作();
                     }
                     else
                     {
