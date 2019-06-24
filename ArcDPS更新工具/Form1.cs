@@ -58,7 +58,7 @@ namespace GW2_Plug_Updatetool
             checkBox12.Checked = Properties.Settings.Default._12启动;
             checkBox13.Checked = Properties.Settings.Default._不更新;
             启用();
-
+            初次运行();
             int 最新版本 = 版本();
             textBox1.AppendText("当前版本:V" + Application.ProductVersion + "\r\n");
 
@@ -100,7 +100,7 @@ namespace GW2_Plug_Updatetool
                 }
 
             }
-
+            
             if (检测环境())
             {
                 
@@ -140,7 +140,7 @@ namespace GW2_Plug_Updatetool
                     }
 
                 }
-                初次运行();
+                
             }
         }
         private void 读取后操作()
@@ -1159,6 +1159,12 @@ namespace GW2_Plug_Updatetool
             勾选[7] = Properties.Settings.Default._8坐骑;
             勾选[8] = Properties.Settings.Default._9汉滤;
             勾选[9] = Properties.Settings.Default._10全虑;
+            
+            if (!Directory.Exists(下载路劲))
+            {
+                Directory.CreateDirectory(下载路劲);
+            }
+
             if (!File.Exists(本地路劲 + "\\d3d9.dll"))
             {
                 File.Delete(本地路劲 + "\\d3d9.dll");

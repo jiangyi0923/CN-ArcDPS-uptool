@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("ArcDPS更新工具v3.0")]
+[assembly: AssemblyTitle("ArcDPS更新工具V4")]
 [assembly: AssemblyDescription("激战2知名玩家印度神油制作")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("激战2知名玩家印度神油制作")]
-[assembly: AssemblyProduct("ArcDPS更新工具v3.0")]
+[assembly: AssemblyProduct("ArcDPS更新工具V4")]
 [assembly: AssemblyCopyright("激战2知名玩家印度神油制作 BUG反馈 QQ375480856")]
 [assembly: AssemblyTrademark("激战2知名玩家印度神油制作 BUG反馈 QQ375480856")]
 [assembly: AssemblyCulture("")]
@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // 方法是按如下所示使用“*”: :
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("401")]
-[assembly: AssemblyFileVersion("403")]
+[assembly: AssemblyFileVersion("404")]
