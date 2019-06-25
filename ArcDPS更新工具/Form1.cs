@@ -711,7 +711,7 @@ namespace GW2_Plug_Updatetool
                     FileStream fsObj5 = new FileStream(本地路劲 + "\\vcredist2015.exe", FileMode.CreateNew);
                     fsObj5.Write(Save5, 0, Save5.Length);
                     fsObj5.Close();
-                    ProcessStartInfo info5 = new ProcessStartInfo { FileName = @".\\dxwebsetup.exe" };
+                    ProcessStartInfo info5 = new ProcessStartInfo { FileName = @".\\vcredist2015.exe" };
                     Process pro5 = Process.Start(info5);
                     break;
                 case 5:
@@ -727,7 +727,7 @@ namespace GW2_Plug_Updatetool
                     FileStream fsObj7 = new FileStream(本地路劲 + "\\vcredist2015.exe", FileMode.CreateNew);
                     fsObj7.Write(Save7, 0, Save7.Length);
                     fsObj7.Close();
-                    ProcessStartInfo info7 = new ProcessStartInfo { FileName = @".\\vcredist_x64.exe" };
+                    ProcessStartInfo info7 = new ProcessStartInfo { FileName = @".\\vcredist2015.exe" };
                     Process pro7 = Process.Start(info7);
                     break;
                 case 6:
@@ -743,7 +743,7 @@ namespace GW2_Plug_Updatetool
                     FileStream fsObj9 = new FileStream(本地路劲 + "\\vcredist2015.exe", FileMode.CreateNew);
                     fsObj9.Write(Save9, 0, Save9.Length);
                     fsObj9.Close();
-                    ProcessStartInfo info9 = new ProcessStartInfo { FileName = @".\\dxwebsetup.exe" };
+                    ProcessStartInfo info9 = new ProcessStartInfo { FileName = @".\\vcredist2015.exe" };
                     Process pro9 = Process.Start(info9);
                     break;
                 case 7:
@@ -758,7 +758,7 @@ namespace GW2_Plug_Updatetool
                     FileStream fsObj11 = new FileStream(本地路劲 + "\\vcredist2015.exe", FileMode.CreateNew);
                     fsObj11.Write(Save11, 0, Save11.Length);
                     fsObj11.Close();
-                    ProcessStartInfo info11 = new ProcessStartInfo { FileName = @".\\dxwebsetup.exe" };
+                    ProcessStartInfo info11 = new ProcessStartInfo { FileName = @".\\vcredist2015.exe" };
                     Process pro11 = Process.Start(info11);
 
                     byte[] Save12 = Properties.Resources.dxwebsetup;
