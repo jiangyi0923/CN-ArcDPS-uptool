@@ -10,6 +10,9 @@ namespace ArcDPS_uptool
     public partial class Form2 : Form
     {
         int a = 0;
+        public string 本地路劲 = Application.StartupPath;
+        public string 插件路劲 = Application.StartupPath + "\\addons\\arcdps";
+        public string 插件路劲B = Application.StartupPath + "\\addons\\sct";
         public Form2()
         {
             InitializeComponent();
@@ -108,7 +111,89 @@ namespace ArcDPS_uptool
             {
                 textBox1.AppendText("所有项目检测完成!!\r\n");
             }
-            //a = 7;
+            textBox1.AppendText("=====================================\r\n");
+            textBox1.AppendText("开始解压插件配置文件和字体文件\r\n");
+            初次运行();
+        }
+
+        public void 初次运行()
+        {
+            if (!Directory.Exists(插件路劲))
+            {
+                解压(1);
+            }
+            else
+            {
+                解压(2);
+            }
+        }
+
+        public void 解压(int a)
+        {
+            if (a == 1)
+            {
+                Directory.CreateDirectory(插件路劲);
+                Application.DoEvents();
+                if (!Directory.Exists(插件路劲B))
+                {
+                    Directory.CreateDirectory(插件路劲B);
+                    Application.DoEvents();
+                    Directory.CreateDirectory(插件路劲B + "\\fonts");
+                    Application.DoEvents();
+                }
+
+                byte[] Save = Properties.Resources.arcdps;
+                FileStream fsObj = new FileStream(插件路劲 + "\\arcdps.ini", FileMode.CreateNew);
+                fsObj.Write(Save, 0, Save.Length);
+                fsObj.Close();
+                Application.DoEvents();
+
+                byte[] Save1 = Properties.Resources.arcdps_font;
+                FileStream fsObj1 = new FileStream(插件路劲 + "\\arcdps_font.ttf", FileMode.CreateNew);
+                fsObj1.Write(Save1, 0, Save1.Length);
+                fsObj1.Close();
+                Application.DoEvents();
+
+                byte[] Save2 = Properties.Resources.arcdps_font;
+                FileStream fsObj2 = new FileStream(插件路劲B + "\\fonts\\arcdps_font.ttf", FileMode.CreateNew);
+                fsObj2.Write(Save2, 0, Save2.Length);
+                fsObj2.Close();
+                Application.DoEvents();
+                
+
+            }
+            else if (a == 2)
+            {
+                if (!Directory.Exists(插件路劲B))
+                {
+                    Directory.CreateDirectory(插件路劲B);
+                    Application.DoEvents();
+                    Directory.CreateDirectory(插件路劲B + "\\fonts");
+                    Application.DoEvents();
+                }
+                if (!File.Exists(插件路劲 + "\\arcdps.ini"))
+                {
+                    byte[] Save = Properties.Resources.arcdps;
+                    FileStream fsObj = new FileStream(插件路劲 + "\\arcdps.ini", FileMode.CreateNew);
+                    fsObj.Write(Save, 0, Save.Length);
+                    fsObj.Close();
+                }
+                if (!File.Exists(插件路劲 + "\\arcdps_font.ttf"))
+                {
+                    byte[] Save1 = Properties.Resources.arcdps_font;
+                    FileStream fsObj1 = new FileStream(插件路劲 + "\\arcdps_font.ttf", FileMode.CreateNew);
+                    fsObj1.Write(Save1, 0, Save1.Length);
+                    fsObj1.Close();
+                }
+                if (!File.Exists(插件路劲B + "\\fonts\\arcdps_font.ttf"))
+                {
+                    byte[] Save2 = Properties.Resources.arcdps_font;
+                    FileStream fsObj2 = new FileStream(插件路劲B + "\\fonts\\arcdps_font.ttf", FileMode.CreateNew);
+                    fsObj2.Write(Save2, 0, Save2.Length);
+                    fsObj2.Close();
+                }
+            }
+            textBox1.AppendText("解压插件配置文件和字体文件完成\r\n");
         }
         public void 安装运行库()
         {
@@ -189,7 +274,6 @@ namespace ArcDPS_uptool
             }
         }
 
-        readonly string 本地路劲 = Application.StartupPath;
         private void 安装运行库(int a)
         {
             switch (a)
@@ -301,6 +385,18 @@ namespace ArcDPS_uptool
             Properties.Settings.Default.Save();
             Form1:Show();
             Close();
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            if (a==0)
+            {
+                button1.Enabled = false;
+            }
+            else
+            {
+                button1.Enabled = true;
+            }
         }
     }
 }
