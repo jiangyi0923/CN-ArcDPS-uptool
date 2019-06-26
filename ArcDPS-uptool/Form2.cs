@@ -50,8 +50,8 @@ namespace ArcDPS_uptool
                 textBox1.AppendText("×请确保您开启了文件后缀名显示\r\n");
             }
             textBox1.AppendText("=====================================\r\n");
-
-            if (!File.Exists(@"C:\Windows\System32\D3DX9_43.dll"))
+            //Environment.GetFolderPath(Environment.SpecialFolder.System)
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.System)+"//D3DX9_43.dll"))
             {
                 a = 1; //安装dx
                 textBox1.AppendText("×没有检测到DX9.0c运行库!!!\r\n");
@@ -61,7 +61,7 @@ namespace ArcDPS_uptool
                 textBox1.AppendText("√检测到DX9.0c运行库\r\n");
             }
             textBox1.AppendText("=====================================\r\n");
-            if (!File.Exists(@"C:\Windows\System32\vcamp120.dll"))
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.System)+"//vcamp120.dll"))
             {
                 if (a == 1)
                 {
@@ -78,7 +78,7 @@ namespace ArcDPS_uptool
                 textBox1.AppendText("√检测到VC++2013运行库\r\n");
             }
             textBox1.AppendText("=====================================\r\n");
-            if (!File.Exists(@"C:\Windows\System32\vcamp140.dll"))
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.System)+"//vcamp140.dll"))
             {
                 if (a == 0)
                 {

@@ -555,11 +555,11 @@ namespace GW2_Plug_Updatetool
                 Process.GetCurrentProcess().Kill();
             }
             int a = 0;
-            if (!File.Exists(@"C:\Windows\System32\D3DX9_43.dll"))
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.System)+"//D3DX9_43.dll"))
             {
                 a = 1; //安装dx
             }
-            if (!File.Exists(@"C:\Windows\System32\vcamp120.dll"))
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.System)+"//vcamp120.dll"))
             {
                 if (a == 1)
                 {
@@ -570,7 +570,7 @@ namespace GW2_Plug_Updatetool
                     a = 2;//安装2013
                 }
             }
-            if (!File.Exists(@"C:\Windows\System32\vcamp140.dll"))
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.System)+"//vcamp140.dll"))
             {
                 if (a == 0)
                 {

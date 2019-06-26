@@ -46,5 +46,161 @@ namespace ArcDPS_uptool.Properties {
                 this["首次使用"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool _1程序 {
+            get {
+                return ((bool)(this["_1程序"]));
+            }
+            set {
+                this["_1程序"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool _2切换 {
+            get {
+                return ((bool)(this["_2切换"]));
+            }
+            set {
+                this["_2切换"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool _3附加 {
+            get {
+                return ((bool)(this["_3附加"]));
+            }
+            set {
+                this["_3附加"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool _4流汉 {
+            get {
+                return ((bool)(this["_4流汉"]));
+            }
+            set {
+                this["_4流汉"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool _5团力 {
+            get {
+                return ((bool)(this["_5团力"]));
+            }
+            set {
+                this["_5团力"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool _6团恩 {
+            get {
+                return ((bool)(this["_6团恩"]));
+            }
+            set {
+                this["_6团恩"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool _7坐骑 {
+            get {
+                return ((bool)(this["_7坐骑"]));
+            }
+            set {
+                this["_7坐骑"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool _8汉滤 {
+            get {
+                return ((bool)(this["_8汉滤"]));
+            }
+            set {
+                this["_8汉滤"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool _9全滤 {
+            get {
+                return ((bool)(this["_9全滤"]));
+            }
+            set {
+                this["_9全滤"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool _自动更新 {
+            get {
+                return ((bool)(this["_自动更新"]));
+            }
+            set {
+                this["_自动更新"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool _自动启动 {
+            get {
+                return ((bool)(this["_自动启动"]));
+            }
+            set {
+                this["_自动启动"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool _跳过更新 {
+            get {
+                return ((bool)(this["_跳过更新"]));
+            }
+            set {
+                this["_跳过更新"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool _附加命令 {
+            get {
+                return ((bool)(this["_附加命令"]));
+            }
+            set {
+                this["_附加命令"] = value;
+            }
+        }
     }
 }
