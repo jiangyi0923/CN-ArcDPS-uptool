@@ -83,6 +83,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "运行环境检测";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.Shown += new System.EventHandler(this.Form2_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

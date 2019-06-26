@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
 
 namespace ArcDPS_uptool
@@ -17,6 +19,7 @@ namespace ArcDPS_uptool
             if (Properties.Settings.Default.环境检测)
             {
                 //Application.Run(new Form2());
+                string path = @"./Gw2-64.exe";
                 Application.Run(new Form1());
             }
             else

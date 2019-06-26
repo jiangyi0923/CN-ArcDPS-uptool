@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.progressBar2 = new System.Windows.Forms.ProgressBar();
             this.button1 = new System.Windows.Forms.Button();
@@ -59,7 +60,7 @@
             this.checkBox12 = new System.Windows.Forms.CheckBox();
             this.checkBox13 = new System.Windows.Forms.CheckBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button5 = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -82,7 +83,7 @@
             // 
             this.button1.Location = new System.Drawing.Point(11, 405);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(82, 41);
+            this.button1.Size = new System.Drawing.Size(96, 41);
             this.button1.TabIndex = 2;
             this.button1.Text = "更新";
             this.button1.UseVisualStyleBackColor = true;
@@ -112,7 +113,7 @@
             this.groupBox1.Size = new System.Drawing.Size(329, 155);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "DPS系列";
+            this.groupBox1.Text = "ARCDPS系列";
             // 
             // checkBox6
             // 
@@ -123,6 +124,7 @@
             this.checkBox6.TabIndex = 11;
             this.checkBox6.Tag = "6";
             this.checkBox6.Text = "团队BUFF(汉化)";
+            this.toolTip1.SetToolTip(this.checkBox6, "来源: nodoooka(原村和) ID:大星淡.5907");
             this.checkBox6.UseVisualStyleBackColor = true;
             this.checkBox6.Click += new System.EventHandler(this.按钮点击事件);
             // 
@@ -135,6 +137,7 @@
             this.checkBox5.TabIndex = 10;
             this.checkBox5.Tag = "5";
             this.checkBox5.Text = "团队机制(汉化)";
+            this.toolTip1.SetToolTip(this.checkBox5, "来源: nodoooka(原村和) ID:大星淡.5907");
             this.checkBox5.UseVisualStyleBackColor = true;
             this.checkBox5.Click += new System.EventHandler(this.按钮点击事件);
             // 
@@ -147,6 +150,7 @@
             this.checkBox4.TabIndex = 9;
             this.checkBox4.Tag = "4";
             this.checkBox4.Text = "SCT流动输出(汉化)";
+            this.toolTip1.SetToolTip(this.checkBox4, "流动输出与汉化版团队插件不兼容\r\n请不要开启技能图片会闪退!!!\r\n据说PVP和战场可能闪退!");
             this.checkBox4.UseVisualStyleBackColor = true;
             this.checkBox4.Click += new System.EventHandler(this.按钮点击事件);
             // 
@@ -159,6 +163,7 @@
             this.checkBox3.TabIndex = 8;
             this.checkBox3.Tag = "3";
             this.checkBox3.Text = "附加功能";
+            this.toolTip1.SetToolTip(this.checkBox3, "ArcDPS次要程序");
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.Click += new System.EventHandler(this.按钮点击事件);
             // 
@@ -171,6 +176,7 @@
             this.checkBox2.TabIndex = 7;
             this.checkBox2.Tag = "2";
             this.checkBox2.Text = "DB切换";
+            this.toolTip1.SetToolTip(this.checkBox2, "ArcDPS次要程序");
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.Click += new System.EventHandler(this.按钮点击事件);
             // 
@@ -184,6 +190,7 @@
             this.checkBox1.TabIndex = 6;
             this.checkBox1.Tag = "1";
             this.checkBox1.Text = "主程序";
+            this.toolTip1.SetToolTip(this.checkBox1, "主程序不可取消!");
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.Click += new System.EventHandler(this.按钮点击事件);
             // 
@@ -239,6 +246,7 @@
             this.checkBox9.TabIndex = 14;
             this.checkBox9.Tag = "9";
             this.checkBox9.Text = "SweetFX滤镜";
+            this.toolTip1.SetToolTip(this.checkBox9, "INSERT 键调用开启或者关闭无需配置");
             this.checkBox9.UseVisualStyleBackColor = true;
             this.checkBox9.Click += new System.EventHandler(this.按钮点击事件);
             // 
@@ -251,6 +259,7 @@
             this.checkBox8.TabIndex = 13;
             this.checkBox8.Tag = "8";
             this.checkBox8.Text = "ReShade滤镜(汉化)";
+            this.toolTip1.SetToolTip(this.checkBox8, "HOME 键调用需要自己配置");
             this.checkBox8.UseVisualStyleBackColor = true;
             this.checkBox8.Click += new System.EventHandler(this.按钮点击事件);
             // 
@@ -263,6 +272,7 @@
             this.checkBox7.TabIndex = 12;
             this.checkBox7.Tag = "7";
             this.checkBox7.Text = "坐骑插件";
+            this.toolTip1.SetToolTip(this.checkBox7, "包含鼠标跟随方块 F9开启/关闭\r\nboss计时器和网页日常获取 F8开启关闭\r\n");
             this.checkBox7.UseVisualStyleBackColor = true;
             this.checkBox7.Click += new System.EventHandler(this.按钮点击事件);
             // 
@@ -289,21 +299,23 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(93, 405);
+            this.button2.Location = new System.Drawing.Point(127, 405);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(82, 41);
+            this.button2.Size = new System.Drawing.Size(96, 41);
             this.button2.TabIndex = 7;
             this.button2.Text = "官网";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(257, 405);
+            this.button3.Location = new System.Drawing.Point(243, 405);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(82, 41);
+            this.button3.Size = new System.Drawing.Size(96, 41);
             this.button3.TabIndex = 8;
             this.button3.Text = "卸载";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // button4
             // 
@@ -313,6 +325,7 @@
             this.button4.TabIndex = 9;
             this.button4.Text = "启动游戏";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.Button4_Click);
             // 
             // checkBox10
             // 
@@ -347,6 +360,7 @@
             this.checkBox12.TabIndex = 12;
             this.checkBox12.Tag = "12";
             this.checkBox12.Text = "周三周四不更新";
+            this.toolTip1.SetToolTip(this.checkBox12, "避免美服更新后国服版本没更新导致插件报错");
             this.checkBox12.UseVisualStyleBackColor = true;
             this.checkBox12.Click += new System.EventHandler(this.按钮点击事件);
             // 
@@ -378,20 +392,10 @@
             this.textBox1.TabStop = false;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(175, 405);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(82, 41);
-            this.button5.TabIndex = 15;
-            this.button5.Text = "说明";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(352, 505);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.checkBox13);
             this.Controls.Add(this.checkBox12);
@@ -403,6 +407,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(368, 544);
             this.MinimizeBox = false;
@@ -452,8 +457,8 @@
         private System.Windows.Forms.CheckBox checkBox11;
         private System.Windows.Forms.CheckBox checkBox12;
         private System.Windows.Forms.CheckBox checkBox13;
-        private System.Windows.Forms.Button button5;
         public System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

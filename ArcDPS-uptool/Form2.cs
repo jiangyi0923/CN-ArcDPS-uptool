@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -25,6 +26,8 @@ namespace ArcDPS_uptool
             }
         }
 
+        int siide = 0;
+
         public void Jiancehuanjing()
         {
             textBox1.AppendText("开始检测运行环境\r\n");
@@ -33,6 +36,8 @@ namespace ArcDPS_uptool
             {
                 textBox1.AppendText("所在目录为:" + Application.StartupPath + "\r\n");
                 textBox1.AppendText("×目录含中文会导致插件不识别中文请修改\r\n");
+                textBox1.ForeColor = Color.Red;
+                siide++;
             }
             else
             {
@@ -48,6 +53,8 @@ namespace ArcDPS_uptool
             {
                 textBox1.AppendText("×没有发现Gw2-64.exe请确认程序在游戏根目录或客户端程序名是否为Gw2-64.exe\r\n");
                 textBox1.AppendText("×请确保您开启了文件后缀名显示\r\n");
+                siide++;
+                textBox1.ForeColor = Color.Red;
             }
             textBox1.AppendText("=====================================\r\n");
             //Environment.GetFolderPath(Environment.SpecialFolder.System)
@@ -55,6 +62,7 @@ namespace ArcDPS_uptool
             {
                 a = 1; //安装dx
                 textBox1.AppendText("×没有检测到DX9.0c运行库!!!\r\n");
+                textBox1.ForeColor = Color.Red;
             }
             else
             {
@@ -72,6 +80,7 @@ namespace ArcDPS_uptool
                     a = 2;//安装2013
                 }
                 textBox1.AppendText("×没有检测到VC++2013运行库!!!\r\n");
+                textBox1.ForeColor = Color.Red;
             }
             else
             {
@@ -97,6 +106,7 @@ namespace ArcDPS_uptool
                     a = 7; //安装2013 2015 dx
                 }
                 textBox1.AppendText("×没有检测到VC++2015运行库!!!\r\n");
+                textBox1.ForeColor = Color.Red;
             }
             else
             {
@@ -128,9 +138,9 @@ namespace ArcDPS_uptool
             }
         }
 
-        public void 解压(int a)
+        public void 解压(int aii)
         {
-            if (a == 1)
+            if (aii == 1)
             {
                 Directory.CreateDirectory(插件路劲);
                 Application.DoEvents();
@@ -159,10 +169,22 @@ namespace ArcDPS_uptool
                 fsObj2.Write(Save2, 0, Save2.Length);
                 fsObj2.Close();
                 Application.DoEvents();
-                
+
+                byte[] Save3 = Properties.Resources.sct;
+                FileStream fsObj3 = new FileStream(插件路劲B + "\\sct.ini", FileMode.CreateNew);
+                fsObj3.Write(Save3, 0, Save3.Length);
+                fsObj3.Close();
+                Application.DoEvents();
+
+                byte[] Save4 = Properties.Resources.lang;
+                FileStream fsObj4 = new FileStream(插件路劲B + "\\lang.ini", FileMode.CreateNew);
+                fsObj4.Write(Save4, 0, Save4.Length);
+                fsObj4.Close();
+                Application.DoEvents();
+
 
             }
-            else if (a == 2)
+            else if (aii == 2)
             {
                 if (!Directory.Exists(插件路劲B))
                 {
@@ -191,6 +213,20 @@ namespace ArcDPS_uptool
                     FileStream fsObj2 = new FileStream(插件路劲B + "\\fonts\\arcdps_font.ttf", FileMode.CreateNew);
                     fsObj2.Write(Save2, 0, Save2.Length);
                     fsObj2.Close();
+                }
+                if (!File.Exists(插件路劲B + "\\sct.ini"))
+                {
+                    byte[] Save3 = Properties.Resources.sct;
+                    FileStream fsObj3 = new FileStream(插件路劲B + "\\sct.ini", FileMode.CreateNew);
+                    fsObj3.Write(Save3, 0, Save3.Length);
+                    fsObj3.Close();
+                }
+                if (!File.Exists(插件路劲B + "\\lang.ini"))
+                {
+                    byte[] Save4 = Properties.Resources.lang;
+                    FileStream fsObj4 = new FileStream(插件路劲B + "\\lang.ini", FileMode.CreateNew);
+                    fsObj4.Write(Save4, 0, Save4.Length);
+                    fsObj4.Close();
                 }
             }
             textBox1.AppendText("解压插件配置文件和字体文件完成\r\n");
@@ -381,10 +417,18 @@ namespace ArcDPS_uptool
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.环境检测 = true;
-            Properties.Settings.Default.Save();
-            Form1:Show();
-            Close();
+            if (siide>0||a>0)
+            {
+                Close();
+            }
+            else
+            {
+                Properties.Settings.Default.环境检测 = true;
+                Properties.Settings.Default.Save();
+                Form1: Show();
+                Close();
+            }
+
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -396,6 +440,14 @@ namespace ArcDPS_uptool
             else
             {
                 button1.Enabled = true;
+            }
+        }
+
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (siide>0)
+            {
+                Process.GetCurrentProcess().Kill();
             }
         }
     }

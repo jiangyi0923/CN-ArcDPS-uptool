@@ -7,7 +7,7 @@
     <ProjectGuid>{572FBF04-A770-4DEA-8976-341C47DB0B1B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ArcDPS_uptool</RootNamespace>
-    <AssemblyName>ArcDPS-uptool</AssemblyName>
+    <AssemblyName>GW2-Plug-Updatetool</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -36,9 +36,13 @@
   <PropertyGroup>
     <StartupObject>ArcDPS_uptool.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Gw2-64_00003.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -101,10 +105,15 @@
     <None Include="Resources\dxwebsetup.exe" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\lang.ini" />
+    <None Include="Resources\sct.ini" />
     <None Include="Resources\vcredist_x64.exe" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\vcredist2015.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Gw2-64_00003.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
