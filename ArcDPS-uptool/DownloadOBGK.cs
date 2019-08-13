@@ -4,12 +4,13 @@ using System.IO;
 using System.Net;
 using System.Threading;
 
+
 namespace ArcDPS_uptool
 {
     public class DownloadOBGK
     {
         #region 变量
-        private int _threadNum = 4;    //线程数量
+        private int _threadNum = 1;    //线程数量
         private long _fileSize;    //文件大小
         private string _fileUrl;   //文件地址
         private string _fileName;   //文件名
@@ -101,6 +102,7 @@ namespace ArcDPS_uptool
         public DownloadOBGK(string fileUrl, string savePath)
         {
             //this._threadNum = threahNum;
+            //this._threadNum = Properties.Settings.Default.thnum;
             this._thread = new Thread[_threadNum];
             this._fileUrl = fileUrl;
             this._savePath = savePath;
@@ -134,17 +136,20 @@ namespace ArcDPS_uptool
                 if (File.Exists(_savePath))
                 {
                     yum = _fileSize.ToString() == File.ReadAllBytes(_savePath).Length.ToString();
-                    textboxaddsin(System.IO.Path.GetFileName(_savePath) + "文件大小相同\r\n");
+                    if (yum)
+                    {
+                        textboxaddsin(System.IO.Path.GetFileName(_savePath) + "文件大小相同\r\n");
+                    }
+                    else
+                    {
+                        textboxaddsin(System.IO.Path.GetFileName(_savePath) + "文件大小不同\r\n");
+                    }
                 }
                 else
                 {
                     if (!File.Exists(_savePath))
                     {
                         textboxaddsin(System.IO.Path.GetFileName(_savePath) + "文件不存在\r\n");
-                    }
-                    else
-                    {
-                        textboxaddsin(System.IO.Path.GetFileName(_savePath) + "文件大小不同\r\n");
                     }
                     yum = false;
                 }
@@ -195,7 +200,7 @@ namespace ArcDPS_uptool
             try
             {
                 int[] ran = obj as int[];
-                string tmpFileBlock = System.IO.Path.GetTempPath() + Thread.CurrentThread.Name + ".tmp";
+                string tmpFileBlock = Properties.Settings.Default.tmp + "\\bin64\\"+ System.IO.Path.GetRandomFileName()+Thread.CurrentThread.Name + ".tmp";
                 _tempFiles.Add(tmpFileBlock);
                 httprequest = (HttpWebRequest)WebRequest.Create(_fileUrl);
                 httprequest.AddRange(ran[0], ran[1]);
@@ -206,7 +211,7 @@ namespace ArcDPS_uptool
                 int getByteSize = httpFileStream.Read(by, 0, (int)by.Length); //Read方法将返回读入by变量中的总字节数
                 while (getByteSize > 0)
                 {
-                    //Thread.Sleep(20);
+                    Thread.Sleep(10);
                     lock (locker) _downloadSize += getByteSize;
                     localFileStram.Write(by, 0, getByteSize);
                     getByteSize = httpFileStream.Read(by, 0, (int)by.Length);
@@ -236,6 +241,7 @@ namespace ArcDPS_uptool
         /// </summary>
         private void Complete()
         {
+
             Stream mergeFile = new FileStream(@_savePath, FileMode.Create);
             BinaryWriter AddWriter = new BinaryWriter(mergeFile);
             foreach (string file in _tempFiles)

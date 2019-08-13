@@ -10,7 +10,7 @@ namespace ArcDPS_uptool
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
-        [MTAThread]
+        [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
@@ -19,7 +19,7 @@ namespace ArcDPS_uptool
             if (Properties.Settings.Default.环境检测)
             {
                 //Application.Run(new Form2());
-                string path = @"./Gw2-64.exe";
+                //string path = @"./Gw2-64.exe";
                 Application.Run(new Form1());
             }
             else

@@ -69,7 +69,7 @@ namespace ArcDPS_uptool
                 textBox1.AppendText("√检测到DX9.0c运行库\r\n");
             }
             textBox1.AppendText("=====================================\r\n");
-            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.System)+"//vcamp120.dll"))
+            if (!File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.System)+ "//vccorlib120.dll"))
             {
                 if (a == 1)
                 {
@@ -122,8 +122,12 @@ namespace ArcDPS_uptool
                 textBox1.AppendText("所有项目检测完成!!\r\n");
             }
             textBox1.AppendText("=====================================\r\n");
-            textBox1.AppendText("开始解压插件配置文件和字体文件\r\n");
-            初次运行();
+            if (true)
+            {
+                textBox1.AppendText("开始解压插件配置文件和字体文件\r\n");
+                初次运行();
+            }
+
         }
 
         public void 初次运行()

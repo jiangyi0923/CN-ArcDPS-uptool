@@ -1,0 +1,90 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PlugIn_UpdateTool.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="首次运行检测" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="dx12文件名" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d912pxy_v1.4_r367.zip</Value>
+    </Setting>
+    <Setting Name="主程序" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="附加功能" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="db切换" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="流动输出" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="团队力学" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="团队恩赐" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="坐骑插件" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="r滤镜" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="s滤镜" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="dx12" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="启动更新" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="跳过更新" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="自动启动" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="多线程下载" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="附加地图" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="主程序_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.deltaconnected.com/arcdps/x64/d3d9.dll</Value>
+    </Setting>
+    <Setting Name="附加功能_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.deltaconnected.com/arcdps/x64/extras/d3d9_arcdps_extras.dll</Value>
+    </Setting>
+    <Setting Name="db切换_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://www.deltaconnected.com/arcdps/x64/buildtemplates/d3d9_arcdps_buildtemplates.dll</Value>
+    </Setting>
+    <Setting Name="流动输出_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_arcdps_sct.dll</Value>
+    </Setting>
+    <Setting Name="团队力学_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_arcdps_mechanicschs.dll</Value>
+    </Setting>
+    <Setting Name="团队恩赐_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_arcdps_tablechs.dll</Value>
+    </Setting>
+    <Setting Name="坐骑插件_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_chainload.dll</Value>
+    </Setting>
+    <Setting Name="r滤镜_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_ReShade64.zip</Value>
+    </Setting>
+    <Setting Name="s滤镜_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/SweetFX.zip</Value>
+    </Setting>
+    <Setting Name="汉化文件地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://raw.githubusercontent.com/Snowy1794/Arcdps-translation-Chinese-simplified/master/arcdps_lang.ini</Value>
+    </Setting>
+    <Setting Name="设置" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

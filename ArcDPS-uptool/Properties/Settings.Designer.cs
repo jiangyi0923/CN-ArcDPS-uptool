@@ -202,5 +202,29 @@ namespace ArcDPS_uptool.Properties {
                 this["_附加命令"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string tmp {
+            get {
+                return ((string)(this["tmp"]));
+            }
+            set {
+                this["tmp"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int thnum {
+            get {
+                return ((int)(this["thnum"]));
+            }
+            set {
+                this["thnum"] = value;
+            }
+        }
     }
 }

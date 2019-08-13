@@ -110,6 +110,8 @@ namespace ArcDPS_uptool
             checkBox11.Checked = Properties.Settings.Default._自动启动;
             checkBox12.Checked = Properties.Settings.Default._跳过更新;
             checkBox13.Checked = Properties.Settings.Default._附加命令;
+            Properties.Settings.Default.tmp = Application.StartupPath;
+            Properties.Settings.Default.Save();
             多选框检测();
 
 
@@ -213,13 +215,13 @@ namespace ArcDPS_uptool
         private int 版本()
         {
             int a = 0;
-            var wc = new WebClient();
+            var wc2 = new WebClient();
             try
             {
 
-                var html = wc.DownloadString(版本检测网址);
+                var html = wc2.DownloadString(版本检测网址);
                 int.TryParse(html, out a);
-                wc.Dispose();
+                wc2.Dispose();
             }
             catch (Exception)
             {
@@ -227,7 +229,7 @@ namespace ArcDPS_uptool
             }
             finally
             {
-                wc.Dispose();
+                wc2.Dispose();
             }
             return a;
         }
@@ -436,7 +438,7 @@ namespace ArcDPS_uptool
             }
             else
             {
-                string[] 所有文件名 = new string[2] { "\\ReShade64.dll","\\ReShade.ini"};
+                string[] 所有文件名 = new string[3] { "\\ReShade64.dll","\\ReShade.ini", "\\d3d9_ReShade64.zip" };
                 for (int i = 0; i < 所有文件名.Length; i++)
                 {
                     if (File.Exists(bin64 + 所有文件名[i]))
@@ -459,7 +461,7 @@ namespace ArcDPS_uptool
             }
             else
             {
-                string[] 所有文件名 = new string[5] {"\\d3d9_mchain.dll", "\\SweetFX readme.txt", "\\SweetFX_preset.txt","\\SweetFX_settings.txt","\\dxgi.dll"};
+                string[] 所有文件名 = new string[6] {"\\d3d9_mchain.dll", "\\SweetFX readme.txt", "\\SweetFX_preset.txt","\\SweetFX_settings.txt","\\dxgi.dll", "\\SweetFX.zip" };
                 for (int i = 0; i < 所有文件名.Length; i++)
                 {
                     if (File.Exists(bin64 + 所有文件名[i]))
@@ -650,7 +652,7 @@ namespace ArcDPS_uptool
         }
         private void 卸载()
         {
-            string[] 所有文件名 = new string[14]
+            string[] 所有文件名 = new string[16]
         {   "\\d3d9.dll",
             "\\d3d9_arcdps_buildtemplates.dll",
             "\\d3d9_arcdps_extras.dll",
@@ -664,7 +666,9 @@ namespace ArcDPS_uptool
             "\\SweetFX readme.txt",
             "\\SweetFX_preset.txt",
             "\\SweetFX_settings.txt",
-            "\\dxgi.dll"
+            "\\dxgi.dll",
+            "\\d3d9_ReShade64.zip",
+            "\\SweetFX.zip"
         };
             for (int i = 0; i < 所有文件名.Length; i++)
             {
@@ -739,8 +743,16 @@ namespace ArcDPS_uptool
         {
             bool a = false;
             textBox1.AppendText("开始解压:" + 文件名 + "\r\n");
-            ZipFile.ExtractToDirectory(文件位置, 解压路径);
-            textBox1.AppendText(文件名 + "解压完成\r\n");
+            try
+            {
+                ZipFile.ExtractToDirectory(文件位置, 解压路径);
+            }
+            catch (Exception)
+            {
+                textBox1.AppendText(文件名 + "解压出错请尝试删除bin64文件夹下"+文件名+"再次下载\r\n");
+            }
+            
+            textBox1.AppendText(文件名 + "解压过程完成\r\n");
             a = true;
             return a;
         }
@@ -847,6 +859,7 @@ namespace ArcDPS_uptool
                             {
                                 解压文件(bin64 + "\\d3d9_ReShade64.zip", bin64, "ReShade64滤镜");
                             }
+
                         }
 
                     }
@@ -902,6 +915,42 @@ namespace ArcDPS_uptool
             //    ts2 = false;
             //    GC.Collect();
             //}
+        }
+
+        private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            //numericUpDown
+            //NumericUpDown numericUpDown = (NumericUpDown)sender;
+            //Properties.Settings.Default.thnum = (int)numericUpDown.Value;
+            //Properties.Settings.Default.Save();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                DirectoryInfo dir = new DirectoryInfo(bin64);
+                FileSystemInfo[] fileinfo = dir.GetFileSystemInfos();  //返回目录中所有文件和子目录
+                foreach (FileSystemInfo i in fileinfo)
+                {
+                    if (i is DirectoryInfo)            //判断是否文件夹
+                    {
+
+                    }
+                    else
+                    {
+                        
+                        if (i.Extension ==".tmp")
+                        {
+                            File.Delete(i.FullName);      //删除指定文件
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
         }
     }
 }
