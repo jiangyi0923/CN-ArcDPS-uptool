@@ -16,5 +16,10 @@ namespace PlugIn_UpdateTool
         {
             InitializeComponent();
         }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            Dispose();
+        }
     }
 }
