@@ -18,6 +18,7 @@ namespace PlugIn_UpdateTool
         {
             InitializeComponent();
         }
+        private LogClass log = new LogClass();
         private bool 完成 = false;
         private int 多线程 = 1;
         private string 下载地址 = "";
@@ -27,9 +28,11 @@ namespace PlugIn_UpdateTool
         {
             label1.Text = 标签;
             多线程 = _多线程;
+            log.WriteLogFile("赋值"+ 标签+ " 线程数"+_多线程);
         }
         public bool 下载完成__()
         {
+            
             return 完成;
         }
         public void 更新()
@@ -100,8 +103,9 @@ namespace PlugIn_UpdateTool
         }
         private void 下载()
         {
-            textBox1.AppendText("Test:" + 下载地址 + "--" + 文件名 + "--" + 储存位置 + "\r\n");
+            label2.Text= "Test:" + 下载地址 + "--" + 文件名 + "--" + 储存位置;
             完成 = true;
+            log.WriteLogFile(label1.Text + " 完成");
         }
 
     }

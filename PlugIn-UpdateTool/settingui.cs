@@ -19,7 +19,7 @@ namespace PlugIn_UpdateTool
             InitializeComponent();
             控件赋值();
         }
-
+        private LogClass log = new LogClass();
         private bool _设置完成 = false;
 
         public void 完成(ref bool ssu)
@@ -31,12 +31,18 @@ namespace PlugIn_UpdateTool
         private void Button1_Click(object sender, EventArgs e)
         {
             _设置完成 = true;
+            log.WriteLogFile("取消了设置");
             Dispose();
         }
         //保存按钮
         private void Button4_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Save();
+            if (Properties.Settings.Default.多线程下载)
+            {
+                log.WriteLogFile("设置多线程数为"+ Properties.Settings.Default.多线程数);
+            }
+            log.WriteLogFile("保存了设置");
             _设置完成 = true;
             Dispose();
         }
@@ -44,16 +50,18 @@ namespace PlugIn_UpdateTool
         private void Button2_Click(object sender, EventArgs e)
         {
             string 官方网址 = "https://gw2sy.top";
+            log.WriteLogFile("打开了官网");
             Process.Start(官方网址);
         }
         //卸载按钮
         private void Button3_Click(object sender, EventArgs e)
         {
-
+            log.WriteLogFile("开始卸载");
         }
         //检测环境
         private void Button5_Click(object sender, EventArgs e)
         {
+            log.WriteLogFile("从设置界面开启了检测界面");
             Testui testui = new Testui();
             Controls.Add(testui);
             testui.BringToFront();
@@ -76,6 +84,7 @@ namespace PlugIn_UpdateTool
             checkBox14.Checked = Properties.Settings.Default.跳过更新;
             checkBox15.Checked = Properties.Settings.Default.附加地图;
             checkBox16.Checked = Properties.Settings.Default.多线程下载;
+            numericUpDown1.Value = Properties.Settings.Default.多线程数;
             if (checkBox12.Checked)
             {
                 checkBox14.Enabled = true;
@@ -117,6 +126,7 @@ namespace PlugIn_UpdateTool
             {
                 numericUpDown1.Enabled = false;
             }
+            log.WriteLogFile("设置界面控件赋值完成");
         }
 
         private void 按键事件(object sender, EventArgs e)
@@ -127,9 +137,11 @@ namespace PlugIn_UpdateTool
             {
                 case 2:
                     Properties.Settings.Default.db切换 = check.Checked;
+                    log.WriteLogFile("db切换"+ check.Checked);
                     break;
                 case 3:
                     Properties.Settings.Default.附加功能 = check.Checked;
+                    log.WriteLogFile("附加功能" + check.Checked);
                     break;
                 case 4:
                     Properties.Settings.Default.流动输出 = check.Checked;
@@ -143,6 +155,7 @@ namespace PlugIn_UpdateTool
                         checkBox5.Enabled = true;
                         checkBox6.Enabled = true;
                     }
+                    log.WriteLogFile("流动输出" + check.Checked);
                     break;
                 case 5:
                     Properties.Settings.Default.团队力学 = check.Checked;
@@ -154,6 +167,7 @@ namespace PlugIn_UpdateTool
                     {
                         checkBox4.Enabled = true;
                     }
+                    log.WriteLogFile("团队力学" + check.Checked);
                     break;
                 case 6:
                     Properties.Settings.Default.团队恩赐 = check.Checked;
@@ -165,6 +179,7 @@ namespace PlugIn_UpdateTool
                     {
                         checkBox4.Enabled = true;
                     }
+                    log.WriteLogFile("团队恩赐" + check.Checked);
                     break;
                 case 7:
                     Properties.Settings.Default.坐骑插件 = check.Checked;
@@ -183,6 +198,7 @@ namespace PlugIn_UpdateTool
                         checkBox9.Checked = false;
                         checkBox10.Checked = false;
                     }
+                    log.WriteLogFile("坐骑插件" + check.Checked);
                     break;
                 case 8:
                     
@@ -201,7 +217,7 @@ namespace PlugIn_UpdateTool
                             }
                         }
                     }
-
+                    log.WriteLogFile("dx12" + check.Checked);
                     break;
                 case 9:
                     if (checkBox7.Checked)
@@ -220,7 +236,7 @@ namespace PlugIn_UpdateTool
                             
                         }
                     }
-
+                    log.WriteLogFile("r滤镜" + check.Checked);
                     break;
                 case 10:
                     if (checkBox7.Checked)
@@ -237,7 +253,7 @@ namespace PlugIn_UpdateTool
                             checkBox9.Enabled = true;
                         }
                     }
-
+                    log.WriteLogFile("s滤镜" + check.Checked);
                     break;
                 case 12:
                     Properties.Settings.Default.启动更新 = check.Checked;
@@ -249,18 +265,23 @@ namespace PlugIn_UpdateTool
                     {
                         checkBox14.Enabled = false;
                     }
+                    log.WriteLogFile("启动更新" + check.Checked);
                     break;
                 case 13:
                     Properties.Settings.Default.自动启动 = check.Checked;
+                    log.WriteLogFile("自动启动" + check.Checked);
                     break;
                 case 14:
                     Properties.Settings.Default.跳过更新 = check.Checked;
+                    log.WriteLogFile("跳过更新" + check.Checked);
                     break;
                 case 15:
                     Properties.Settings.Default.附加地图 = check.Checked;
+                    log.WriteLogFile("附加地图" + check.Checked);
                     break;
                 case 16:
                     Properties.Settings.Default.多线程下载 = check.Checked;
+                    log.WriteLogFile("多线程下载" + check.Checked);
                     if (check.Checked)
                     {
                         numericUpDown1.Enabled = true;
@@ -274,6 +295,11 @@ namespace PlugIn_UpdateTool
                     break;
             }
 
+        }
+
+        private void NumericUpDown1_Validated(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.多线程数 = (int)numericUpDown1.Value;
         }
     }
 }
