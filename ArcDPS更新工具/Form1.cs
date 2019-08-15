@@ -458,8 +458,13 @@ namespace GW2_Plug_Updatetool
             bool a = false;
             textBox1.AppendText("开始解压:" + 文件名 + "\r\n");
             ZipFile.ExtractToDirectory(文件位置, 解压路径);
+            
             textBox1.AppendText(文件名 + "解压完成\r\n");
             a = true;
+
+
+
+
             return a;
         }
 

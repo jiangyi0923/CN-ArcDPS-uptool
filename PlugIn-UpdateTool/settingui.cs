@@ -38,10 +38,10 @@ namespace PlugIn_UpdateTool
         private void Button4_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Save();
-            if (Properties.Settings.Default.多线程下载)
-            {
-                log.WriteLogFile("设置多线程数为"+ Properties.Settings.Default.多线程数);
-            }
+            //if (Properties.Settings.Default.多线程下载)
+            //{
+            //    log.WriteLogFile("设置多线程数为"+ Properties.Settings.Default.多线程数);
+            //}
             log.WriteLogFile("保存了设置");
             _设置完成 = true;
             Dispose();
@@ -83,8 +83,8 @@ namespace PlugIn_UpdateTool
             checkBox13.Checked = Properties.Settings.Default.自动启动;
             checkBox14.Checked = Properties.Settings.Default.跳过更新;
             checkBox15.Checked = Properties.Settings.Default.附加地图;
-            checkBox16.Checked = Properties.Settings.Default.多线程下载;
-            numericUpDown1.Value = Properties.Settings.Default.多线程数;
+            //checkBox16.Checked = Properties.Settings.Default.多线程下载;
+            //numericUpDown1.Value = Properties.Settings.Default.多线程数;
             if (checkBox12.Checked)
             {
                 checkBox14.Enabled = true;
@@ -118,14 +118,14 @@ namespace PlugIn_UpdateTool
                 checkBox9.Enabled = false;
                 checkBox10.Enabled = false;
             }
-            if (checkBox16.Checked)
-            {
-                numericUpDown1.Enabled = true;
-            }
-            else
-            {
-                numericUpDown1.Enabled = false;
-            }
+            //if (checkBox16.Checked)
+            //{
+            //    numericUpDown1.Enabled = true;
+            //}
+            //else
+            //{
+            //    numericUpDown1.Enabled = false;
+            //}
             log.WriteLogFile("设置界面控件赋值完成");
         }
 
@@ -279,27 +279,27 @@ namespace PlugIn_UpdateTool
                     Properties.Settings.Default.附加地图 = check.Checked;
                     log.WriteLogFile("附加地图" + check.Checked);
                     break;
-                case 16:
-                    Properties.Settings.Default.多线程下载 = check.Checked;
-                    log.WriteLogFile("多线程下载" + check.Checked);
-                    if (check.Checked)
-                    {
-                        numericUpDown1.Enabled = true;
-                    }
-                    else
-                    {
-                        numericUpDown1.Enabled = false;
-                    }
-                    break;
+                //case 16:
+                //    Properties.Settings.Default.多线程下载 = check.Checked;
+                //    log.WriteLogFile("多线程下载" + check.Checked);
+                //    if (check.Checked)
+                //    {
+                //        numericUpDown1.Enabled = true;
+                //    }
+                //    else
+                //    {
+                //        numericUpDown1.Enabled = false;
+                //    }
+                //    break;
                 default:
                     break;
             }
 
         }
 
-        private void NumericUpDown1_Validated(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.多线程数 = (int)numericUpDown1.Value;
-        }
+        //private void NumericUpDown1_Validated(object sender, EventArgs e)
+        //{
+        //    Properties.Settings.Default.多线程数 = (int)numericUpDown1.Value;
+        //}
     }
 }
