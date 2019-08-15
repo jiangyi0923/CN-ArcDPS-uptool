@@ -23,7 +23,7 @@ namespace PlugIn_UpdateTool
         {
             InitializeComponent();
             button1.Enabled = false;
-            检测();
+            
         }
 
         public void 初次运行()
@@ -299,6 +299,11 @@ namespace PlugIn_UpdateTool
         private void Button5_Click(object sender, EventArgs e)
         {
             log.WriteLogFile("重新检测");
+            检测();
+        }
+
+        private void Testui_Load(object sender, EventArgs e)
+        {
             检测();
         }
     }

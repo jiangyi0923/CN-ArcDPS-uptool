@@ -45,11 +45,17 @@
             // 
             // textBox1
             // 
+            this.textBox1.AcceptsReturn = true;
             this.textBox1.Location = new System.Drawing.Point(3, 108);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(287, 287);
+            this.textBox1.ReadOnly = true;
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.ShortcutsEnabled = false;
+            this.textBox1.Size = new System.Drawing.Size(274, 287);
             this.textBox1.TabIndex = 1;
+            this.textBox1.TabStop = false;
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button1
             // 
@@ -69,7 +75,7 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Name = "Mgui";
-            this.Size = new System.Drawing.Size(293, 545);
+            this.Size = new System.Drawing.Size(280, 545);
             this.ResumeLayout(false);
             this.PerformLayout();
 

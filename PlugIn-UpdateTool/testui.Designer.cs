@@ -197,6 +197,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Testui";
             this.Size = new System.Drawing.Size(281, 750);
+            this.Load += new System.EventHandler(this.Testui_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

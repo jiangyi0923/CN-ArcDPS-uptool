@@ -19,11 +19,20 @@ namespace PlugIn_UpdateTool
             {
                 Testui testui = new Testui();
                 Controls.Add(testui);
-                //testui.BringToFront();
+                testui.BringToFront();
                 log.WriteLogFile("首次使用");
-                backgroundWorker1.RunWorkerAsync();
-                log.WriteLogFile("载入部件");
             }
+            else
+            {
+                Mgui mgui = new Mgui();
+                if (mgui.有新版本() || mgui.有新提醒())
+                {
+                    Controls.Add(mgui);
+                    mgui.BringToFront();
+                }
+            }
+            log.WriteLogFile("载入部件");
+            backgroundWorker1.RunWorkerAsync();
         }
 
         private readonly LogClass log =new LogClass();
@@ -136,6 +145,7 @@ namespace PlugIn_UpdateTool
                 Jiheui settingui2 = new Jiheui();
                 settingui2.赋值("汉化文本", 1);
                 开始 += settingui2.更新;
+                完成 += settingui2.下载完成__;
             }
             if (Properties.Settings.Default.db切换)
             {
@@ -224,13 +234,16 @@ namespace PlugIn_UpdateTool
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
+            
             if (下载中)
             {
+                完成个数 = 0;
                 foreach (Func<bool> dd in 完成.GetInvocationList())
                 {
                     if (dd())
                     {
                         完成个数++;
+                        //Console.WriteLine(完成个数+"/"+项目数);
                         if ((项目数 == 完成个数) && (完成个数 > 0))
                         {
                             log.WriteLogFile("所有项目完成,重置必要参数,开启主界面按钮");
