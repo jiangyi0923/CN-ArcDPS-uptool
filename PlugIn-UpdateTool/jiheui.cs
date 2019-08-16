@@ -252,6 +252,25 @@ namespace PlugIn_UpdateTool
                     progressBar1.Value = (int)totalBytes;
                     label2.Text = 文件名 + "无需更新";
                     label2.ForeColor = Color.Green;
+                    if (label1.Text == "Sweet滤镜")
+                    {
+                        if (!Directory.Exists(bin64 + "\\SweetFX"))
+                        {
+                            Ungzip(储存位置, bin64);
+                        }
+                    }
+                    if (label1.Text == "ReShade滤镜")
+                    {
+                        if (解压模式 == 2 && !Directory.Exists(bin64 + "\\reshade-shaders"))
+                        {
+                            Ungzip(储存位置, bin64);
+                        }
+                        if (解压模式 == 1 && !Directory.Exists(Application.StartupPath + "\\reshade-shaders"))
+                        {
+                            Ungzip(储存位置, Application.StartupPath);
+                        }
+                    }
+
                     完成 = true;
                 }
             }
@@ -457,6 +476,10 @@ namespace PlugIn_UpdateTool
                     progressBar1.Value = (int)totalBytes;
                     label2.Text = 文件名 + "无需更新";
                     label2.ForeColor = Color.Green;
+                    if (!Directory.Exists(Application.StartupPath+ "\\d912pxy"))
+                    {
+                        Ungzip(储存位置, Application.StartupPath);
+                    }
                     完成 = true;
                 }
             }
