@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,22 +17,22 @@ namespace PlugIn_UpdateTool
         public Form1()
         {
             InitializeComponent();
-            //if (!Properties.Settings.Default.首次运行检测)
-            //{
-            //    Testui testui = new Testui();
-            //    Controls.Add(testui);
-            //    testui.BringToFront();
-            //    log.WriteLogFile("首次使用");
-            //}
-            //else
-            //{
-            //    Mgui mgui = new Mgui();
-            //    if (mgui.有新版本() || mgui.有新提醒())
-            //    {
-            //        Controls.Add(mgui);
-            //        mgui.BringToFront();
-            //    }
-            //}
+            if (!Properties.Settings.Default.首次运行检测)
+            {
+                Testui testui = new Testui();
+                Controls.Add(testui);
+                testui.BringToFront();
+                log.WriteLogFile("首次使用");
+            }
+            else
+            {
+                Mgui mgui = new Mgui();
+                if (mgui.有新版本() || mgui.有新提醒())
+                {
+                    Controls.Add(mgui);
+                    mgui.BringToFront();
+                }
+            }
             log.WriteLogFile("载入部件");
             backgroundWorker1.RunWorkerAsync();
         }
@@ -44,6 +46,8 @@ namespace PlugIn_UpdateTool
         private bool 设置完成_ = false;
         private int 项目数 = 0;
         private int 完成个数 = 0;
+        private readonly string bin64 = Application.StartupPath + "//bin64";
+        private readonly string 目录 = Application.StartupPath;
         private void Button2_Click(object sender, EventArgs e)
         {
             Settingui settingui = new Settingui();
@@ -65,7 +69,41 @@ namespace PlugIn_UpdateTool
         //启动
         private void Button3_Click(object sender, EventArgs e)
         {
-           //log.WriteLogFile("启动游戏");
+            //log.WriteLogFile("启动游戏");
+            启动yx();
+        }
+
+        public void 启动yx()
+        {
+            string 启动代码 = "-maploadinfo";
+            if (!Properties.Settings.Default.附加地图)
+            {
+                启动代码 = "";
+            }
+            if (File.Exists(@".\\GW2Lanucher.exe"))
+            {
+                if (File.Exists(bin64 +"\\d3d9.dll"))
+                {
+                    File.Copy(bin64 + "\\d3d9.dll", 目录 + "\\d3d9.dll",true);
+                }
+                ProcessStartInfo info = new ProcessStartInfo { FileName = @".\\GW2Lanucher.exe", Arguments = 启动代码 };
+                Process pro = new Process
+                {
+                    StartInfo = info
+                };
+                pro.Start();
+                Close();
+            }
+            else if (File.Exists(@".\\Gw2-64.exe"))
+            {
+                ProcessStartInfo info = new ProcessStartInfo { FileName = @".\\Gw2-64.exe", Arguments = 启动代码 };
+                Process pro = new Process
+                {
+                    StartInfo = info
+                };
+                pro.Start();
+                Close();
+            }
         }
 
         private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -85,12 +123,205 @@ namespace PlugIn_UpdateTool
         //更新
         private void Button1_Click(object sender, EventArgs e)
         {
+            开始更新();
+        }
+        public void 开始更新()
+        {
             下载中 = true;
             按钮开关(0);
-            //log.WriteLogFile("开始所有项目,关闭主界面按钮");
-            开始();
+            if (检测冲突())
+            {
+                开始();
+            }
         }
 
+        public bool 检测冲突()
+        {
+            if (!Properties.Settings.Default.附加功能)
+            {
+                删除文件("d3d9_arcdps_extras.dll");
+            }
+            if (!Properties.Settings.Default.db切换)
+            {
+                删除文件("d3d9_arcdps_buildtemplates.dll");
+                
+            }
+            if (!Properties.Settings.Default.团队力学)
+            {
+                删除文件("d3d9_arcdps_mechanicschs.dll");
+            }
+            if (!Properties.Settings.Default.团队恩赐)
+            {
+                删除文件("d3d9_arcdps_tablechs.dll");
+            }
+            if (!Properties.Settings.Default.流动输出)
+            {
+                删除文件("d3d9_arcdps_sct.dll");
+            }
+            if (!Properties.Settings.Default.坐骑插件)
+            {
+                删除文件("d3d9_chainload.dll");
+            }
+            if (!Properties.Settings.Default.r滤镜)
+            {
+                string[] vs = new string[4]
+                {
+                "ReShade64.dll",
+                "ReShade.ini",
+                "DefaultPreset.ini",
+                "d3d9_ReShade641.zip",
+                };
+
+                for (int i = 0; i < vs.Length; i++)
+                {
+                    删除文件(vs[i]);
+                }
+
+                if (Properties.Settings.Default.s滤镜)
+                {
+                    if (File.Exists(目录 + "\\dxgi.dll"))
+                    {
+                        File.Delete(目录 + "\\dxgi.dll");
+                    }
+                }
+
+
+                string didi2 = bin64 + "\\reshade-shaders";
+                if (Directory.Exists(didi2))
+                {
+                    删除目录(didi2);
+                }
+                string didi3 = 目录 + "\\reshade-shaders";
+                if (Directory.Exists(didi3))
+                {
+                    删除目录(didi3);
+                }
+            }
+            else
+            {
+                if (!Properties.Settings.Default.dx12)
+                {
+                    string didi3 = 目录 + "\\reshade-shaders";
+                    if (Directory.Exists(didi3))
+                    {
+                        删除目录(didi3);
+                    }
+                    string[] vs = new string[5]
+                    {
+                        "ReShade64.dll",
+                        "ReShade.ini",
+                        "DefaultPreset.ini",
+                        "d3d9_ReShade641.zip",
+                        "dxgi.dll"
+                    };
+                    for (int i = 0; i < vs.Length; i++)
+                    {
+                        if (File.Exists(目录 + "\\" + vs[i]))
+                        {
+                            File.Delete(目录 + "\\" + vs[i]);
+                        }
+                    }
+                }
+            }
+            if (!Properties.Settings.Default.s滤镜)
+            {
+                string didi1 = bin64 + "\\SweetFX";
+                if (Directory.Exists(didi1))
+                {
+                    删除目录(didi1);
+                }
+                string[] vs = new string[5]
+                {
+                "d3d9_mchain.dll",
+                "SweetFX readme.txt",
+                "SweetFX_preset.txt",
+                "SweetFX_settings.txt",
+                "SweetFX.zip"
+                };
+                for (int i = 0; i < vs.Length; i++)
+                {
+                    删除文件(vs[i]);
+                }
+                if (File.Exists(bin64 +"\\dxgi.dll"))
+                {
+                    File.Delete(bin64 + "\\dxgi.dll");
+                }
+            }
+            if (!Properties.Settings.Default.dx12)
+            {
+                string didi1 = 目录 + "\\d912pxy";
+                if (Directory.Exists(didi1))
+                {
+                    删除目录(didi1);
+                }
+                删除文件("d912pxy.dll");
+            }
+            else
+            {
+                if (Properties.Settings.Default.r滤镜)
+                {
+                    string[] vs = new string[5]
+                    {
+                        "ReShade64.dll",
+                        "ReShade.ini",
+                        "DefaultPreset.ini",
+                        "d3d9_ReShade641.zip",
+                        "dxgi.dll"
+                    };
+                    for (int i = 0; i < vs.Length; i++)
+                    {
+                        if (File.Exists(bin64 + "\\" + vs[i]))
+                        {
+                            File.Delete(bin64 + "\\" + vs[i]);
+                        }
+                    }
+                    string didi2 = bin64 + "\\reshade-shaders";
+                    if (Directory.Exists(didi2))
+                    {
+                        删除目录(didi2);
+                    }
+                }
+            }
+            return true;
+        }
+
+        public void 删除文件(string 文件)
+        {
+            if (File.Exists(Application.StartupPath+"\\"+文件))
+            {
+                File.Delete(Application.StartupPath + "\\" + 文件);
+            }
+            if (File.Exists(Application.StartupPath + "\\bin64\\" + 文件))
+            {
+                File.Delete(Application.StartupPath + "\\bin64\\" + 文件);
+            }
+        }
+
+        private static void 删除目录(string srcPath)
+        {
+            try
+            {
+                DirectoryInfo dir = new DirectoryInfo(srcPath);
+                FileSystemInfo[] fileinfo = dir.GetFileSystemInfos();  //返回目录中所有文件和子目录
+                foreach (FileSystemInfo i in fileinfo)
+                {
+                    if (i is DirectoryInfo)            //判断是否文件夹
+                    {
+                        DirectoryInfo subdir = new DirectoryInfo(i.FullName);
+                        subdir.Delete(true);          //删除子目录和文件
+                    }
+                    else
+                    {
+                        File.Delete(i.FullName);      //删除指定文件
+                    }
+                }
+                Directory.Delete(srcPath);
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+        }
         private void 按钮开关(int 开关状态)
         {
             switch (开关状态)
@@ -217,6 +448,39 @@ namespace PlugIn_UpdateTool
             }
             项目数 = 开始.GetInvocationList().Count();
             log.WriteLogFile("项目数:"+ 项目数);
+            if (Properties.Settings.Default.启动更新)
+            {
+                是否更新();
+            }
+        }
+
+
+        private void 是否更新()
+        {
+            if (Properties.Settings.Default.跳过更新)
+            {
+                string[] Day = new string[] { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+                string week = Day[Convert.ToInt32(DateTime.Now.DayOfWeek.ToString("d"))].ToString();
+                if (!week.Equals(Day[3]) && !week.Equals(Day[4]))
+                {
+                    label1.Text ="今天是" + week + "可以正常更新";
+                    开始更新();
+                }
+                else
+                {
+                    label1.Text = "今天是" + week + "您设置了不更新,所以跳过 ";
+                    下载中 = false;
+                    按钮开关(1);
+                    if (Properties.Settings.Default.自动启动)
+                    {
+                        启动yx();
+                    }
+                }
+            }
+            else
+            {
+                开始更新();
+            }
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -237,6 +501,10 @@ namespace PlugIn_UpdateTool
                             下载中 = false;
                             完成个数 = 0;
                             按钮开关(1);
+                            if (Properties.Settings.Default.自动启动)
+                            {
+                                启动yx();
+                            }
                         }
                     }
                 }

@@ -121,7 +121,7 @@ namespace PlugIn_UpdateTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool 坐骑插件 {
             get {
                 return ((bool)(this["坐骑插件"]));
@@ -145,7 +145,7 @@ namespace PlugIn_UpdateTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool s滤镜 {
             get {
                 return ((bool)(this["s滤镜"]));
@@ -314,7 +314,7 @@ namespace PlugIn_UpdateTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://gw2sy.top//wp-content/uploads/d3d9_ReShade64.zip")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://gw2sy.top//wp-content/uploads/d3d9_ReShade641.zip")]
         public string r滤镜_地址 {
             get {
                 return ((string)(this["r滤镜_地址"]));
@@ -346,27 +346,6 @@ namespace PlugIn_UpdateTool.Properties {
             }
             set {
                 this["汉化文件地址"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool 设置 {
-            get {
-                return ((bool)(this["设置"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int 多线程数 {
-            get {
-                return ((int)(this["多线程数"]));
-            }
-            set {
-                this["多线程数"] = value;
             }
         }
     }

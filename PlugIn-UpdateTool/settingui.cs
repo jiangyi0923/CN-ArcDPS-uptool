@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace PlugIn_UpdateTool
 {
@@ -19,9 +20,10 @@ namespace PlugIn_UpdateTool
             InitializeComponent();
             控件赋值();
         }
-        private LogClass log = new LogClass();
+        private readonly LogClass log = new LogClass();
         private bool _设置完成 = false;
-
+        private readonly string bin64 = Application.StartupPath + "//bin64";
+        private readonly string 目录 = Application.StartupPath;
         public void 完成(ref bool ssu)
         {
             ssu = _设置完成;
@@ -57,6 +59,100 @@ namespace PlugIn_UpdateTool
         private void Button3_Click(object sender, EventArgs e)
         {
             log.WriteLogFile("开始卸载");
+            卸载插件();
+
+        }
+
+        private void 卸载插件()
+        {
+            string[] 所有文件名 = new string[24]
+            {   "d3d9.dll",
+                "d3d9_arcdps_buildtemplates.dll",
+                "d3d9_arcdps_extras.dll",
+                "d3d9_arcdps_mechanics.dll",
+                "d3d9_chainload.dll",
+                "d3d9_arcdps_tablechs.dll",
+                "d3d9_arcdps_sct.dll",
+                "ReShade64.dll",
+                "ReShade.ini",
+                "DefaultPreset.ini",
+                "d3d9_mchain.dll",
+                "SweetFX readme.txt",
+                "SweetFX_preset.txt",
+                "SweetFX_settings.txt",
+                "dxgi.dll",
+                "d3d9_ReShade641.zip",
+                "d912pxy.dll",
+                "SweetFX.zip",
+                "ReShade.fx",
+                "Sweet.fx",
+                "dxgi.log",
+                "d3d9_mchain.log",
+                "ReShade64.log",
+                Properties.Settings.Default.dx12文件名
+            };
+            for (int i = 0; i < 所有文件名.Length; i++)
+            {
+                if (File.Exists(bin64 + "\\" + 所有文件名[i]))
+                {
+                    File.Delete(bin64 + "\\" + 所有文件名[i]);
+                }
+            }
+            for (int i = 0; i < 所有文件名.Length; i++)
+            {
+                if (File.Exists(目录 + "\\" + 所有文件名[i]))
+                {
+                    File.Delete(目录 + "\\" + 所有文件名[i]);
+                }
+            }
+            string didi1 = bin64 + "\\SweetFX";
+            if (Directory.Exists(didi1))
+            {
+                删除目录(didi1);
+            }
+            string didi2 = bin64 + "\\reshade-shaders";
+            if (Directory.Exists(didi2))
+            {
+                删除目录(didi2);
+            }
+            string didi3 = 目录 + "\\reshade-shaders";
+            if (Directory.Exists(didi3))
+            {
+                删除目录(didi3);
+            }
+
+            string didi4 = 目录 + "\\d912pxy";
+            if (Directory.Exists(didi4))
+            {
+                删除目录(didi4);
+            }
+            log.WriteLogFile("卸载完成");
+        }
+
+        private static void 删除目录(string srcPath)
+        {
+            try
+            {
+                DirectoryInfo dir = new DirectoryInfo(srcPath);
+                FileSystemInfo[] fileinfo = dir.GetFileSystemInfos();  //返回目录中所有文件和子目录
+                foreach (FileSystemInfo i in fileinfo)
+                {
+                    if (i is DirectoryInfo)            //判断是否文件夹
+                    {
+                        DirectoryInfo subdir = new DirectoryInfo(i.FullName);
+                        subdir.Delete(true);          //删除子目录和文件
+                    }
+                    else
+                    {
+                        File.Delete(i.FullName);      //删除指定文件
+                    }
+                }
+                Directory.Delete(srcPath);
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
         }
         //检测环境
         private void Button5_Click(object sender, EventArgs e)
@@ -297,9 +393,6 @@ namespace PlugIn_UpdateTool
 
         }
 
-        //private void NumericUpDown1_Validated(object sender, EventArgs e)
-        //{
-        //    Properties.Settings.Default.多线程数 = (int)numericUpDown1.Value;
-        //}
+
     }
 }

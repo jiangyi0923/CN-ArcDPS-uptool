@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -50,6 +51,8 @@
             this.checkBox13 = new System.Windows.Forms.CheckBox();
             this.checkBox12 = new System.Windows.Forms.CheckBox();
             this.button5 = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -57,7 +60,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(3, 258);
+            this.button1.Location = new System.Drawing.Point(0, 272);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(39, 29);
             this.button1.TabIndex = 0;
@@ -67,7 +70,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(50, 258);
+            this.button2.Location = new System.Drawing.Point(47, 272);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(46, 29);
             this.button2.TabIndex = 1;
@@ -77,7 +80,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(158, 258);
+            this.button3.Location = new System.Drawing.Point(155, 272);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(62, 29);
             this.button3.TabIndex = 2;
@@ -87,7 +90,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(228, 258);
+            this.button4.Location = new System.Drawing.Point(225, 272);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(49, 29);
             this.button4.TabIndex = 3;
@@ -119,6 +122,7 @@
             this.checkBox6.TabIndex = 5;
             this.checkBox6.Tag = "6";
             this.checkBox6.Text = "团队恩赐";
+            this.toolTip1.SetToolTip(this.checkBox6, "来源: nodoooka(原村和) ID:大星淡.5907\r\n已经很久没更新了\r\n");
             this.checkBox6.UseVisualStyleBackColor = true;
             this.checkBox6.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
@@ -131,6 +135,7 @@
             this.checkBox5.TabIndex = 4;
             this.checkBox5.Tag = "5";
             this.checkBox5.Text = "团队力学";
+            this.toolTip1.SetToolTip(this.checkBox5, "来源: nodoooka(原村和) ID:大星淡.5907\r\n已经很久没更新了");
             this.checkBox5.UseVisualStyleBackColor = true;
             this.checkBox5.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
@@ -143,6 +148,7 @@
             this.checkBox4.TabIndex = 3;
             this.checkBox4.Tag = "4";
             this.checkBox4.Text = "SCT流动输出";
+            this.toolTip1.SetToolTip(this.checkBox4, "dps插件附属插件 汉化版\r\n流动输出与汉化版团队插件不兼容\r\n请不要开启技能图片会闪退!!!\r\n据说PVP和战场可能闪退!");
             this.checkBox4.UseVisualStyleBackColor = true;
             this.checkBox4.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
@@ -155,6 +161,7 @@
             this.checkBox3.TabIndex = 2;
             this.checkBox3.Tag = "3";
             this.checkBox3.Text = "附加功能";
+            this.toolTip1.SetToolTip(this.checkBox3, "dps插件附属插件");
             this.checkBox3.UseVisualStyleBackColor = true;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
@@ -167,18 +174,23 @@
             this.checkBox2.TabIndex = 1;
             this.checkBox2.Tag = "2";
             this.checkBox2.Text = "DB切换";
+            this.toolTip1.SetToolTip(this.checkBox2, "dps插件附属插件");
             this.checkBox2.UseVisualStyleBackColor = true;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
             // checkBox1
             // 
+            this.checkBox1.AutoCheck = false;
             this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.Location = new System.Drawing.Point(6, 20);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(60, 16);
             this.checkBox1.TabIndex = 0;
             this.checkBox1.Tag = "1";
             this.checkBox1.Text = "主程序";
+            this.toolTip1.SetToolTip(this.checkBox1, "主程序不可取消");
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
@@ -216,6 +228,7 @@
             this.checkBox9.TabIndex = 2;
             this.checkBox9.Tag = "9";
             this.checkBox9.Text = "ReShade滤镜";
+            this.toolTip1.SetToolTip(this.checkBox9, "HOME 键调用需要自己配置\r\n不使用DX9TO12插件的 开启性能模式避免闪退\r\n使用DX9TO12插件的 开启dx12选项卡的第一项避免闪退和重复加载");
             this.checkBox9.UseVisualStyleBackColor = true;
             this.checkBox9.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
@@ -228,6 +241,7 @@
             this.checkBox8.TabIndex = 1;
             this.checkBox8.Tag = "8";
             this.checkBox8.Text = "DX9to12";
+            this.toolTip1.SetToolTip(this.checkBox8, "大幅提升帧率的插件\r\n更新下载缓慢,建议下载缓慢的翻墙下载!");
             this.checkBox8.UseVisualStyleBackColor = true;
             this.checkBox8.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
@@ -240,6 +254,7 @@
             this.checkBox7.TabIndex = 0;
             this.checkBox7.Tag = "7";
             this.checkBox7.Text = "坐骑插件";
+            this.toolTip1.SetToolTip(this.checkBox7, "包含鼠标跟随方块 F9开启/关闭\r\nboss计时器和网页日常获取 F8开启关闭\r\nSHIFT ALT M 开启菜单");
             this.checkBox7.UseVisualStyleBackColor = true;
             this.checkBox7.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
@@ -265,6 +280,7 @@
             this.checkBox15.TabIndex = 4;
             this.checkBox15.Tag = "15";
             this.checkBox15.Text = "附加地图加载命令";
+            this.toolTip1.SetToolTip(this.checkBox15, "地图加载界面左下角出现地图加载状况参数");
             this.checkBox15.UseVisualStyleBackColor = true;
             this.checkBox15.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
@@ -306,7 +322,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(104, 258);
+            this.button5.Location = new System.Drawing.Point(101, 272);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(46, 29);
             this.button5.TabIndex = 8;
@@ -314,10 +330,20 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.Button5_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(45, 243);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(185, 12);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "只要更新没成功都不会替换原文件";
+            // 
             // Settingui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -335,6 +361,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -362,5 +389,7 @@
         private System.Windows.Forms.CheckBox checkBox13;
         private System.Windows.Forms.CheckBox checkBox12;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label label1;
     }
 }

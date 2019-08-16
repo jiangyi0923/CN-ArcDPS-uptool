@@ -44,7 +44,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(102, 9);
+            this.progressBar1.Location = new System.Drawing.Point(89, 9);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(158, 12);
             this.progressBar1.TabIndex = 1;
@@ -52,9 +52,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(13, 30);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.Size = new System.Drawing.Size(27, 11);
             this.label2.TabIndex = 2;
             this.label2.Text = "状态";
             // 
@@ -66,7 +67,7 @@
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label1);
             this.Name = "Jiheui";
-            this.Size = new System.Drawing.Size(263, 49);
+            this.Size = new System.Drawing.Size(263, 46);
             this.ResumeLayout(false);
             this.PerformLayout();
 

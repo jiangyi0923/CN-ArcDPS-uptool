@@ -107,8 +107,17 @@ namespace PlugIn_UpdateTool
                 case "ReShade滤镜":
                     下载地址 = Properties.Settings.Default.r滤镜_地址;
                     文件名 = Path.GetFileName(下载地址);
-                    储存位置 = Application.StartupPath + "\\" + 文件名;
-                    解压模式 = 1;
+                    
+                    if (Properties.Settings.Default.dx12)
+                    {
+                        储存位置 = Application.StartupPath + "\\" + 文件名;
+                        解压模式 = 1;
+                    }
+                    else
+                    {
+                        储存位置 = bin64 + "\\" + 文件名;
+                        解压模式 = 2;
+                    }
                     下载();
                     break;
                 case "Sweet滤镜":
@@ -142,9 +151,9 @@ namespace PlugIn_UpdateTool
             string 缓存 = 储存位置 + ".tmp";
             try
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 label2.Text = 文件名 + "尝试链接";
                 request = (HttpWebRequest)WebRequest.Create(下载地址);
-                request.Timeout = 5000;
                 response = (HttpWebResponse)request.GetResponse();
                 totalBytes = response.ContentLength;
                 if (totalBytes > 0)
@@ -229,6 +238,7 @@ namespace PlugIn_UpdateTool
                     }
                     catch (Exception)
                     {
+                         
                         log.WriteLogFile(label1.Text + "下载过程中出错");
                         label2.Text = 文件名 + "下载过程中出错";
                         label2.ForeColor = Color.Red;
@@ -245,9 +255,10 @@ namespace PlugIn_UpdateTool
                     完成 = true;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                log.WriteLogFile(label1.Text + "网络读取过程中出错");
+                //log.WriteLogFile(label1.Text + "网络读取过程中出错");
+                log.WriteLogFile(e.StackTrace);
                 label2.Text = 文件名 + "网络读取过程中出错";
                 label2.ForeColor = Color.Red;
                 完成 = true;
@@ -289,6 +300,16 @@ namespace PlugIn_UpdateTool
                         File.Copy(Application.StartupPath + "\\d912pxy\\dll\\release\\d3d9.dll",
                             bin64+ "\\d912pxy.dll",true);
                         label2.Text = "d912pxy.dll复制完成";
+                    }
+                }
+
+                if (!Properties.Settings.Default.dx12 && label1.Text == "ReShade滤镜")
+                {
+                    if (File.Exists(bin64 + "\\dxgi.dll"))
+                    {
+                        File.Copy(bin64 + "\\dxgi.dll", bin64 + "\\ReShade64.dll", true);
+                        File.Delete(bin64 + "\\dxgi.dll");
+                        label2.Text = "ReShade64.dll复制完成";
                     }
                 }
                 完成 = true;

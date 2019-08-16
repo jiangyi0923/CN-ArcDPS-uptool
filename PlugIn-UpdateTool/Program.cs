@@ -31,7 +31,7 @@ namespace PlugIn_UpdateTool
         public void WriteLogFile(string input)
         {
             string dateTimeNow = DateTime.Now.ToString("MM-dd@hh:mm:ss");
-            string fname = Application.StartupPath + "\\日志.txt";//获取程序启动路径
+            string fname = Application.StartupPath + "\\插件更新工具日志.txt";//获取程序启动路径
             FileInfo finfo = new FileInfo(fname);
             if (!finfo.Exists)
             {

@@ -180,12 +180,14 @@ namespace PlugIn_UpdateTool
                 jishu++;
                 button2.Enabled = false;
                 label7.ForeColor = Color.Green;
+                label7.Text = "√DX9.0c已安装";
                 log.WriteLogFile("有D3DX9_43.dll");
             }
             else
             {
                 button2.Enabled = true;
                 label7.ForeColor = Color.Red;
+                label7.Text = "×DX9.0c未安装,请点击安装";
                 log.WriteLogFile("没有D3DX9_43.dll");
             }
             //检测2013 
@@ -195,12 +197,14 @@ namespace PlugIn_UpdateTool
                 jishu++;
                 button3.Enabled = false;
                 label8.ForeColor = Color.Green;
+                label8.Text = "√VC++2013已安装";
                 log.WriteLogFile("有vccorlib120.dll");
             }
             else
             {
                 button3.Enabled = true;
                 label8.ForeColor = Color.Red;
+                label8.Text = "×VC++2013未安装,请点击安装";
                 log.WriteLogFile("没有vccorlib120.dll");
             }
             //检测2015-2019
@@ -210,12 +214,14 @@ namespace PlugIn_UpdateTool
                 jishu++;
                 button4.Enabled = false;
                 label9.ForeColor = Color.Green;
+                label9.Text = "√VC++2015-2019已安装";
                 log.WriteLogFile("有vcamp140.dll");
             }
             else
             {
                 button4.Enabled = true;
                 label9.ForeColor = Color.Red;
+                label9.Text = "×VC++2015-2019未安装,请点击安装";
                 log.WriteLogFile("没有vcamp140.dll");
             }
             //如果上面都正确 开启按钮1 否则呵呵
