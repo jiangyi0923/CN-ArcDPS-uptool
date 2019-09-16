@@ -17,6 +17,8 @@ namespace PlugIn_UpdateTool
         public Form1()
         {
             InitializeComponent();
+            int.TryParse(Application.ProductVersion, out int 本地版本);
+            this.Text = "激战2插件更新工具V5-" + 本地版本.ToString();
             if (!Properties.Settings.Default.首次运行检测)
             {
                 Testui testui = new Testui();
@@ -26,6 +28,7 @@ namespace PlugIn_UpdateTool
             }
             else
             {
+
                 Mgui mgui = new Mgui();
                 if (mgui.有新版本() || mgui.有新提醒())
                 {
@@ -350,6 +353,7 @@ namespace PlugIn_UpdateTool
             完成 = null;
             项目数 = 0;
             完成个数 = 0;
+            button3.Text = "启动";
             flowLayoutPanel1.Controls.Clear();
             if (Properties.Settings.Default.主程序)
             {
@@ -368,7 +372,7 @@ namespace PlugIn_UpdateTool
             if (Properties.Settings.Default.db切换)
             {
                 Jiheui settingui = new Jiheui();
-                settingui.赋值("DB切换");
+                settingui.赋值("BD切换");
                 开始 += settingui.更新;
                 完成 += settingui.下载完成__;
                 flowLayoutPanel1.Controls.Add(settingui);
@@ -454,7 +458,7 @@ namespace PlugIn_UpdateTool
             }
         }
 
-
+        bool 是否开始计时 = false;
         private void 是否更新()
         {
             if (Properties.Settings.Default.跳过更新)
@@ -463,7 +467,7 @@ namespace PlugIn_UpdateTool
                 string week = Day[Convert.ToInt32(DateTime.Now.DayOfWeek.ToString("d"))].ToString();
                 if (!week.Equals(Day[3]) && !week.Equals(Day[4]))
                 {
-                    label1.Text ="今天是" + week + "可以正常更新";
+                    label1.Text = "今天是" + week + "可以正常更新";
                     开始更新();
                 }
                 else
@@ -473,7 +477,8 @@ namespace PlugIn_UpdateTool
                     按钮开关(1);
                     if (Properties.Settings.Default.自动启动)
                     {
-                        启动yx();
+                        timer2.Enabled =  是否开始计时 = true;
+                        //启动yx();
                     }
                 }
             }
@@ -503,12 +508,35 @@ namespace PlugIn_UpdateTool
                             按钮开关(1);
                             if (Properties.Settings.Default.自动启动)
                             {
-                                启动yx();
+                                timer2.Enabled = 是否开始计时 = true;
+                                //启动yx();
                             }
                         }
                     }
                 }
             }
+        }
+
+        int 计时器_ = 3;
+        private void Timer2_Tick(object sender, EventArgs e)
+        {
+            if (是否开始计时)
+            {
+                计时器_--;
+                
+                if (计时器_ < 0)
+                {
+                    timer2.Enabled = 是否开始计时 = false;
+                    计时器_ = 3;
+                    if (设置完成_ == true)
+                    {
+                        启动yx();
+                    }
+                    
+                }
+                button3.Text = "启动 -" + 计时器_.ToString();
+            }
+
         }
     }
 }

@@ -53,6 +53,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -60,7 +61,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(0, 272);
+            this.button1.Location = new System.Drawing.Point(4, 280);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(39, 29);
             this.button1.TabIndex = 0;
@@ -70,7 +71,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(47, 272);
+            this.button2.Location = new System.Drawing.Point(51, 280);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(46, 29);
             this.button2.TabIndex = 1;
@@ -80,7 +81,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(155, 272);
+            this.button3.Location = new System.Drawing.Point(159, 280);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(62, 29);
             this.button3.TabIndex = 2;
@@ -90,7 +91,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(225, 272);
+            this.button4.Location = new System.Drawing.Point(229, 280);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(49, 29);
             this.button4.TabIndex = 3;
@@ -216,6 +217,7 @@
             this.checkBox10.TabIndex = 3;
             this.checkBox10.Tag = "10";
             this.checkBox10.Text = "Sweet滤镜";
+            this.toolTip1.SetToolTip(this.checkBox10, "INSERT 开启/关闭滤镜");
             this.checkBox10.UseVisualStyleBackColor = true;
             this.checkBox10.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
@@ -322,7 +324,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(101, 272);
+            this.button5.Location = new System.Drawing.Point(105, 280);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(46, 29);
             this.button5.TabIndex = 8;
@@ -339,10 +341,19 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "只要更新没成功都不会替换原文件";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(45, 265);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(149, 12);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "鼠标指向插件查看调用方式";
+            // 
             // Settingui
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox3);
@@ -391,5 +402,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }

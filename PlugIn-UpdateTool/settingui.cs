@@ -40,10 +40,6 @@ namespace PlugIn_UpdateTool
         private void Button4_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Save();
-            //if (Properties.Settings.Default.多线程下载)
-            //{
-            //    log.WriteLogFile("设置多线程数为"+ Properties.Settings.Default.多线程数);
-            //}
             log.WriteLogFile("保存了设置");
             _设置完成 = true;
             Dispose();
@@ -58,8 +54,18 @@ namespace PlugIn_UpdateTool
         //卸载按钮
         private void Button3_Click(object sender, EventArgs e)
         {
-            log.WriteLogFile("开始卸载");
-            卸载插件();
+            if (MessageBox.Show(
+                "这将卸载有戏目录下所有插件但会保留addons目录及文件!(此目录不影响你正常玩游戏)", 
+                "确定卸载所以插件吗?", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            {
+                log.WriteLogFile("开始卸载");
+                卸载插件();
+            }
+            else
+            {
+                log.WriteLogFile("取消卸载");
+            }
+
 
         }
 
@@ -127,6 +133,7 @@ namespace PlugIn_UpdateTool
                 删除目录(didi4);
             }
             log.WriteLogFile("卸载完成");
+            MessageBox.Show("卸载完成");
         }
 
         private static void 删除目录(string srcPath)
@@ -179,15 +186,21 @@ namespace PlugIn_UpdateTool
             checkBox13.Checked = Properties.Settings.Default.自动启动;
             checkBox14.Checked = Properties.Settings.Default.跳过更新;
             checkBox15.Checked = Properties.Settings.Default.附加地图;
-            //checkBox16.Checked = Properties.Settings.Default.多线程下载;
-            //numericUpDown1.Value = Properties.Settings.Default.多线程数;
             if (checkBox12.Checked)
             {
                 checkBox14.Enabled = true;
             }
             else
             {
-                checkBox14.Enabled = false;
+                
+                if (checkBox14.Checked)
+                {
+                    Properties.Settings.Default.跳过更新 = checkBox14.Checked = checkBox14.Enabled = false;
+                }
+                else
+                {
+                    checkBox14.Enabled = false;
+                }
             }
             if (checkBox7.Checked)
             {
@@ -197,31 +210,28 @@ namespace PlugIn_UpdateTool
                 if (checkBox8.Checked)
                 {
                     checkBox10.Enabled = false;
+                    Properties.Settings.Default.s滤镜 = checkBox10.Checked = false;
                 }
                 if (checkBox9.Checked)
                 {
                     checkBox10.Enabled = false;
+                    Properties.Settings.Default.s滤镜 = checkBox10.Checked = false;
                 }
                 if (checkBox10.Checked)
                 {
                     checkBox8.Enabled = false;
                     checkBox9.Enabled = false;
+                    Properties.Settings.Default.dx12 = checkBox8.Checked = false;
+                    Properties.Settings.Default.r滤镜 = checkBox9.Checked = false;
                 }
             }
             else
             {
-                checkBox8.Enabled = false;
-                checkBox9.Enabled = false;
-                checkBox10.Enabled = false;
+                Properties.Settings.Default.s滤镜 = checkBox10.Checked = checkBox10.Enabled = false;
+                Properties.Settings.Default.dx12 = checkBox8.Checked = checkBox8.Enabled = false;
+                Properties.Settings.Default.r滤镜 = checkBox9.Checked = checkBox9.Enabled = false;
             }
-            //if (checkBox16.Checked)
-            //{
-            //    numericUpDown1.Enabled = true;
-            //}
-            //else
-            //{
-            //    numericUpDown1.Enabled = false;
-            //}
+            Properties.Settings.Default.Save();
             log.WriteLogFile("设置界面控件赋值完成");
         }
 
@@ -287,12 +297,9 @@ namespace PlugIn_UpdateTool
                     }
                     else
                     {
-                        checkBox8.Enabled = false;
-                        checkBox9.Enabled = false;
-                        checkBox10.Enabled = false;
-                        checkBox8.Checked = false;
-                        checkBox9.Checked = false;
-                        checkBox10.Checked = false;
+                        Properties.Settings.Default.s滤镜 = checkBox10.Checked = checkBox10.Enabled = false;
+                        Properties.Settings.Default.dx12 = checkBox8.Checked = checkBox8.Enabled = false;
+                        Properties.Settings.Default.r滤镜 = checkBox9.Checked = checkBox9.Enabled = false;
                     }
                     log.WriteLogFile("坐骑插件" + check.Checked);
                     break;
@@ -359,7 +366,14 @@ namespace PlugIn_UpdateTool
                     }
                     else
                     {
-                        checkBox14.Enabled = false;
+                        if (checkBox14.Checked)
+                        {
+                            Properties.Settings.Default.跳过更新 = checkBox14.Checked = checkBox14.Enabled = false;
+                        }
+                        else
+                        {
+                            checkBox14.Enabled = false;
+                        }
                     }
                     log.WriteLogFile("启动更新" + check.Checked);
                     break;
@@ -375,18 +389,6 @@ namespace PlugIn_UpdateTool
                     Properties.Settings.Default.附加地图 = check.Checked;
                     log.WriteLogFile("附加地图" + check.Checked);
                     break;
-                //case 16:
-                //    Properties.Settings.Default.多线程下载 = check.Checked;
-                //    log.WriteLogFile("多线程下载" + check.Checked);
-                //    if (check.Checked)
-                //    {
-                //        numericUpDown1.Enabled = true;
-                //    }
-                //    else
-                //    {
-                //        numericUpDown1.Enabled = false;
-                //    }
-                //    break;
                 default:
                     break;
             }
