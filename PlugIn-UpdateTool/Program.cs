@@ -21,37 +21,37 @@ namespace PlugIn_UpdateTool
         }
     }
     
-    public class LogClass
-    {
-        /**/
-        /// <summary>
-        /// 写入日志文件
-        /// </summary>
-        /// <param name="input"></param>
-        public void WriteLogFile(string input)
-        {
-            string dateTimeNow = DateTime.Now.ToString("MM-dd@hh:mm:ss");
-            string fname = Application.StartupPath + "\\插件更新工具日志.txt";//获取程序启动路径
-            FileInfo finfo = new FileInfo(fname);
-            if (!finfo.Exists)
-            {
-                FileStream fs;
-                fs = File.Create(fname);
-                fs.Close();
-                finfo = new FileInfo(fname);
-            }
-            if (finfo.Length > 1024 * 1024 * 10)
-            {
-                File.Move(Application.StartupPath + "\\日志.txt", Directory.GetCurrentDirectory() + DateTime.Now.TimeOfDay + "\\日志.txt");
-            }
-            using (FileStream fs = finfo.OpenWrite())
-            {
-                StreamWriter w = new StreamWriter(fs);
-                w.BaseStream.Seek(0, SeekOrigin.End);
-                w.Write(dateTimeNow +":"+input + "\r");
-                w.Flush();
-                w.Close();
-            }
-        }
-    }
+    //public class LogClass
+    //{
+    //    /**/
+    //    /// <summary>
+    //    /// 写入日志文件
+    //    /// </summary>
+    //    /// <param name="input"></param>
+    //    public void WriteLogFile(string input)
+    //    {
+    //        string dateTimeNow = DateTime.Now.ToString("MM-dd@hh:mm:ss");
+    //        string fname = Application.StartupPath + "\\插件更新工具日志.txt";//获取程序启动路径
+    //        FileInfo finfo = new FileInfo(fname);
+    //        if (!finfo.Exists)
+    //        {
+    //            FileStream fs;
+    //            fs = File.Create(fname);
+    //            fs.Close();
+    //            finfo = new FileInfo(fname);
+    //        }
+    //        if (finfo.Length > 1024 * 1024 * 10)
+    //        {
+    //            File.Move(Application.StartupPath + "\\日志.txt", Directory.GetCurrentDirectory() + DateTime.Now.TimeOfDay + "\\日志.txt");
+    //        }
+    //        using (FileStream fs = finfo.OpenWrite())
+    //        {
+    //            StreamWriter w = new StreamWriter(fs);
+    //            w.BaseStream.Seek(0, SeekOrigin.End);
+    //            w.Write(dateTimeNow +":"+input + "\r");
+    //            w.Flush();
+    //            w.Close();
+    //        }
+    //    }
+    //}
 }

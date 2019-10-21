@@ -23,7 +23,7 @@ namespace PlugIn_UpdateTool
             CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
         }
-        private readonly LogClass log = new LogClass();
+        //private readonly LogClass log = new LogClass();
         private bool 完成 = false;
         //private int 多线程 = 1;
         private string 下载地址 = "";
@@ -35,7 +35,7 @@ namespace PlugIn_UpdateTool
         public void 赋值(string 标签)
         {
             label1.Text = 标签;
-            log.WriteLogFile("赋值"+ 标签);
+            ////log.WriteLogFile("赋值"+ 标签);
             
         }
         public bool 下载完成__()
@@ -65,7 +65,7 @@ namespace PlugIn_UpdateTool
                     储存位置 = Application.StartupPath + "\\addons\\arcdps\\" + 文件名;
                     下载();
                     break;
-                case "DB切换":
+                case "BD切换":
                     下载地址 = Properties.Settings.Default.db切换_地址;
                     文件名 = Path.GetFileName(下载地址);
                     储存位置 = bin64 + "\\" + 文件名;
@@ -149,6 +149,7 @@ namespace PlugIn_UpdateTool
             Stream so = null;
             long totalBytes;
             string 缓存 = 储存位置 + ".tmp";
+            ////log.WriteLogFile(储存位置 + ".tmp");
             try
             {
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -208,14 +209,14 @@ namespace PlugIn_UpdateTool
                             progressBar1.Value = (int)totalDownloadedByte;
                             osize = st.Read(by, 0, by.Length);
                         }
-                        //log.WriteLogFile(label1.Text + " 关闭缓存流");
+                        ////log.WriteLogFile(label1.Text + " 关闭缓存流");
                         if (so != null) so.Close();
                         if (st != null) st.Close();
-                        //log.WriteLogFile(label1.Text + " 拷贝缓存到老文件");
+                        ////log.WriteLogFile(label1.Text + " 拷贝缓存到老文件");
                         File.Copy(缓存, 储存位置, true);
                         File.SetLastWriteTime(储存位置, _DateTime);
 
-                        log.WriteLogFile(label1.Text + " 下载完成");
+                        ////log.WriteLogFile(label1.Text + " 下载完成");
                         progressBar1.Value = (int)totalBytes;
                         label2.Text = 文件名 + "下载完成\r\n";
                         label2.ForeColor = Color.Green;
@@ -239,7 +240,7 @@ namespace PlugIn_UpdateTool
                     catch (Exception)
                     {
                          
-                        log.WriteLogFile(label1.Text + "下载过程中出错");
+                        ////log.WriteLogFile(label1.Text + "下载过程中出错");
                         label2.Text = 文件名 + "下载过程中出错";
                         label2.ForeColor = Color.Red;
                         完成 = true;
@@ -248,7 +249,7 @@ namespace PlugIn_UpdateTool
                 }
                 else
                 {
-                    //log.WriteLogFile(label1.Text + " 无需更新");
+                    ////log.WriteLogFile(label1.Text + " 无需更新");
                     progressBar1.Value = (int)totalBytes;
                     label2.Text = 文件名 + "无需更新";
                     label2.ForeColor = Color.Green;
@@ -274,10 +275,10 @@ namespace PlugIn_UpdateTool
                     完成 = true;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                //log.WriteLogFile(label1.Text + "网络读取过程中出错");
-                log.WriteLogFile(e.StackTrace);
+                ////log.WriteLogFile(label1.Text + "网络读取过程中出错");
+                ////log.WriteLogFile(e.StackTrace);
                 label2.Text = 文件名 + "网络读取过程中出错";
                 label2.ForeColor = Color.Red;
                 完成 = true;
@@ -449,13 +450,13 @@ namespace PlugIn_UpdateTool
                             progressBar1.Value = (int)totalDownloadedByte;
                             osize = st.Read(by, 0, by.Length);
                         }
-                        //log.WriteLogFile(label1.Text + " 关闭缓存流");
+                        ////log.WriteLogFile(label1.Text + " 关闭缓存流");
                         if (so != null) so.Close();
                         if (st != null) st.Close();
-                        //log.WriteLogFile(label1.Text + " 拷贝缓存到老文件");
+                        ////log.WriteLogFile(label1.Text + " 拷贝缓存到老文件");
                         File.Copy(缓存, 储存位置, true);
                         File.SetLastWriteTime(储存位置, _DateTime);
-                        log.WriteLogFile(label1.Text + " 下载完成");
+                        ////log.WriteLogFile(label1.Text + " 下载完成");
                         progressBar1.Value = (int)totalBytes;
                         label2.Text = 文件名 + "下载完成\r\n";
                         label2.ForeColor = Color.Green;
@@ -463,7 +464,7 @@ namespace PlugIn_UpdateTool
                     }
                     catch (Exception)
                     {
-                        log.WriteLogFile(label1.Text + "下载过程中出错");
+                        ////log.WriteLogFile(label1.Text + "下载过程中出错");
                         label2.Text = 文件名 + "下载过程中出错";
                         label2.ForeColor = Color.Red;
                         完成 = true;
@@ -472,7 +473,7 @@ namespace PlugIn_UpdateTool
                 }
                 else
                 {
-                    //log.WriteLogFile(label1.Text + " 无需更新");
+                    ////log.WriteLogFile(label1.Text + " 无需更新");
                     progressBar1.Value = (int)totalBytes;
                     label2.Text = 文件名 + "无需更新";
                     label2.ForeColor = Color.Green;
@@ -485,7 +486,7 @@ namespace PlugIn_UpdateTool
             }
             catch (Exception)
             {
-                log.WriteLogFile(label1.Text + "网络读取过程中出错");
+                ////log.WriteLogFile(label1.Text + "网络读取过程中出错");
                 label2.Text = 文件名 + "网络读取过程中出错";
                 label2.ForeColor = Color.Red;
                 完成 = true;

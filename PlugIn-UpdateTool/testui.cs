@@ -18,7 +18,7 @@ namespace PlugIn_UpdateTool
         public string 本地路劲 = Application.StartupPath;
         public string 插件路劲 = Application.StartupPath + "\\addons\\arcdps";
         public string 插件路劲B = Application.StartupPath + "\\addons\\sct";
-        private LogClass log = new LogClass();
+        //private LogClass log = new LogClass();
         public Testui()
         {
             InitializeComponent();
@@ -149,7 +149,7 @@ namespace PlugIn_UpdateTool
                 label4.Text =   Application.StartupPath;
                 label3.ForeColor = label4.ForeColor = Color.Red;
             }
-            log.WriteLogFile(Application.StartupPath);
+            //log.WriteLogFile(Application.StartupPath);
             //检测程序是否正确
             string path = @"./Gw2-64.exe";
             if (File.Exists(path))
@@ -158,14 +158,14 @@ namespace PlugIn_UpdateTool
                 mul++;
                 label5.Text = "程序名检测: ";
                 label6.Text = "√有Gw2-64.exe";
-                log.WriteLogFile("有Gw2-64.exe");
+                //log.WriteLogFile("有Gw2-64.exe");
                 label5.ForeColor = label6.ForeColor = Color.Green;
             }
             else
             {
                 label5.Text = "程序名检测: ";
                 label6.Text = "×无Gw2-64.exe,请关闭程序更改游戏程序名";
-                log.WriteLogFile("没有Gw2-64.exe");
+                //log.WriteLogFile("没有Gw2-64.exe");
                 label5.ForeColor = label6.ForeColor = Color.Red;
             }
             //如果上面两个正确 - 解压配置和字体 否则 跳过
@@ -181,14 +181,14 @@ namespace PlugIn_UpdateTool
                 button2.Enabled = false;
                 label7.ForeColor = Color.Green;
                 label7.Text = "√DX9.0c已安装";
-                log.WriteLogFile("有D3DX9_43.dll");
+                //log.WriteLogFile("有D3DX9_43.dll");
             }
             else
             {
                 button2.Enabled = true;
                 label7.ForeColor = Color.Red;
                 label7.Text = "×DX9.0c未安装,请点击安装";
-                log.WriteLogFile("没有D3DX9_43.dll");
+                //log.WriteLogFile("没有D3DX9_43.dll");
             }
             //检测2013 
             //如果拥有 按钮3关闭;否则开启
@@ -198,14 +198,14 @@ namespace PlugIn_UpdateTool
                 button3.Enabled = false;
                 label8.ForeColor = Color.Green;
                 label8.Text = "√VC++2013已安装";
-                log.WriteLogFile("有vccorlib120.dll");
+                //log.WriteLogFile("有vccorlib120.dll");
             }
             else
             {
                 button3.Enabled = true;
                 label8.ForeColor = Color.Red;
                 label8.Text = "×VC++2013未安装,请点击安装";
-                log.WriteLogFile("没有vccorlib120.dll");
+                //log.WriteLogFile("没有vccorlib120.dll");
             }
             //检测2015-2019
             //如果拥有 按钮4关闭;否则开启
@@ -215,14 +215,14 @@ namespace PlugIn_UpdateTool
                 button4.Enabled = false;
                 label9.ForeColor = Color.Green;
                 label9.Text = "√VC++2015-2019已安装";
-                log.WriteLogFile("有vcamp140.dll");
+                //log.WriteLogFile("有vcamp140.dll");
             }
             else
             {
                 button4.Enabled = true;
                 label9.ForeColor = Color.Red;
                 label9.Text = "×VC++2015-2019未安装,请点击安装";
-                log.WriteLogFile("没有vcamp140.dll");
+                //log.WriteLogFile("没有vcamp140.dll");
             }
             //如果上面都正确 开启按钮1 否则呵呵
             if (jishu == 5)
@@ -241,7 +241,7 @@ namespace PlugIn_UpdateTool
         {
             Properties.Settings.Default.首次运行检测 = true;
             Properties.Settings.Default.Save();
-            log.WriteLogFile("完成检测");
+            //log.WriteLogFile("完成检测");
             Dispose();
         }
         //安装dx
@@ -304,7 +304,7 @@ namespace PlugIn_UpdateTool
         //重新检测
         private void Button5_Click(object sender, EventArgs e)
         {
-            log.WriteLogFile("重新检测");
+            //log.WriteLogFile("重新检测");
             检测();
         }
 

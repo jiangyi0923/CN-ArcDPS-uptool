@@ -20,7 +20,7 @@ namespace PlugIn_UpdateTool
             InitializeComponent();
             控件赋值();
         }
-        private readonly LogClass log = new LogClass();
+        //private readonly LogClass log = new LogClass();
         private bool _设置完成 = false;
         private readonly string bin64 = Application.StartupPath + "//bin64";
         private readonly string 目录 = Application.StartupPath;
@@ -33,14 +33,14 @@ namespace PlugIn_UpdateTool
         private void Button1_Click(object sender, EventArgs e)
         {
             _设置完成 = true;
-            log.WriteLogFile("取消了设置");
+            //log.WriteLogFile("取消了设置");
             Dispose();
         }
         //保存按钮
         private void Button4_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.Save();
-            log.WriteLogFile("保存了设置");
+            //log.WriteLogFile("保存了设置");
             _设置完成 = true;
             Dispose();
         }
@@ -48,7 +48,7 @@ namespace PlugIn_UpdateTool
         private void Button2_Click(object sender, EventArgs e)
         {
             string 官方网址 = "https://gw2sy.top";
-            log.WriteLogFile("打开了官网");
+            //log.WriteLogFile("打开了官网");
             Process.Start(官方网址);
         }
         //卸载按钮
@@ -58,12 +58,12 @@ namespace PlugIn_UpdateTool
                 "这将卸载有戏目录下所有插件但会保留addons目录及文件!(此目录不影响你正常玩游戏)", 
                 "确定卸载所以插件吗?", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
             {
-                log.WriteLogFile("开始卸载");
+                //log.WriteLogFile("开始卸载");
                 卸载插件();
             }
             else
             {
-                log.WriteLogFile("取消卸载");
+                //log.WriteLogFile("取消卸载");
             }
 
 
@@ -132,7 +132,7 @@ namespace PlugIn_UpdateTool
             {
                 删除目录(didi4);
             }
-            log.WriteLogFile("卸载完成");
+            //log.WriteLogFile("卸载完成");
             MessageBox.Show("卸载完成");
         }
 
@@ -164,7 +164,7 @@ namespace PlugIn_UpdateTool
         //检测环境
         private void Button5_Click(object sender, EventArgs e)
         {
-            log.WriteLogFile("从设置界面开启了检测界面");
+            //log.WriteLogFile("从设置界面开启了检测界面");
             Testui testui = new Testui();
             Controls.Add(testui);
             testui.BringToFront();
@@ -173,8 +173,8 @@ namespace PlugIn_UpdateTool
         private void 控件赋值()
         {
             checkBox1.Checked = Properties.Settings.Default.主程序;
-            checkBox2.Checked = Properties.Settings.Default.db切换;
-            checkBox3.Checked = Properties.Settings.Default.附加功能;
+            //checkBox2.Checked = Properties.Settings.Default.db切换;
+            //checkBox3.Checked = Properties.Settings.Default.附加功能;
             checkBox4.Checked = Properties.Settings.Default.流动输出;
             checkBox5.Checked = Properties.Settings.Default.团队力学;
             checkBox6.Checked = Properties.Settings.Default.团队恩赐;
@@ -232,7 +232,7 @@ namespace PlugIn_UpdateTool
                 Properties.Settings.Default.r滤镜 = checkBox9.Checked = checkBox9.Enabled = false;
             }
             Properties.Settings.Default.Save();
-            log.WriteLogFile("设置界面控件赋值完成");
+            //log.WriteLogFile("设置界面控件赋值完成");
         }
 
         private void 按键事件(object sender, EventArgs e)
@@ -242,12 +242,12 @@ namespace PlugIn_UpdateTool
             switch (int.Parse(check.Tag.ToString()))
             {
                 case 2:
-                    Properties.Settings.Default.db切换 = check.Checked;
-                    log.WriteLogFile("db切换"+ check.Checked);
+                    //Properties.Settings.Default.db切换 = check.Checked;
+                    //log.WriteLogFile("db切换"+ check.Checked);
                     break;
                 case 3:
-                    Properties.Settings.Default.附加功能 = check.Checked;
-                    log.WriteLogFile("附加功能" + check.Checked);
+                    //Properties.Settings.Default.附加功能 = check.Checked;
+                    //log.WriteLogFile("附加功能" + check.Checked);
                     break;
                 case 4:
                     Properties.Settings.Default.流动输出 = check.Checked;
@@ -261,7 +261,7 @@ namespace PlugIn_UpdateTool
                         checkBox5.Enabled = true;
                         checkBox6.Enabled = true;
                     }
-                    log.WriteLogFile("流动输出" + check.Checked);
+                    //log.WriteLogFile("流动输出" + check.Checked);
                     break;
                 case 5:
                     Properties.Settings.Default.团队力学 = check.Checked;
@@ -271,9 +271,12 @@ namespace PlugIn_UpdateTool
                     }
                     else
                     {
-                        checkBox4.Enabled = true;
+                        if (!checkBox6.Checked)
+                        {
+                            checkBox4.Enabled = true;
+                        }
                     }
-                    log.WriteLogFile("团队力学" + check.Checked);
+                    //log.WriteLogFile("团队力学" + check.Checked);
                     break;
                 case 6:
                     Properties.Settings.Default.团队恩赐 = check.Checked;
@@ -283,9 +286,13 @@ namespace PlugIn_UpdateTool
                     }
                     else
                     {
-                        checkBox4.Enabled = true;
+                        if (!checkBox5.Checked)
+                        {
+                            checkBox4.Enabled = true;
+                        }
+                        
                     }
-                    log.WriteLogFile("团队恩赐" + check.Checked);
+                    //log.WriteLogFile("团队恩赐" + check.Checked);
                     break;
                 case 7:
                     Properties.Settings.Default.坐骑插件 = check.Checked;
@@ -301,7 +308,7 @@ namespace PlugIn_UpdateTool
                         Properties.Settings.Default.dx12 = checkBox8.Checked = checkBox8.Enabled = false;
                         Properties.Settings.Default.r滤镜 = checkBox9.Checked = checkBox9.Enabled = false;
                     }
-                    log.WriteLogFile("坐骑插件" + check.Checked);
+                    //log.WriteLogFile("坐骑插件" + check.Checked);
                     break;
                 case 8:
                     
@@ -320,7 +327,7 @@ namespace PlugIn_UpdateTool
                             }
                         }
                     }
-                    log.WriteLogFile("dx12" + check.Checked);
+                    //log.WriteLogFile("dx12" + check.Checked);
                     break;
                 case 9:
                     if (checkBox7.Checked)
@@ -339,7 +346,7 @@ namespace PlugIn_UpdateTool
                             
                         }
                     }
-                    log.WriteLogFile("r滤镜" + check.Checked);
+                    //log.WriteLogFile("r滤镜" + check.Checked);
                     break;
                 case 10:
                     if (checkBox7.Checked)
@@ -356,7 +363,7 @@ namespace PlugIn_UpdateTool
                             checkBox9.Enabled = true;
                         }
                     }
-                    log.WriteLogFile("s滤镜" + check.Checked);
+                    //log.WriteLogFile("s滤镜" + check.Checked);
                     break;
                 case 12:
                     Properties.Settings.Default.启动更新 = check.Checked;
@@ -375,19 +382,19 @@ namespace PlugIn_UpdateTool
                             checkBox14.Enabled = false;
                         }
                     }
-                    log.WriteLogFile("启动更新" + check.Checked);
+                    //log.WriteLogFile("启动更新" + check.Checked);
                     break;
                 case 13:
                     Properties.Settings.Default.自动启动 = check.Checked;
-                    log.WriteLogFile("自动启动" + check.Checked);
+                    //log.WriteLogFile("自动启动" + check.Checked);
                     break;
                 case 14:
                     Properties.Settings.Default.跳过更新 = check.Checked;
-                    log.WriteLogFile("跳过更新" + check.Checked);
+                    //log.WriteLogFile("跳过更新" + check.Checked);
                     break;
                 case 15:
                     Properties.Settings.Default.附加地图 = check.Checked;
-                    log.WriteLogFile("附加地图" + check.Checked);
+                    //log.WriteLogFile("附加地图" + check.Checked);
                     break;
                 default:
                     break;

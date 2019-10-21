@@ -24,7 +24,7 @@ namespace PlugIn_UpdateTool
                 Testui testui = new Testui();
                 Controls.Add(testui);
                 testui.BringToFront();
-                log.WriteLogFile("首次使用");
+                ////log.WriteLogFile("首次使用");
             }
             else
             {
@@ -36,11 +36,11 @@ namespace PlugIn_UpdateTool
                     mgui.BringToFront();
                 }
             }
-            log.WriteLogFile("载入部件");
+            ////log.WriteLogFile("载入部件");
             backgroundWorker1.RunWorkerAsync();
         }
 
-        private readonly LogClass log =new LogClass();
+        //private readonly LogClass log =new LogClass();
         private 设置完成 shes;
         private 开始下载 开始;
         private Func<bool> 完成;
@@ -59,20 +59,20 @@ namespace PlugIn_UpdateTool
             shes = settingui.完成;
             if (backgroundWorker1.IsBusy)
             {
-                //log.WriteLogFile("设置菜单已打开");
+                ////log.WriteLogFile("设置菜单已打开");
                 return;
             }
             else
             {
                 backgroundWorker1.RunWorkerAsync();
-                //log.WriteLogFile("打开了设置菜单");
+                ////log.WriteLogFile("打开了设置菜单");
             }
 
         }
         //启动
         private void Button3_Click(object sender, EventArgs e)
         {
-            //log.WriteLogFile("启动游戏");
+            ////log.WriteLogFile("启动游戏");
             启动yx();
         }
 
@@ -117,7 +117,7 @@ namespace PlugIn_UpdateTool
                 shes(ref 设置完成_);
                 if (设置完成_)
                 {
-                    //log.WriteLogFile("设置界面关闭");
+                    ////log.WriteLogFile("设置界面关闭");
                     break;
                 }
             }
@@ -140,15 +140,15 @@ namespace PlugIn_UpdateTool
 
         public bool 检测冲突()
         {
-            if (!Properties.Settings.Default.附加功能)
-            {
-                删除文件("d3d9_arcdps_extras.dll");
-            }
-            if (!Properties.Settings.Default.db切换)
-            {
-                删除文件("d3d9_arcdps_buildtemplates.dll");
+            //if (!Properties.Settings.Default.附加功能)
+            //{
+            //    删除文件("d3d9_arcdps_extras.dll");
+            //}
+            //if (!Properties.Settings.Default.db切换)
+            //{
+             //   删除文件("d3d9_arcdps_buildtemplates.dll");
                 
-            }
+            //}
             if (!Properties.Settings.Default.团队力学)
             {
                 删除文件("d3d9_arcdps_mechanicschs.dll");
@@ -333,13 +333,13 @@ namespace PlugIn_UpdateTool
                     button1.Enabled = false;
                     button2.Enabled = false;
                     button3.Enabled = false;
-                    //log.WriteLogFile("主界面界面按钮关闭");
+                    ////log.WriteLogFile("主界面界面按钮关闭");
                     break;
                 case 1:
                     button1.Enabled = true;
                     button2.Enabled = true;
                     button3.Enabled = true;
-                    //log.WriteLogFile("主界面界面按钮打开");
+                    ////log.WriteLogFile("主界面界面按钮打开");
                     break;
                 default:
                     break;
@@ -362,31 +362,31 @@ namespace PlugIn_UpdateTool
                 开始 += settingui.更新;
                 完成 += settingui.下载完成__;
                 flowLayoutPanel1.Controls.Add(settingui);
-                //log.WriteLogFile("创建了 主程序 控件");
+                ////log.WriteLogFile("创建了 主程序 控件");
                 //汉化文本
                 Jiheui settingui2 = new Jiheui();
                 settingui2.赋值("汉化文本");
                 开始 += settingui2.更新;
                 完成 += settingui2.下载完成__;
             }
-            if (Properties.Settings.Default.db切换)
-            {
-                Jiheui settingui = new Jiheui();
-                settingui.赋值("BD切换");
-                开始 += settingui.更新;
-                完成 += settingui.下载完成__;
-                flowLayoutPanel1.Controls.Add(settingui);
-                //log.WriteLogFile("创建了 DB切换 控件");
-            }
-            if (Properties.Settings.Default.附加功能)
-            {
-                Jiheui settingui = new Jiheui();
-                settingui.赋值("附加功能");
-                开始 += settingui.更新;
-                完成 += settingui.下载完成__;
-                flowLayoutPanel1.Controls.Add(settingui);
-                //log.WriteLogFile("创建了 附加功能 控件");
-            }
+            //if (Properties.Settings.Default.db切换)
+            //{
+            //    Jiheui settingui = new Jiheui();
+            //    settingui.赋值("BD切换");
+            //    开始 += settingui.更新;
+            //    完成 += settingui.下载完成__;
+            //    flowLayoutPanel1.Controls.Add(settingui);
+            //    ////log.WriteLogFile("创建了 DB切换 控件");
+            //}
+            //if (Properties.Settings.Default.附加功能)
+            //{
+            //    Jiheui settingui = new Jiheui();
+            //    settingui.赋值("附加功能");
+            //    开始 += settingui.更新;
+            //    完成 += settingui.下载完成__;
+            //    flowLayoutPanel1.Controls.Add(settingui);
+            //    ////log.WriteLogFile("创建了 附加功能 控件");
+            //}
             if (Properties.Settings.Default.流动输出)
             {
                 Jiheui settingui = new Jiheui();
@@ -394,7 +394,7 @@ namespace PlugIn_UpdateTool
                 开始 += settingui.更新;
                 完成 += settingui.下载完成__;
                 flowLayoutPanel1.Controls.Add(settingui);
-                //log.WriteLogFile("创建了 流动输出 控件");
+                ////log.WriteLogFile("创建了 流动输出 控件");
             }
             if (Properties.Settings.Default.团队力学)
             {
@@ -403,7 +403,7 @@ namespace PlugIn_UpdateTool
                 开始 += settingui.更新;
                 完成 += settingui.下载完成__;
                 flowLayoutPanel1.Controls.Add(settingui);
-                //log.WriteLogFile("创建了 团队力学 控件");
+                ////log.WriteLogFile("创建了 团队力学 控件");
             }
             if (Properties.Settings.Default.团队恩赐)
             {
@@ -412,7 +412,7 @@ namespace PlugIn_UpdateTool
                 开始 += settingui.更新;
                 完成 += settingui.下载完成__;
                 flowLayoutPanel1.Controls.Add(settingui);
-                //log.WriteLogFile("创建了 团队恩赐 控件");
+                ////log.WriteLogFile("创建了 团队恩赐 控件");
             }
             if (Properties.Settings.Default.坐骑插件)
             {
@@ -421,7 +421,7 @@ namespace PlugIn_UpdateTool
                 开始 += settingui.更新;
                 完成 += settingui.下载完成__;
                 flowLayoutPanel1.Controls.Add(settingui);
-                //log.WriteLogFile("创建了 坐骑插件 控件");
+                ////log.WriteLogFile("创建了 坐骑插件 控件");
             }
             if (Properties.Settings.Default.dx12)
             {
@@ -430,7 +430,7 @@ namespace PlugIn_UpdateTool
                 开始 += settingui.更新;
                 完成 += settingui.下载完成__;
                 flowLayoutPanel1.Controls.Add(settingui);
-                //log.WriteLogFile("创建了 DX9TO12 控件");
+                ////log.WriteLogFile("创建了 DX9TO12 控件");
             }
             if (Properties.Settings.Default.r滤镜)
             {
@@ -439,7 +439,7 @@ namespace PlugIn_UpdateTool
                 开始 += settingui.更新;
                 完成 += settingui.下载完成__;
                 flowLayoutPanel1.Controls.Add(settingui);
-                //log.WriteLogFile("创建了 ReShade滤镜 控件");
+                ////log.WriteLogFile("创建了 ReShade滤镜 控件");
             }
             if (Properties.Settings.Default.s滤镜)
             {
@@ -448,10 +448,10 @@ namespace PlugIn_UpdateTool
                 开始 += settingui.更新;
                 完成 += settingui.下载完成__;
                 flowLayoutPanel1.Controls.Add(settingui);
-                //log.WriteLogFile("创建了 Sweet滤镜 控件");
+                ////log.WriteLogFile("创建了 Sweet滤镜 控件");
             }
             项目数 = 开始.GetInvocationList().Count();
-            log.WriteLogFile("项目数:"+ 项目数);
+            ////log.WriteLogFile("项目数:"+ 项目数);
             if (Properties.Settings.Default.启动更新)
             {
                 是否更新();
@@ -502,7 +502,7 @@ namespace PlugIn_UpdateTool
                         //Console.WriteLine(完成个数+"/"+项目数);
                         if ((项目数 == 完成个数) && (完成个数 > 0))
                         {
-                            //log.WriteLogFile("所有项目完成,重置必要参数,开启主界面按钮");
+                            ////log.WriteLogFile("所有项目完成,重置必要参数,开启主界面按钮");
                             下载中 = false;
                             完成个数 = 0;
                             按钮开关(1);

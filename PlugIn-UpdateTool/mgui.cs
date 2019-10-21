@@ -21,7 +21,7 @@ namespace PlugIn_UpdateTool
         private readonly string 更新说明 = "http://gw2sy.top/wp-content/uploads/2.txt";
         private readonly string 信息检测网址 = "http://gw2sy.top/wp-content/uploads/11.txt";
         private readonly string 信息说明 = "http://gw2sy.top/wp-content/uploads/22.txt";
-        private readonly LogClass log = new LogClass();
+        //private readonly LogClass log = new LogClass();
         private void Button1_Click(object sender, EventArgs e)
         {
             Dispose();
@@ -34,7 +34,7 @@ namespace PlugIn_UpdateTool
             textBox1.AppendText("当前版本:V" + Application.ProductVersion + "\r\n");
             if (最新版本 == 0)
             {
-                log.WriteLogFile("获取最新版本信息失败,官网暂时无法连接");
+                ////log.WriteLogFile("获取最新版本信息失败,官网暂时无法连接");
                 textBox1.Text = "获取最新版本说明失败,官网暂时无法连接";
             }
             int.TryParse(Application.ProductVersion, out int 本地版本);
@@ -44,7 +44,7 @@ namespace PlugIn_UpdateTool
                 a = true;
                 if (说明文档 == "")
                 {
-                    log.WriteLogFile("获取最新版本说明失败,官网暂时无法连接");
+                    ////log.WriteLogFile("获取最新版本说明失败,官网暂时无法连接");
                     textBox1.Text += "获取最新版本说明失败,官网暂时无法连接\r\n";
                 }
                 else
@@ -66,7 +66,7 @@ namespace PlugIn_UpdateTool
                 string 信息说明文档 = 获取信息说明();
                 if (信息说明文档 == "")
                 {
-                    log.WriteLogFile("获取最新提醒信息失败,官网暂时无法连接");
+                    ////log.WriteLogFile("获取最新提醒信息失败,官网暂时无法连接");
                     textBox1.Text = "获取最新提醒信息失败,官网暂时无法连接\r\n";
                 }
                 else
@@ -132,7 +132,7 @@ namespace PlugIn_UpdateTool
             }
             catch (Exception)
             {
-                log.WriteLogFile("获取最新提醒失败,官网暂时无法连接");
+                ////log.WriteLogFile("获取最新提醒失败,官网暂时无法连接");
                 a = 0;
             }
             return a;
