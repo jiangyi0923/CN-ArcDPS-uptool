@@ -368,6 +368,7 @@ namespace PlugIn_UpdateTool
                 settingui2.赋值("汉化文本");
                 开始 += settingui2.更新;
                 完成 += settingui2.下载完成__;
+                flowLayoutPanel1.Controls.Add(settingui2);
             }
             //if (Properties.Settings.Default.db切换)
             //{
@@ -517,7 +518,7 @@ namespace PlugIn_UpdateTool
             }
         }
 
-        int 计时器_ = 3;
+        int 计时器_ = 5;
         private void Timer2_Tick(object sender, EventArgs e)
         {
             if (是否开始计时)
@@ -527,7 +528,7 @@ namespace PlugIn_UpdateTool
                 if (计时器_ < 0)
                 {
                     timer2.Enabled = 是否开始计时 = false;
-                    计时器_ = 3;
+                    计时器_ = 5;
                     if (设置完成_ == true)
                     {
                         启动yx();

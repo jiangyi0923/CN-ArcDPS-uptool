@@ -227,7 +227,7 @@
             this.checkBox10.TabIndex = 3;
             this.checkBox10.Tag = "10";
             this.checkBox10.Text = "Sweet滤镜";
-            this.toolTip1.SetToolTip(this.checkBox10, "INSERT 开启/关闭滤镜");
+            this.toolTip1.SetToolTip(this.checkBox10, "INSERT 开启/关闭滤镜\r\n无需配置懒人首选\r\n注意>>>可能有闪退的bug");
             this.checkBox10.UseVisualStyleBackColor = true;
             this.checkBox10.CheckedChanged += new System.EventHandler(this.按键事件);
             // 

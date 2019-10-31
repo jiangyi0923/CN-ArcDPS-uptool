@@ -81,7 +81,7 @@
       <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/SweetFX.zip</Value>
     </Setting>
     <Setting Name="汉化文件地址" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://raw.githubusercontent.com/Snowy1794/Arcdps-translation-Chinese-simplified/master/arcdps_lang.ini</Value>
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/arcdps_lang.ini</Value>
     </Setting>
   </Settings>
 </SettingsFile>

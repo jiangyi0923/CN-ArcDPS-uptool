@@ -12,7 +12,7 @@ namespace PlugIn_UpdateTool.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.2.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -338,8 +338,7 @@ namespace PlugIn_UpdateTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://raw.githubusercontent.com/Snowy1794/Arcdps-translation-Chinese-simplified" +
-            "/master/arcdps_lang.ini")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://gw2sy.top//wp-content/uploads/arcdps_lang.ini")]
         public string 汉化文件地址 {
             get {
                 return ((string)(this["汉化文件地址"]));
