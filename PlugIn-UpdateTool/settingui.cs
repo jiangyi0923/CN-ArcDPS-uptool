@@ -71,11 +71,13 @@ namespace PlugIn_UpdateTool
 
         private void 卸载插件()
         {
-            string[] 所有文件名 = new string[24]
+            string[] 所有文件名 = new string[26]
             {   "d3d9.dll",
                 "d3d9_arcdps_buildtemplates.dll",
                 "d3d9_arcdps_extras.dll",
                 "d3d9_arcdps_mechanics.dll",
+                "d3d9_arcdps_buildpad.dll",
+                "d3d9_arcdps_ct.dll",
                 "d3d9_chainload.dll",
                 "d3d9_arcdps_tablechs.dll",
                 "d3d9_arcdps_sct.dll",
@@ -173,8 +175,8 @@ namespace PlugIn_UpdateTool
         private void 控件赋值()
         {
             checkBox1.Checked = Properties.Settings.Default.主程序;
-            //checkBox2.Checked = Properties.Settings.Default.db切换;
-            //checkBox3.Checked = Properties.Settings.Default.附加功能;
+            checkBox2.Checked = Properties.Settings.Default.小提示;
+            checkBox3.Checked = Properties.Settings.Default.配置板;
             checkBox4.Checked = Properties.Settings.Default.流动输出;
             checkBox5.Checked = Properties.Settings.Default.团队力学;
             checkBox6.Checked = Properties.Settings.Default.团队恩赐;
@@ -242,56 +244,23 @@ namespace PlugIn_UpdateTool
             switch (int.Parse(check.Tag.ToString()))
             {
                 case 2:
-                    //Properties.Settings.Default.db切换 = check.Checked;
+                    Properties.Settings.Default.小提示 = check.Checked;
                     //log.WriteLogFile("db切换"+ check.Checked);
                     break;
                 case 3:
-                    //Properties.Settings.Default.附加功能 = check.Checked;
+                    Properties.Settings.Default.配置板 = check.Checked;
                     //log.WriteLogFile("附加功能" + check.Checked);
                     break;
                 case 4:
                     Properties.Settings.Default.流动输出 = check.Checked;
-                    if (check.Checked)
-                    {
-                        checkBox5.Enabled = false;
-                        checkBox6.Enabled = false;
-                    }
-                    else
-                    {
-                        checkBox5.Enabled = true;
-                        checkBox6.Enabled = true;
-                    }
                     //log.WriteLogFile("流动输出" + check.Checked);
                     break;
                 case 5:
                     Properties.Settings.Default.团队力学 = check.Checked;
-                    if (check.Checked)
-                    {
-                        checkBox4.Enabled = false;
-                    }
-                    else
-                    {
-                        if (!checkBox6.Checked)
-                        {
-                            checkBox4.Enabled = true;
-                        }
-                    }
                     //log.WriteLogFile("团队力学" + check.Checked);
                     break;
                 case 6:
                     Properties.Settings.Default.团队恩赐 = check.Checked;
-                    if (check.Checked)
-                    {
-                        checkBox4.Enabled = false;
-                    }
-                    else
-                    {
-                        if (!checkBox5.Checked)
-                        {
-                            checkBox4.Enabled = true;
-                        }
-                        
-                    }
                     //log.WriteLogFile("团队恩赐" + check.Checked);
                     break;
                 case 7:

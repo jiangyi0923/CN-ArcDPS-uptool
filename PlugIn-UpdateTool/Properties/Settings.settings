@@ -11,10 +11,10 @@
     <Setting Name="主程序" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="附加功能" Type="System.Boolean" Scope="User">
+    <Setting Name="配置板" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="db切换" Type="System.Boolean" Scope="User">
+    <Setting Name="小提示" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="流动输出" Type="System.Boolean" Scope="User">
@@ -54,13 +54,13 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="主程序_地址" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://www.deltaconnected.com/arcdps/x64/d3d9.dll</Value>
+      <Value Profile="(Default)">http://gw2sy.top/d3d9.dll</Value>
     </Setting>
-    <Setting Name="附加功能_地址" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://www.deltaconnected.com/arcdps/x64/extras/d3d9_arcdps_extras.dll</Value>
+    <Setting Name="配置板_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top/wp-content/uploads/d3d9_arcdps_buildpad.dll</Value>
     </Setting>
-    <Setting Name="db切换_地址" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://www.deltaconnected.com/arcdps/x64/buildtemplates/d3d9_arcdps_buildtemplates.dll</Value>
+    <Setting Name="小提示_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top/wp-content/uploads/d3d9_arcdps_ct.dll</Value>
     </Setting>
     <Setting Name="流动输出_地址" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_arcdps_sct.dll</Value>

@@ -46,7 +46,7 @@
             // 
             this.progressBar1.Location = new System.Drawing.Point(89, 9);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(158, 12);
+            this.progressBar1.Size = new System.Drawing.Size(145, 12);
             this.progressBar1.TabIndex = 1;
             // 
             // label2
@@ -67,7 +67,7 @@
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label1);
             this.Name = "Jiheui";
-            this.Size = new System.Drawing.Size(263, 46);
+            this.Size = new System.Drawing.Size(243, 42);
             this.ResumeLayout(false);
             this.PerformLayout();
 

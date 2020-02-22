@@ -56,7 +56,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -152,41 +151,35 @@
             this.checkBox4.TabIndex = 3;
             this.checkBox4.Tag = "4";
             this.checkBox4.Text = "SCT流动输出";
-            this.toolTip1.SetToolTip(this.checkBox4, "dps插件附属插件 汉化版\r\n流动输出与汉化版团队插件不兼容\r\n请不要开启技能图片会闪退!!!\r\n据说PVP和战场可能闪退!");
+            this.toolTip1.SetToolTip(this.checkBox4, "dps插件附属插件 汉化版\r\n请不要开启技能图片会闪退!!!\r\n据说PVP和战场可能闪退!");
             this.checkBox4.UseVisualStyleBackColor = true;
             this.checkBox4.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
             // checkBox3
             // 
-            this.checkBox3.AutoCheck = false;
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Enabled = false;
             this.checkBox3.Location = new System.Drawing.Point(179, 20);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(72, 16);
+            this.checkBox3.Size = new System.Drawing.Size(60, 16);
             this.checkBox3.TabIndex = 2;
             this.checkBox3.Tag = "3";
-            this.checkBox3.Text = "附加功能";
-            this.toolTip1.SetToolTip(this.checkBox3, "dps插件附属插件");
+            this.checkBox3.Text = "配置板";
+            this.toolTip1.SetToolTip(this.checkBox3, "dps插件附属插件\r\n保存你的配置模版");
             this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.Visible = false;
             this.checkBox3.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
             // checkBox2
             // 
-            this.checkBox2.AutoCheck = false;
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Enabled = false;
             this.checkBox2.Location = new System.Drawing.Point(102, 20);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(60, 16);
             this.checkBox2.TabIndex = 1;
             this.checkBox2.TabStop = false;
             this.checkBox2.Tag = "2";
-            this.checkBox2.Text = "DB切换";
-            this.toolTip1.SetToolTip(this.checkBox2, "dps插件附属插件");
+            this.checkBox2.Text = "小提示";
+            this.toolTip1.SetToolTip(this.checkBox2, "在地图界面/角色选择界面/地图加载界面显示游戏小提示");
             this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.Visible = false;
             this.checkBox2.CheckedChanged += new System.EventHandler(this.按键事件);
             // 
             // checkBox1
@@ -345,7 +338,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(45, 243);
+            this.label1.Location = new System.Drawing.Point(49, 346);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(185, 12);
             this.label1.TabIndex = 9;
@@ -354,11 +347,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(45, 265);
+            this.label2.Location = new System.Drawing.Point(49, 362);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(149, 12);
+            this.label2.Size = new System.Drawing.Size(161, 12);
             this.label2.TabIndex = 10;
-            this.label2.Text = "鼠标指向插件查看调用方式";
+            this.label2.Text = "鼠标指向插件名查看调用方式";
             // 
             // label3
             // 
@@ -372,25 +365,15 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(59, 330);
+            this.label4.Location = new System.Drawing.Point(21, 330);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(161, 12);
+            this.label4.Size = new System.Drawing.Size(197, 12);
             this.label4.TabIndex = 12;
-            this.label4.Text = "遇到插件文字为?号解决方法:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(45, 348);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(185, 12);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "删除addons目录点击本页面的检测";
+            this.label4.Text = "提示:DX9to12插件服务器不定时更新";
             // 
             // Settingui
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -445,6 +428,5 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
     }
 }

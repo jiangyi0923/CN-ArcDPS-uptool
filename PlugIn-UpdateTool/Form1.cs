@@ -32,6 +32,7 @@ namespace PlugIn_UpdateTool
                 Mgui mgui = new Mgui();
                 if (mgui.有新版本() || mgui.有新提醒())
                 {
+                    有提示_ = true;
                     Controls.Add(mgui);
                     mgui.BringToFront();
                 }
@@ -46,9 +47,10 @@ namespace PlugIn_UpdateTool
         private Func<bool> 完成;
         //private 下载完成 完成;
         private bool 下载中 = false;
-        private bool 设置完成_ = false;
+        private bool 设置完成_ = true;
         private int 项目数 = 0;
         private int 完成个数 = 0;
+        private bool 有提示_ = false;
         private readonly string bin64 = Application.StartupPath + "//bin64";
         private readonly string 目录 = Application.StartupPath;
         private void Button2_Click(object sender, EventArgs e)
@@ -126,29 +128,44 @@ namespace PlugIn_UpdateTool
         //更新
         private void Button1_Click(object sender, EventArgs e)
         {
+            有提示_ = false;
             开始更新();
         }
         public void 开始更新()
         {
-            下载中 = true;
-            按钮开关(0);
-            if (检测冲突())
+            if (检测冲突() && !有提示_)
             {
+                下载中 = true;
+                按钮开关(0);
                 开始();
             }
         }
 
         public bool 检测冲突()
         {
-            //if (!Properties.Settings.Default.附加功能)
-            //{
-            //    删除文件("d3d9_arcdps_extras.dll");
-            //}
-            //if (!Properties.Settings.Default.db切换)
-            //{
-             //   删除文件("d3d9_arcdps_buildtemplates.dll");
-                
-            //}
+            Testui testui = new Testui();
+            if (!File.Exists(testui.插件路劲 + "//arcdps_font.ttf")|| !File.Exists(testui.插件路劲B + "\\fonts\\arcdps_font.ttf"))
+            {
+                testui.初次运行();
+            }
+
+            if (File.Exists(bin64+ "//d3d9_arcdps_extras.dll"))
+            {
+                File.Delete(bin64 + "//d3d9_arcdps_extras.dll");
+            }
+            if (File.Exists(bin64 + "//d3d9_arcdps_buildtemplates.dll"))
+            {
+                File.Delete(bin64 + "//d3d9_arcdps_buildtemplates.dll");
+            }
+
+            if (!Properties.Settings.Default.小提示)
+            {
+                删除文件("d3d9_arcdps_ct.dll");
+            }
+            if (!Properties.Settings.Default.配置板)
+            {
+                删除文件("d3d9_arcdps_buildpad.dll");
+            }
             if (!Properties.Settings.Default.团队力学)
             {
                 删除文件("d3d9_arcdps_mechanicschs.dll");
@@ -285,6 +302,7 @@ namespace PlugIn_UpdateTool
                     }
                 }
             }
+            testui.Dispose();
             return true;
         }
 
@@ -370,24 +388,24 @@ namespace PlugIn_UpdateTool
                 完成 += settingui2.下载完成__;
                 flowLayoutPanel1.Controls.Add(settingui2);
             }
-            //if (Properties.Settings.Default.db切换)
-            //{
-            //    Jiheui settingui = new Jiheui();
-            //    settingui.赋值("BD切换");
-            //    开始 += settingui.更新;
-            //    完成 += settingui.下载完成__;
-            //    flowLayoutPanel1.Controls.Add(settingui);
-            //    ////log.WriteLogFile("创建了 DB切换 控件");
-            //}
-            //if (Properties.Settings.Default.附加功能)
-            //{
-            //    Jiheui settingui = new Jiheui();
-            //    settingui.赋值("附加功能");
-            //    开始 += settingui.更新;
-            //    完成 += settingui.下载完成__;
-            //    flowLayoutPanel1.Controls.Add(settingui);
-            //    ////log.WriteLogFile("创建了 附加功能 控件");
-            //}
+            if (Properties.Settings.Default.小提示)
+            {
+                Jiheui settingui = new Jiheui();
+                settingui.赋值("小提示");
+                开始 += settingui.更新;
+                完成 += settingui.下载完成__;
+                flowLayoutPanel1.Controls.Add(settingui);
+                ////log.WriteLogFile("创建了 DB切换 控件");
+            }
+            if (Properties.Settings.Default.配置板)
+            {
+                Jiheui settingui = new Jiheui();
+                settingui.赋值("配置板");
+                开始 += settingui.更新;
+                完成 += settingui.下载完成__;
+                flowLayoutPanel1.Controls.Add(settingui);
+                ////log.WriteLogFile("创建了 附加功能 控件");
+            }
             if (Properties.Settings.Default.流动输出)
             {
                 Jiheui settingui = new Jiheui();
@@ -527,13 +545,12 @@ namespace PlugIn_UpdateTool
                 
                 if (计时器_ < 0)
                 {
-                    timer2.Enabled = 是否开始计时 = false;
                     计时器_ = 5;
+                    timer2.Enabled = 是否开始计时 = false;
                     if (设置完成_ == true)
                     {
                         启动yx();
                     }
-                    
                 }
                 button3.Text = "启动 -" + 计时器_.ToString();
             }

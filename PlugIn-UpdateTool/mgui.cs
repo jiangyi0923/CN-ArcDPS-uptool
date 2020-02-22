@@ -31,15 +31,17 @@ namespace PlugIn_UpdateTool
         {
             bool a = false;
             int 最新版本 = 版本();
-            textBox1.AppendText("当前版本:V" + Application.ProductVersion + "\r\n");
+            
             if (最新版本 == 0)
             {
                 ////log.WriteLogFile("获取最新版本信息失败,官网暂时无法连接");
+                textBox1.AppendText("当前版本:V" + Application.ProductVersion + "\r\n");
                 textBox1.Text = "获取最新版本说明失败,官网暂时无法连接";
             }
             int.TryParse(Application.ProductVersion, out int 本地版本);
             if (本地版本 < 最新版本)
             {
+                textBox1.AppendText("当前版本:V" + Application.ProductVersion + "\r\n");
                 string 说明文档 = 说明();
                 a = true;
                 if (说明文档 == "")
@@ -49,7 +51,11 @@ namespace PlugIn_UpdateTool
                 }
                 else
                 {
-                    textBox1.Text += 说明文档;
+                    string[] 分段 = 说明文档.Split('&');
+                    for (int i = 0; i < 分段.Length; i++)
+                    {
+                        textBox1.AppendText(分段[i] + "\r\n");
+                    }
                 }
                 label1.Text = "有最新版本V" + 最新版本.ToString();
             }//
@@ -71,10 +77,23 @@ namespace PlugIn_UpdateTool
                 }
                 else
                 {
-                    textBox1.Text = 信息说明文档;
+                    label1.Text = "重要提醒!!";
+                    if (最新信息检测 == 2)
+                    {
+                        label1.ForeColor = Color.Green;
+                    }
+                    if (最新信息检测 == 3)
+                    {
+                        label1.ForeColor = Color.Red;
+                    }
+                    string[] 分段 = 信息说明文档.Split('&');
+                    for (int i = 0; i < 分段.Length; i++)
+                    {
+                        textBox1.AppendText(分段[i]+"\r\n");
+                    }
                 }
-                label1.Text = "重要提醒!!";
-                label1.ForeColor = Color.Red;
+                
+                
             }
             return a;
         }
@@ -114,7 +133,6 @@ namespace PlugIn_UpdateTool
             catch (Exception)
             {
                 a = "";
-                
             }
 
             return a;

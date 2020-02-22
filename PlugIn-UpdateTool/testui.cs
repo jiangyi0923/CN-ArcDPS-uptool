@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+//using System.Runtime.InteropServices;
 
 namespace PlugIn_UpdateTool
 {
@@ -26,10 +27,35 @@ namespace PlugIn_UpdateTool
             
         }
 
+        //public enum INSTALLSTATE
+        //{
+        //    INSTALLSTATE_NOTUSED = -7,  // component disabled
+        //    INSTALLSTATE_BADCONFIG = -6,  // configuration data corrupt
+        //    INSTALLSTATE_INCOMPLETE = -5,  // installation suspended or in progress
+        //    INSTALLSTATE_SOURCEABSENT = -4,  // run from source, source is unavailable
+        //    INSTALLSTATE_MOREDATA = -3,  // return buffer overflow
+        //    INSTALLSTATE_INVALIDARG = -2,  // invalid function argument
+        //    INSTALLSTATE_UNKNOWN = -1,  // unrecognized product or feature
+        //    INSTALLSTATE_BROKEN = 0,  // broken
+        //    INSTALLSTATE_ADVERTISED = 1,  // advertised feature
+        //    INSTALLSTATE_REMOVED = 1,  // component being removed (action state, not settable)
+        //    INSTALLSTATE_ABSENT = 2,  // uninstalled (or action state absent but clients remain)
+        //    INSTALLSTATE_LOCAL = 3,  // installed on local drive
+        //    INSTALLSTATE_SOURCE = 4,  // run from source, CD or net
+        //    INSTALLSTATE_DEFAULT = 5,  // use default, local or source
+        //}
+
+
+        //[DllImport("msi.dll")]
+        //private static extern INSTALLSTATE MsiQueryProductState(string productGuid);
+
         public void 初次运行()
         {
             if (!Directory.Exists(插件路劲))
             {
+                
+                
+
                 解压(1);
             }
             else
@@ -51,10 +77,10 @@ namespace PlugIn_UpdateTool
                     Application.DoEvents();
                 }
 
-                byte[] Save = Properties.Resources.arcdps;
-                FileStream fsObj = new FileStream(插件路劲 + "\\arcdps.ini", FileMode.CreateNew);
-                fsObj.Write(Save, 0, Save.Length);
-                fsObj.Close();
+                //byte[] Save = Properties.Resources.arcdps;
+                //FileStream fsObj = new FileStream(插件路劲 + "\\arcdps.ini", FileMode.CreateNew);
+                //fsObj.Write(Save, 0, Save.Length);
+                //fsObj.Close();
                 Application.DoEvents();
 
                 byte[] Save1 = Properties.Resources.arcdps_font;
@@ -92,13 +118,13 @@ namespace PlugIn_UpdateTool
                     Directory.CreateDirectory(插件路劲B + "\\fonts");
                     Application.DoEvents();
                 }
-                if (!File.Exists(插件路劲 + "\\arcdps.ini"))
-                {
-                    byte[] Save = Properties.Resources.arcdps;
-                    FileStream fsObj = new FileStream(插件路劲 + "\\arcdps.ini", FileMode.CreateNew);
-                    fsObj.Write(Save, 0, Save.Length);
-                    fsObj.Close();
-                }
+                //if (!File.Exists(插件路劲 + "\\arcdps.ini"))
+                //{
+                //    byte[] Save = Properties.Resources.arcdps;
+                //    FileStream fsObj = new FileStream(插件路劲 + "\\arcdps.ini", FileMode.CreateNew);
+                //    fsObj.Write(Save, 0, Save.Length);
+                //    fsObj.Close();
+                //}
                 if (!File.Exists(插件路劲 + "\\arcdps_font.ttf"))
                 {
                     byte[] Save1 = Properties.Resources.arcdps_font;

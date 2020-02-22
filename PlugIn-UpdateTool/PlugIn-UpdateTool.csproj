@@ -124,12 +124,12 @@
     <None Include="Resources\arcdps.ini" />
     <None Include="Resources\arcdps_font.ttf" />
     <None Include="Resources\lang.ini" />
-    <None Include="Resources\sct.ini" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\sct.ini" />
     <None Include="Resources\vc_redist.x64.exe" />
   </ItemGroup>
   <ItemGroup>

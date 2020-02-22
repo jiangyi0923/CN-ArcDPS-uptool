@@ -62,24 +62,24 @@ namespace PlugIn_UpdateTool.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool 附加功能 {
+        public bool 配置板 {
             get {
-                return ((bool)(this["附加功能"]));
+                return ((bool)(this["配置板"]));
             }
             set {
-                this["附加功能"] = value;
+                this["配置板"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool db切换 {
+        public bool 小提示 {
             get {
-                return ((bool)(this["db切换"]));
+                return ((bool)(this["小提示"]));
             }
             set {
-                this["db切换"] = value;
+                this["小提示"] = value;
             }
         }
         
@@ -229,7 +229,7 @@ namespace PlugIn_UpdateTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://www.deltaconnected.com/arcdps/x64/d3d9.dll")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://gw2sy.top/d3d9.dll")]
         public string 主程序_地址 {
             get {
                 return ((string)(this["主程序_地址"]));
@@ -241,26 +241,25 @@ namespace PlugIn_UpdateTool.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://www.deltaconnected.com/arcdps/x64/extras/d3d9_arcdps_extras.dll")]
-        public string 附加功能_地址 {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://gw2sy.top/wp-content/uploads/d3d9_arcdps_buildpad.dll")]
+        public string 配置板_地址 {
             get {
-                return ((string)(this["附加功能_地址"]));
+                return ((string)(this["配置板_地址"]));
             }
             set {
-                this["附加功能_地址"] = value;
+                this["配置板_地址"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://www.deltaconnected.com/arcdps/x64/buildtemplates/d3d9_arcdps_buildtemplat" +
-            "es.dll")]
-        public string db切换_地址 {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://gw2sy.top/wp-content/uploads/d3d9_arcdps_ct.dll")]
+        public string 小提示_地址 {
             get {
-                return ((string)(this["db切换_地址"]));
+                return ((string)(this["小提示_地址"]));
             }
             set {
-                this["db切换_地址"] = value;
+                this["小提示_地址"] = value;
             }
         }
         

@@ -46,6 +46,7 @@ namespace PlugIn_UpdateTool
         {
             完成 = false;
             progressBar1.Value = 0;
+            label2.ForeColor = Color.Green;
             if (!Directory.Exists(bin64))
             {
                 Directory.CreateDirectory(bin64);
@@ -65,14 +66,14 @@ namespace PlugIn_UpdateTool
                     储存位置 = Application.StartupPath + "\\addons\\arcdps\\" + 文件名;
                     下载();
                     break;
-                case "BD切换":
-                    下载地址 = Properties.Settings.Default.db切换_地址;
+                case "小提示":
+                    下载地址 = Properties.Settings.Default.小提示_地址;
                     文件名 = Path.GetFileName(下载地址);
                     储存位置 = bin64 + "\\" + 文件名;
                     下载();
                     break;
-                case "附加功能":
-                    下载地址 = Properties.Settings.Default.附加功能_地址;
+                case "配置板":
+                    下载地址 = Properties.Settings.Default.配置板_地址;
                     文件名 = Path.GetFileName(下载地址);
                     储存位置 = bin64 + "\\" + 文件名;
                     下载();
@@ -102,7 +103,8 @@ namespace PlugIn_UpdateTool
                     下载();
                     break;
                 case "DX9TO12":
-                    下载4();
+                    //下载4();
+                    下载5();
                     break;
                 case "ReShade滤镜":
                     下载地址 = Properties.Settings.Default.r滤镜_地址;
@@ -140,6 +142,10 @@ namespace PlugIn_UpdateTool
         {
             Task.Run(new Action(Start4));
         }
+        private void 下载5()
+        {
+            Task.Run(new Action(Start6));
+        }
         private void Start()
         {
             Thread.BeginThreadAffinity();
@@ -152,6 +158,38 @@ namespace PlugIn_UpdateTool
             ////log.WriteLogFile(储存位置 + ".tmp");
             try
             {
+
+                if (文件名 == "d3d9.dll")
+                {
+                    int a = 0;
+                    var wc2 = new WebClient();
+                    try
+                    {
+
+                        var html = wc2.DownloadString(@"http://gw2sy.top/getitnow.txt");
+                        int.TryParse(html, out a);
+                        wc2.Dispose();
+                    }
+                    catch (Exception)
+                    {
+                        a = 0;
+                        label2.Text = "获取服务器状态失败";
+                        完成 = true;
+                        return;
+                    }
+                    finally
+                    {
+                        wc2.Dispose();
+                    }
+                    if (a == 0)
+                    {
+                        label2.Text = "服务器更新中,请等会再来";
+                        完成 = true;
+                        return;
+                    }
+                }
+
+
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                 label2.Text = 文件名 + "尝试链接";
                 request = (HttpWebRequest)WebRequest.Create(下载地址);
@@ -386,8 +424,25 @@ namespace PlugIn_UpdateTool
             
             if (文件名 != "" && 下载地址 !="")
             {
-                储存位置 = Application.StartupPath + "\\" + 文件名;
-                Start5();
+                储存位置 = Application.StartupPath + "//" + 文件名;
+
+                if (File.Exists(Application.StartupPath + "//" + 文件名))
+                {
+                    Properties.Settings.Default.dx12文件名 = 文件名;
+                    Properties.Settings.Default.Save();
+                    progressBar1.Value = progressBar1.Maximum;
+                    label2.Text = 文件名 + "发现现存文件";
+                    label2.ForeColor = Color.Green;
+
+                        Ungzip(储存位置, Application.StartupPath);
+                        完成 = true;
+                        Thread.EndThreadAffinity();
+
+                }
+                else
+                {
+                    Start5();
+                }
             }
         }
 
@@ -498,6 +553,199 @@ namespace PlugIn_UpdateTool
                 if (so != null) so.Close();
                 if (st != null) st.Close();
                 if (File.Exists(缓存)) File.Delete(缓存);
+            }
+
+            Thread.EndThreadAffinity();
+        }
+
+        private void Start6(){
+            HttpWebRequest request = null;
+            HttpWebResponse response = null;
+            Stream st = null;
+            Stream so = null;
+            long totalBytes;
+            long totalBytes2;
+            string 缓存 = "";
+            try
+            {
+                label2.Text = "尝试获取服务器状态";
+                int azt = 0;
+                var wc2zt = new WebClient();
+                try
+                {
+
+                    var htmztl = wc2zt.DownloadString(@"http://gw2sy.top/getdxnow.txt");
+                    int.TryParse(htmztl, out azt);
+                    wc2zt.Dispose();
+                }
+                catch (Exception)
+                {
+                    azt = 0;
+                    label2.Text = "获取服务器状态失败";
+                    label2.ForeColor = Color.Red;
+                    完成 = true;
+                    return;
+                }
+                finally
+                {
+                    wc2zt.Dispose();
+                }
+                if (azt == 0)
+                {
+                    label2.Text = "服务器正在更新中,请等会再来";
+                    label2.ForeColor = Color.Red;
+                    完成 = true;
+                    return;
+                }
+                label2.Text = "尝试获取文件名";
+
+                var wc = new WebClient();
+                try
+                {
+                    string html = wc.DownloadString(@"http://gw2sy.top/dx12name.txt");
+                    if (html != "")
+                    {
+                        string[] 分段 = html.Split('@');
+                        label2.Text = 文件名 = 分段[0];
+                        long.TryParse(分段[1], out totalBytes2);
+                        储存位置 = Application.StartupPath + "//" + 文件名;
+                        缓存 = 储存位置 + ".tmp";
+                        下载地址 = @"http://gw2sy.top/" + 文件名;
+                        Properties.Settings.Default.dx12文件名 = 文件名;
+                        Properties.Settings.Default.Save();
+                    }
+                    else
+                    {
+                        label2.Text = "获取服务器文件信息失败!";
+                        label2.ForeColor = Color.Red;
+                        完成 = true;
+                        return;
+                    }
+                }
+                catch (Exception)
+                {
+                    label2.Text = "尝试获取文件名失败";
+                    label2.ForeColor = Color.Red;
+                    完成 = true;
+                    return;
+                }
+                finally
+                {
+                    wc.Dispose();
+                }
+
+                label2.Text = 文件名 + "尝试链接";
+                request = (HttpWebRequest)WebRequest.Create(下载地址);
+                request.Timeout = 5000;
+                response = (HttpWebResponse)request.GetResponse();
+                totalBytes = response.ContentLength;
+                if (totalBytes != totalBytes2) {
+                    label2.Text = "服务端文件大小和源文件不匹配!请联系神油";
+                    label2.ForeColor = Color.Red;
+                    完成 = true;
+                    return;
+                }
+
+                if (totalBytes > 0)
+                {
+                    label2.Text = 文件名 + "读取成功";
+                    _DateTime = response.LastModified;
+                    progressBar1.Maximum = (int)totalBytes;
+                }
+                else
+                {
+                    label2.Text = 文件名 + "读取失败";
+                    label2.ForeColor = Color.Red;
+                    完成 = true;
+                    return;
+                }
+                bool yum = false;
+                if (File.Exists(储存位置))
+                {
+                    yum = totalBytes.ToString() == File.ReadAllBytes(储存位置).Length.ToString();
+                    if (yum)
+                    {
+                        label2.Text = 文件名 + "文件大小相同";
+                    }
+                    else
+                    {
+                        label2.Text = 文件名 + "文件大小不同";
+                    }
+                }
+                else
+                {
+                    if (!File.Exists(储存位置))
+                    {
+                        label2.Text = 文件名 + "文件不存在";
+                    }
+                    yum = false;
+                }
+                if (!File.GetLastWriteTime(储存位置).DayOfYear.Equals(response.LastModified.DayOfYear) || yum == false)
+                {
+                    try
+                    {
+                        st = response.GetResponseStream();
+                        so = new FileStream(缓存, FileMode.Create);
+                        long totalDownloadedByte = 0;
+                        byte[] by = new byte[1024];
+                        int osize = st.Read(by, 0, by.Length);
+                        label2.Text = 文件名 + "开始下载";
+                        while (osize > 0)
+                        {
+                            totalDownloadedByte = osize + totalDownloadedByte;
+                            so.Write(by, 0, osize);
+                            progressBar1.Value = (int)totalDownloadedByte;
+                            osize = st.Read(by, 0, by.Length);
+                        }
+                        ////log.WriteLogFile(label1.Text + " 关闭缓存流");
+                        if (so != null) so.Close();
+                        if (st != null) st.Close();
+                        ////log.WriteLogFile(label1.Text + " 拷贝缓存到老文件");
+                        File.Copy(缓存, 储存位置, true);
+                        File.SetLastWriteTime(储存位置, _DateTime);
+                        ////log.WriteLogFile(label1.Text + " 下载完成");
+                        progressBar1.Value = (int)totalBytes;
+                        label2.Text = 文件名 + "下载完成\r\n";
+                        label2.ForeColor = Color.Green;
+                        Ungzip(储存位置, Application.StartupPath);
+                    }
+                    catch (Exception)
+                    {
+                        ////log.WriteLogFile(label1.Text + "下载过程中出错");
+                        label2.Text = 文件名 + "下载过程中出错";
+                        label2.ForeColor = Color.Red;
+                        完成 = true;
+                    }
+                }
+                else
+                {
+                    ////log.WriteLogFile(label1.Text + " 无需更新");
+                    progressBar1.Value = (int)totalBytes;
+                    label2.Text = 文件名 + "无需更新";
+                    label2.ForeColor = Color.Green;
+                    if (!Directory.Exists(Application.StartupPath + "\\d912pxy")|| !File.Exists(Application.StartupPath + "\\bin64\\d912pxy.dll"))
+                    {
+                        Ungzip(储存位置, Application.StartupPath);
+                    }
+                    完成 = true;
+                }
+            }
+            catch (Exception)
+            {
+                label2.Text = 文件名 + "网络读取过程中出错";
+                label2.ForeColor = Color.Red;
+                完成 = true;
+            }
+            finally
+            {
+                if (request != null) request.Abort();
+                if (response != null) response.Close();
+                if (so != null) so.Close();
+                if (st != null) st.Close();
+                if (缓存 != "")
+                {
+                    if (File.Exists(缓存)) File.Delete(缓存);
+                }
             }
             Thread.EndThreadAffinity();
         }
