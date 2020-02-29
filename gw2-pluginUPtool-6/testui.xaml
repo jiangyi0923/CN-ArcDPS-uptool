@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="gw2_pluginUPtool_6.testui"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:gw2_pluginUPtool_6"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="240" Background="White">
+    <Grid Margin="0,0,2,2">
+        <Viewbox Stretch=" Uniform">
+            <Canvas Width=" 240" Height=" 500">
+                <Label  Content="插件运行环境检测" FontSize="18" Canvas.Left="10" Canvas.Top="65" Height="39" Width="220" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Button x:Name="B_1" Content="确定不在提示" Width="94" Canvas.Left="136" Canvas.Top="468" Click="Button_Click"/>
+                <Button x:Name="B_2" Content="重新检测" Width="94" Canvas.Left="10" Canvas.Top="468" Click="Button_Click_1"/>
+                <CheckBox x:Name="M_d" Content="目录名" Canvas.Left="10" Canvas.Top="104" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Focusable="False" IsTabStop="False" ClickMode="Press" IsEnabled="False"/>
+                <CheckBox x:Name="M_f" Content="文件名" Canvas.Left="10" Canvas.Top="176" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Focusable="False" IsTabStop="False" ClickMode="Press" IsEnabled="False"/>
+                <CheckBox x:Name="M_3" Content="VC++2013" Canvas.Left="10" Canvas.Top="221" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Focusable="False" IsTabStop="False" ClickMode="Press" IsEnabled="False" />
+                <CheckBox x:Name="M_59" Content="VC++2015-2019" Canvas.Left="10" Canvas.Top="241" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Focusable="False" IsTabStop="False" ClickMode="Press" IsEnabled="False"/>
+                <CheckBox x:Name="M_dx" Content="DX9.0c" Canvas.Left="10" Canvas.Top="261" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Focusable="False" IsTabStop="False" ClickMode="Press" IsEnabled="False"/>
+                <Button x:Name="B_3" Content="安装VC++2013" Width="139"  Canvas.Top="311" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="50"/>
+                <Button x:Name="B_59" Content="安装VC++2015-2019" Width="139"  Canvas.Top="338" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="50"/>
+                <Button x:Name="B_dx" Content="安装DX9.0c" Width="139"  Canvas.Top="365" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Canvas.Left="50"/>
+                <Label x:Name="L2" Content="Label" Canvas.Left="10" Canvas.Top="191" />
+                <TextBox x:Name="TX1" Height="50" TextWrapping="Wrap" Text="" Width="220" Canvas.Left="10" Canvas.Top="121"/>
+
+            </Canvas>
+        </Viewbox>
+
+    </Grid>
+</UserControl>

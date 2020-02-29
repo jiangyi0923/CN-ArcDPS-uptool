@@ -639,6 +639,7 @@ namespace PlugIn_UpdateTool
                 request.Timeout = 5000;
                 response = (HttpWebResponse)request.GetResponse();
                 totalBytes = response.ContentLength;
+
                 if (totalBytes != totalBytes2) {
                     label2.Text = "服务端文件大小和源文件不匹配!请联系神油";
                     label2.ForeColor = Color.Red;

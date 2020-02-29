@@ -1,0 +1,84 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="gw2_pluginUPtool_6.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="主程序" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="流动输出" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="配置板" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="小提示" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="团队力学" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="团队恩赐" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="坐骑插件" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="dx12" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="r滤镜" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="s滤镜" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="启动_" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="跳过_" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="开启_" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="附加_" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="首次运行检测" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="主程序_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top/d3d9.dll</Value>
+    </Setting>
+    <Setting Name="配置板_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top/wp-content/uploads/d3d9_arcdps_buildpad.dll</Value>
+    </Setting>
+    <Setting Name="小提示_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top/wp-content/uploads/d3d9_arcdps_ct.dll</Value>
+    </Setting>
+    <Setting Name="流动输出_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_arcdps_sct.dll</Value>
+    </Setting>
+    <Setting Name="团队力学_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_arcdps_mechanicschs.dll</Value>
+    </Setting>
+    <Setting Name="团队恩赐_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_arcdps_tablechs.dll</Value>
+    </Setting>
+    <Setting Name="r滤镜_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_ReShade641.zip</Value>
+    </Setting>
+    <Setting Name="s滤镜_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/SweetFX.zip</Value>
+    </Setting>
+    <Setting Name="汉化文件地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/arcdps_lang.ini</Value>
+    </Setting>
+    <Setting Name="dx12文件名" Type="System.String" Scope="User">
+      <Value Profile="(Default)">d912pxy_v1.4_r367.zip</Value>
+    </Setting>
+    <Setting Name="坐骑插件_地址" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_chainload.dll</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArcDPS-uptool", "ArcDPS-upt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlugIn-UpdateTool", "PlugIn-UpdateTool\PlugIn-UpdateTool.csproj", "{E6AD6D6B-2E87-4D3A-AF21-4B8EF2869F0A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gw2-pluginUPtool-6", "gw2-pluginUPtool-6\gw2-pluginUPtool-6.csproj", "{DC75F1CE-FBF0-475D-9F41-6AEC1FF64B09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{E6AD6D6B-2E87-4D3A-AF21-4B8EF2869F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6AD6D6B-2E87-4D3A-AF21-4B8EF2869F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6AD6D6B-2E87-4D3A-AF21-4B8EF2869F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC75F1CE-FBF0-475D-9F41-6AEC1FF64B09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC75F1CE-FBF0-475D-9F41-6AEC1FF64B09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC75F1CE-FBF0-475D-9F41-6AEC1FF64B09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC75F1CE-FBF0-475D-9F41-6AEC1FF64B09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
