@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:gw2_pluginUPtool_6"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="240" Background="White">
+             d:DesignHeight="560" d:DesignWidth="240" Background="White">
     <Grid Margin="0,0,2,2">
         <Viewbox Stretch=" Uniform">
-            <Canvas Width=" 240" Height=" 500">
+            <Canvas Width=" 240" Height=" 560">
                 <Label  Content="插件运行环境检测" FontSize="18" Canvas.Left="10" Canvas.Top="65" Height="39" Width="220" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Button x:Name="B_1" Content="确定不在提示" Width="94" Canvas.Left="136" Canvas.Top="468" Click="Button_Click"/>
                 <Button x:Name="B_2" Content="重新检测" Width="94" Canvas.Left="10" Canvas.Top="468" Click="Button_Click_1"/>

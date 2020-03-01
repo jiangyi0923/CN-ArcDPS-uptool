@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:gw2_pluginUPtool_6"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="240" Background="White">
+             d:DesignHeight="560" d:DesignWidth="240" Background="White">
     <Grid Margin="0,0,2,2">
         <Viewbox Stretch=" Uniform">
-            <Canvas Width=" 240" Height=" 500">
+            <Canvas Width=" 240" Height=" 560">
                 <Label x:Name="label1" Content="提示" FontSize="18" Canvas.Left="10" Canvas.Top="10" Height="39" Width="220" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Button Content="确定" Width="75" Canvas.Left="155" Canvas.Top="443" Click="Button_Click"/>
                 <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="371" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="218" Canvas.Left="10" Canvas.Top="54" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>

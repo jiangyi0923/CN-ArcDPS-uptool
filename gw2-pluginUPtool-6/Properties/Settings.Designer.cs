@@ -334,5 +334,17 @@ namespace gw2_pluginUPtool_6.Properties {
                 this["坐骑插件_地址"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool 多线程下载 {
+            get {
+                return ((bool)(this["多线程下载"]));
+            }
+            set {
+                this["多线程下载"] = value;
+            }
+        }
     }
 }

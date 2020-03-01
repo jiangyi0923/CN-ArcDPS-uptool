@@ -80,5 +80,8 @@
     <Setting Name="坐骑插件_地址" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://gw2sy.top//wp-content/uploads/d3d9_chainload.dll</Value>
     </Setting>
+    <Setting Name="多线程下载" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

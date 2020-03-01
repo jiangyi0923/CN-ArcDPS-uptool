@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:gw2_pluginUPtool_6"
         mc:Ignorable="d"
-        Title="激战2插件更新工具"  Height="600" MaxHeight="600" MinHeight="500" Width="300" MaxWidth="300" MinWidth="240"  Icon="Gw2-64_00003.ico" SnapsToDevicePixels="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.IsSharedSizeScope="True" UseLayoutRounding="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" AllowDrop="True" IsTabStop="True" ResizeMode="NoResize">
+        Title="激战2插件更新工具"  Height="560" MaxHeight="560" MinHeight="560" Width="240" MaxWidth="240" MinWidth="240"  Icon="Gw2-64_00003.ico" SnapsToDevicePixels="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.IsSharedSizeScope="True" UseLayoutRounding="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" AllowDrop="True" IsTabStop="True" ResizeMode="NoResize">
     <Grid x:Name="Home" Margin="0,0,2,2">
         <Viewbox Stretch=" Uniform">
-            <Canvas Width=" 240" Height=" 500">
-                <Button x:Name="Updatebt"  Content="更新" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="Button_Click_1" Canvas.Left="9" Canvas.Top="468"/>
-                <Button x:Name="Settingbt"  Content="设置" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="69" Click="Button_Click" RenderTransformOrigin="0.576,0.511" Canvas.Left="84" Canvas.Top="468"/>
-                <Button x:Name="Runbt"  Content="启动" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="69" Click="Button_Click_2" Canvas.Left="161" Canvas.Top="468"/>
-                <ScrollViewer Margin="0" VerticalScrollBarVisibility="Auto" Height="463" Width="230">
+            <Canvas Width=" 240" Height="560">
+                <Button x:Name="Updatebt"  Content="更新" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="70" Click="Button_Click_1" Canvas.Left="10" Canvas.Top="528"/>
+                <Button x:Name="Settingbt"  Content="设置" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="69" Click="Button_Click"  Canvas.Left="87" Canvas.Top="528"/>
+                <Button x:Name="Runbt"  Content="启动" Height="22" VerticalAlignment="Top" HorizontalAlignment="Left" Width="69" Click="Button_Click_2" Canvas.Left="161" Canvas.Top="528"/>
+                <Grid Margin="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="515" Width="230">
                     <WrapPanel x:Name ="Panelpad" Orientation="Horizontal"/>
-                </ScrollViewer>
+                </Grid>
             </Canvas>
         </Viewbox>
     </Grid>

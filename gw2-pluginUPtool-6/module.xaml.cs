@@ -39,7 +39,7 @@ namespace gw2_pluginUPtool_6
             public string 文件网址;
             public string 文件保存地址;
             public int 文件大小;
-            public string[] 文件线程名集合; 
+            public string[] 文件线程名集合;
             public int[] 文件线程范围_起;
             public int[] 文件线程范围_终;
             public bool[] 线程状态集合;
@@ -56,7 +56,7 @@ namespace gw2_pluginUPtool_6
             return 完成;
         }
 
-        private void 解压当前文件(string File_, string appPath)
+        public void 解压当前文件(string File_, string appPath)
         {
             using (ZipArchive archive = ZipFile.Open(File_, ZipArchiveMode.Read, Encoding.Default))
             {
@@ -73,605 +73,38 @@ namespace gw2_pluginUPtool_6
                         entry.ExtractToFile(fullPath, true);
                     }
                 }
-                Label2.Content = dwfileinfoset.需下载文件名 + "解压完成";
-                Label2.Foreground = Brushes.Green;
-                if (Label1.Content.ToString() == "DX9TO12")
+                通知标签(1, dwfileinfoset.需下载文件名 + "解压完成");
+                if (获得标签() == "DX9TO12")
                 {
                     //d912pxy\dll\release
                     if (File.Exists(Directory.GetCurrentDirectory() + "\\d912pxy\\dll\\release\\d3d9.dll"))
                     {
                         File.Copy(Directory.GetCurrentDirectory() + "\\d912pxy\\dll\\release\\d3d9.dll",
                             bin64 + "\\d912pxy.dll", true);
-                        Label2.Content = "d912pxy.dll复制完成";
+                        通知标签(1, "d912pxy.dll复制完成");
                     }
                 }
 
-                if (!Properties.Settings.Default.dx12 && Label1.Content.ToString() == "ReShade滤镜")
+                if (!Properties.Settings.Default.dx12 && 获得标签() == "ReShade滤镜")
                 {
                     if (File.Exists(bin64 + "\\dxgi.dll"))
                     {
                         File.Copy(bin64 + "\\dxgi.dll", bin64 + "\\ReShade64.dll", true);
                         File.Delete(bin64 + "\\dxgi.dll");
-                        Label2.Content = "ReShade64.dll复制完成";
+                        通知标签(3, "ReShade64.dll复制完成");
                     }
                 }
                 完成 = true;
             }
         }
 
-        private bool 完成 = false;
-        public int 线程数量;  
+        public bool 完成 = false;
+        public int 线程数量;
         public 文件信息参数 dwfileinfoset = new 文件信息参数();
         private readonly string bin64 = Directory.GetCurrentDirectory() + "\\bin64";
         private DateTime _DateTime;
-        
-
-        #region 单线程下载模式
-        public void 更新()
-        {
-            完成 = false;
-            ProgressBar1.Value = 0;
-            Label2.Foreground = Brushes.Green;
-            if (!Directory.Exists(bin64))
-            {
-                Directory.CreateDirectory(bin64);
-            }
-            switch (Label1.Content)
-            {
-                case "主程序":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.主程序_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    下载();
-                    break;
-                //汉化文本
-                case "汉化文本":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.汉化文件地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = Directory.GetCurrentDirectory() + "\\addons\\arcdps\\" + dwfileinfoset.需下载文件名;
-                    下载();
-                    break;
-                case "小提示":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.小提示_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    下载();
-                    break;
-                case "配置板":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.配置板_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    下载();
-                    break;
-                case "流动输出":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.流动输出_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    下载();
-                    break;
-                case "团队力学":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.团队力学_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    下载();
-                    break;
-                case "团队恩赐":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.团队恩赐_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    下载();
-                    break;
-                case "坐骑插件":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.坐骑插件_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    下载();
-                    break;
-                case "DX9TO12":
-                    //下载4();
-                    下载5();
-                    break;
-                case "ReShade滤镜":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.r滤镜_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-
-                    if (Properties.Settings.Default.dx12)
-                    {
-                        dwfileinfoset.文件保存地址 = Directory.GetCurrentDirectory() + "\\" + dwfileinfoset.需下载文件名;
-                        dwfileinfoset.解压模式 = 1;
-                    }
-                    else
-                    {
-                        dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                        dwfileinfoset.解压模式 = 2;
-                    }
-                    下载();
-                    break;
-                case "Sweet滤镜":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.s滤镜_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    dwfileinfoset.解压模式 = 2;
-                    下载();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void 下载()
-        {
-            Task.Run(new Action(Start));
-        }
-
-        private void 下载5()
-        {
-            Task.Run(new Action(Start6));
-        }
-
-        private void Start()
-        {
-            Thread.BeginThreadAffinity();
-            HttpWebRequest request = null;
-            HttpWebResponse response = null;
-            Stream st = null;
-            Stream so = null;
-            long totalBytes;
-            string 缓存 = dwfileinfoset.文件保存地址 + ".tmp";
-
-            try
-            {
-
-                if (dwfileinfoset.需下载文件名 == "d3d9.dll")
-                {
-                    int a = 0;
-                    var wc2 = new WebClient();
-                    try
-                    {
-
-                        var html = wc2.DownloadString(@"http://gw2sy.top/getitnow.txt");
-                        int.TryParse(html, out a);
-                        wc2.Dispose();
-                    }
-                    catch (Exception)
-                    {
-                        a = 0;
-                        Label2.Content = "获取服务器状态失败";
-                        Label2.Foreground = Brushes.Red;
-                        完成 = true;
-                        return;
-                    }
-                    finally
-                    {
-                        wc2.Dispose();
-                    }
-                    if (a == 0)
-                    {
-                        Label2.Content = "服务器更新中,请等会再来";
-                        完成 = true;
-                        return;
-                    }
-                }
-
-
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                Label2.Content = dwfileinfoset.需下载文件名 + "尝试链接";
-                request = (HttpWebRequest)WebRequest.Create(dwfileinfoset.文件网址);
-                response = (HttpWebResponse)request.GetResponse();
-                totalBytes = response.ContentLength;
-                if (totalBytes > 0)
-                {
-                    Label2.Content = dwfileinfoset.需下载文件名 + "读取成功";
-                    _DateTime = response.LastModified;
-                    ProgressBar1.Maximum = (int)totalBytes;
-                }
-                else
-                {
-                    Label2.Content = dwfileinfoset.需下载文件名 + "读取失败";
-                    Label2.Foreground = Brushes.Red;
-                    完成 = true;
-                    return;
-                }
-                bool yum = false;
-                if (File.Exists(dwfileinfoset.文件保存地址))
-                {
-                    yum = totalBytes.ToString() == File.ReadAllBytes(dwfileinfoset.文件保存地址).Length.ToString();
-                    if (yum)
-                    {
-                        Label2.Content = dwfileinfoset.需下载文件名 + "文件大小相同";
-                    }
-                    else
-                    {
-                        Label2.Content = dwfileinfoset.需下载文件名 + "文件大小不同";
-                    }
-                }
-                else
-                {
-                    if (!File.Exists(dwfileinfoset.文件保存地址))
-                    {
-                        Label2.Content = dwfileinfoset.需下载文件名 + "文件不存在";
-                    }
-                    yum = false;
-                }
-
-                if (!File.GetLastWriteTime(dwfileinfoset.文件保存地址).DayOfYear.Equals(response.LastModified.DayOfYear) || yum == false)
-                {
-                    try
-                    {
-                        st = response.GetResponseStream();
-                        so = new FileStream(缓存, FileMode.Create);
-                        long totalDownloadedByte = 0;
-                        byte[] by = new byte[1024];
-                        int osize = st.Read(by, 0, by.Length);
-                        Label2.Content = dwfileinfoset.需下载文件名 + "开始下载";
-                        while (osize > 0)
-                        {
-                            totalDownloadedByte = osize + totalDownloadedByte;
-                            so.Write(by, 0, osize);
-                            ProgressBar1.Value = (int)totalDownloadedByte;
-                            osize = st.Read(by, 0, by.Length);
-                        }
-                        if (so != null) so.Close();
-                        if (st != null) st.Close();
-                        File.Copy(缓存, dwfileinfoset.文件保存地址, true);
-                        File.SetLastWriteTime(dwfileinfoset.文件保存地址, _DateTime);
-
-                        ProgressBar1.Value = (int)totalBytes;
-                        Label2.Content = dwfileinfoset.需下载文件名 + "下载完成\r\n";
-                        Label2.Foreground = Brushes.Green;
-                        if (dwfileinfoset.解压模式 > 0)
-                        {
-                            if (dwfileinfoset.解压模式 == 2)
-                            {
-                                解压当前文件(dwfileinfoset.文件保存地址, bin64);
-                            }
-                            else
-                            {
-                                解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
-                            }
-                        }
-                        else
-                        {
-                            完成 = true;
-                        }
-
-                    }
-                    catch (Exception)
-                    {
-                        Label2.Content = dwfileinfoset.需下载文件名 + "下载过程中出错";
-                        Label2.Foreground = Brushes.Red;
-                        完成 = true;
-                    }
-
-                }
-                else
-                {
-                    ProgressBar1.Value = (int)totalBytes;
-                    Label2.Content = dwfileinfoset.需下载文件名 + "无需更新";
-                    Label2.Foreground = Brushes.Green;
-                    if (Label1.Content.ToString() == "Sweet滤镜")
-                    {
-                        if (!Directory.Exists(bin64 + "\\SweetFX"))
-                        {
-                            解压当前文件(dwfileinfoset.文件保存地址, bin64);
-                        }
-                    }
-                    if (Label1.Content.ToString() == "ReShade滤镜")
-                    {
-                        if (dwfileinfoset.解压模式 == 2 && !Directory.Exists(bin64 + "\\reshade-shaders"))
-                        {
-                            解压当前文件(dwfileinfoset.文件保存地址, bin64);
-                        }
-                        if (dwfileinfoset.解压模式 == 1 && !Directory.Exists(Directory.GetCurrentDirectory() + "\\reshade-shaders"))
-                        {
-                            解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
-                        }
-                    }
-
-                    完成 = true;
-                }
-            }
-            catch (Exception)
-            {
-                Label2.Content = dwfileinfoset.需下载文件名 + "网络读取过程中出错";
-                Label2.Foreground = Brushes.Red;
-                完成 = true;
-            }
-            finally
-            {
-                if (request != null) request.Abort();
-                if (response != null) response.Close();
-                if (so != null) so.Close();
-                if (st != null) st.Close();
-                if (File.Exists(缓存)) File.Delete(缓存);
-            }
-            Thread.EndThreadAffinity();
-        }
-
-        private void Start6()
-        {
-            HttpWebRequest request = null;
-            HttpWebResponse response = null;
-            Stream st = null;
-            Stream so = null;
-            long totalBytes;
-            long totalBytes2;
-            string 缓存 = "";
-            try
-            {
-                Label2.Content = "尝试获取服务器状态";
-                int azt = 0;
-                var wc2zt = new WebClient();
-                try
-                {
-
-                    var htmztl = wc2zt.DownloadString(@"http://gw2sy.top/getdxnow.txt");
-                    int.TryParse(htmztl, out azt);
-                    wc2zt.Dispose();
-                }
-                catch (Exception)
-                {
-                    azt = 0;
-                    Label2.Content = "获取服务器状态失败";
-                    Label2.Foreground = Brushes.Red;
-                    完成 = true;
-                    return;
-                }
-                finally
-                {
-                    wc2zt.Dispose();
-                }
-                if (azt == 0)
-                {
-                    Label2.Content = "服务器正在更新中,请等会再来";
-                    Label2.Foreground = Brushes.Red;
-                    完成 = true;
-                    return;
-                }
-                Label2.Content = "尝试获取文件名";
-
-                var wc = new WebClient();
-                try
-                {
-                    string html = wc.DownloadString(@"http://gw2sy.top/dx12name.txt");
-                    if (html != "")
-                    {
-                        string[] 分段 = html.Split('@');
-                        Label2.Content = dwfileinfoset.需下载文件名 = 分段[0];
-                        long.TryParse(分段[1], out totalBytes2);
-                        dwfileinfoset.文件保存地址 = Directory.GetCurrentDirectory() + "//" + dwfileinfoset.需下载文件名;
-                        缓存 = dwfileinfoset.文件保存地址 + ".tmp";
-                        dwfileinfoset.文件网址 = @"http://gw2sy.top/" + dwfileinfoset.需下载文件名;
-                        Properties.Settings.Default.dx12文件名 = dwfileinfoset.需下载文件名;
-                        Properties.Settings.Default.Save();
-                    }
-                    else
-                    {
-                        Label2.Content = "获取服务器文件信息失败!";
-                        Label2.Foreground = Brushes.Red;
-                        完成 = true;
-                        return;
-                    }
-                }
-                catch (Exception)
-                {
-                    Label2.Content = "尝试获取文件名失败";
-                    Label2.Foreground = Brushes.Red;
-                    完成 = true;
-                    return;
-                }
-                finally
-                {
-                    wc.Dispose();
-                }
-
-                Label2.Content = dwfileinfoset.需下载文件名 + "尝试链接";
-                request = (HttpWebRequest)WebRequest.Create(dwfileinfoset.文件网址);
-                request.Timeout = 5000;
-                response = (HttpWebResponse)request.GetResponse();
-                totalBytes = response.ContentLength;
-
-                if (totalBytes != totalBytes2)
-                {
-                    Label2.Content = "服务端文件大小和源文件不匹配!请联系神油";
-                    Label2.Foreground = Brushes.Red;
-                    完成 = true;
-                    return;
-                }
-
-                if (totalBytes > 0)
-                {
-                    Label2.Content = dwfileinfoset.需下载文件名 + "读取成功";
-                    _DateTime = response.LastModified;
-                    ProgressBar1.Maximum = (int)totalBytes;
-                }
-                else
-                {
-                    Label2.Content = dwfileinfoset.需下载文件名 + "读取失败";
-                    Label2.Foreground = Brushes.Red;
-                    完成 = true;
-                    return;
-                }
-                bool yum = false;
-                if (File.Exists(dwfileinfoset.文件保存地址))
-                {
-                    yum = totalBytes.ToString() == File.ReadAllBytes(dwfileinfoset.文件保存地址).Length.ToString();
-                    if (yum)
-                    {
-                        Label2.Content = dwfileinfoset.需下载文件名 + "文件大小相同";
-                    }
-                    else
-                    {
-                        Label2.Content = dwfileinfoset.需下载文件名 + "文件大小不同";
-                    }
-                }
-                else
-                {
-                    if (!File.Exists(dwfileinfoset.文件保存地址))
-                    {
-                        Label2.Content = dwfileinfoset.需下载文件名 + "文件不存在";
-                    }
-                    yum = false;
-                }
-                if (!File.GetLastWriteTime(dwfileinfoset.文件保存地址).DayOfYear.Equals(response.LastModified.DayOfYear) || yum == false)
-                {
-                    try
-                    {
-                        st = response.GetResponseStream();
-                        so = new FileStream(缓存, FileMode.Create);
-                        long totalDownloadedByte = 0;
-                        byte[] by = new byte[1024];
-                        int osize = st.Read(by, 0, by.Length);
-                        Label2.Content = dwfileinfoset.需下载文件名 + "开始下载";
-                        while (osize > 0)
-                        {
-                            totalDownloadedByte = osize + totalDownloadedByte;
-                            so.Write(by, 0, osize);
-                            ProgressBar1.Value = (int)totalDownloadedByte;
-                            osize = st.Read(by, 0, by.Length);
-                        }
-                        if (so != null) so.Close();
-                        if (st != null) st.Close();
-                        File.Copy(缓存, dwfileinfoset.文件保存地址, true);
-                        File.SetLastWriteTime(dwfileinfoset.文件保存地址, _DateTime);
-                        ProgressBar1.Value = (int)totalBytes;
-                        Label2.Content = dwfileinfoset.需下载文件名 + "下载完成\r\n";
-                        Label2.Foreground = Brushes.Green;
-                        解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
-                    }
-                    catch (Exception)
-                    {
-                        Label2.Content = dwfileinfoset.需下载文件名 + "下载过程中出错";
-                        Label2.Foreground = Brushes.Red;
-                        完成 = true;
-                    }
-                }
-                else
-                {
-                    ProgressBar1.Value = (int)totalBytes;
-                    Label2.Content = dwfileinfoset.需下载文件名 + "无需更新";
-                    Label2.Foreground = Brushes.Green;
-                    if (!Directory.Exists(Directory.GetCurrentDirectory() + "\\d912pxy") || !File.Exists(Directory.GetCurrentDirectory() + "\\bin64\\d912pxy.dll"))
-                    {
-                        解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
-                    }
-                    完成 = true;
-                }
-            }
-            catch (Exception)
-            {
-                Label2.Content = dwfileinfoset.需下载文件名 + "网络读取过程中出错";
-                Label2.Foreground = Brushes.Red;
-                完成 = true;
-            }
-            finally
-            {
-                if (request != null) request.Abort();
-                if (response != null) response.Close();
-                if (so != null) so.Close();
-                if (st != null) st.Close();
-                if (缓存 != "")
-                {
-                    if (File.Exists(缓存)) File.Delete(缓存);
-                }
-            }
-            Thread.EndThreadAffinity();
-        }
-        #endregion
 
         #region 多线程下载
-
-        public void 多线程更新()
-        {
-            完成 = false;
-            ProgressBar1.Value = 0;
-            Label2.Foreground = Brushes.Green;
-            if (!Directory.Exists(bin64))
-            {
-                Directory.CreateDirectory(bin64);
-            }
-            switch (Label1.Content)
-            {
-                case "主程序":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.主程序_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    多线程下载();
-                    break;
-                //汉化文本
-                case "汉化文本":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.汉化文件地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = Directory.GetCurrentDirectory() + "\\addons\\arcdps\\" + dwfileinfoset.需下载文件名;
-                    下载();//文件太小 单线程下载
-                    break;
-                case "小提示":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.小提示_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    多线程下载();
-                    break;
-                case "配置板":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.配置板_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    多线程下载();
-                    break;
-                case "流动输出":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.流动输出_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    多线程下载();
-                    break;
-                case "团队力学":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.团队力学_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    多线程下载();
-                    break;
-                case "团队恩赐":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.团队恩赐_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    多线程下载();
-                    break;
-                case "坐骑插件":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.坐骑插件_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    多线程下载();
-                    break;
-                case "DX9TO12":
-                    //下载4();
-                    多线程下载();  //
-                    break;
-                case "ReShade滤镜":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.r滤镜_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-
-                    if (Properties.Settings.Default.dx12)
-                    {
-                        dwfileinfoset.文件保存地址 = Directory.GetCurrentDirectory() + "\\" + dwfileinfoset.需下载文件名;
-                        dwfileinfoset.解压模式 = 1;
-                    }
-                    else
-                    {
-                        dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                        dwfileinfoset.解压模式 = 2;
-                    }
-                    多线程下载();
-                    break;
-                case "Sweet滤镜":
-                    dwfileinfoset.文件网址 = Properties.Settings.Default.s滤镜_地址;
-                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
-                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
-                    dwfileinfoset.解压模式 = 2;
-                    多线程下载();
-                    break;
-                default:
-                    break;
-            }
-        }
 
         public class HttpFile
         {
@@ -728,39 +161,6 @@ namespace gw2_pluginUPtool_6
 
         public void 多线程下载()
         {
-
-            if (dwfileinfoset.需下载文件名 == "d3d9.dll")
-            {
-                int a = 0;
-                var wc2 = new WebClient();
-                try
-                {
-                    var html = wc2.DownloadString(@"http://gw2sy.top/getitnow.txt");
-                    int.TryParse(html, out a);
-                    wc2.Dispose();
-                }
-                catch (Exception)
-                {
-                    a = 0;
-                    Label2.Content = "获取服务器状态失败";
-                    Label2.Foreground = Brushes.Red;
-                    完成 = true;
-                    return;
-                }
-                finally
-                {
-                    wc2.Dispose();
-                }
-                if (a == 0)
-                {
-                    Label2.Content = "服务器更新中,请等会再来";
-                    完成 = true;
-                    return;
-                }
-            }
-
-
-
             HttpWebRequest request;
             long filesize = 0;
             try
@@ -774,7 +174,7 @@ namespace gw2_pluginUPtool_6
             catch (Exception)
             {
                 Label2.Content = dwfileinfoset.需下载文件名 + "获取文件失败";
-            } 
+            }
             线程数量 = 6;
             dwfileinfoset.线程状态集合 = new bool[线程数量];
             dwfileinfoset.文件线程名集合 = new string[线程数量];
@@ -784,12 +184,12 @@ namespace gw2_pluginUPtool_6
             int filethread = (int)filesize / 线程数量;
             for (int i = 0; i < 线程数量; i++)
             {
-                dwfileinfoset.线程状态集合[i] = false;  
+                dwfileinfoset.线程状态集合[i] = false;
                 dwfileinfoset.文件线程名集合[i] = dwfileinfoset.文件保存地址 + i.ToString() + ".tmp";
                 if (i < 线程数量 - 1)
                 {
                     dwfileinfoset.文件线程范围_起[i] = filethread * i;
-                    dwfileinfoset.文件线程范围_终[i] = filethread * (i + 1) - 1;  
+                    dwfileinfoset.文件线程范围_终[i] = filethread * (i + 1) - 1;
                 }
                 else
                 {
@@ -797,7 +197,7 @@ namespace gw2_pluginUPtool_6
                     dwfileinfoset.文件线程范围_终[i] = (int)filesize;
                 }
             }
-             
+
             Thread[] threadk = new Thread[线程数量];
             HttpFile[] httpfile = new HttpFile[线程数量];
             for (int j = 0; j < 线程数量; j++)
@@ -807,26 +207,62 @@ namespace gw2_pluginUPtool_6
                 threadk[j].Start();
                 Label2.Content = dwfileinfoset.需下载文件名 + "开始下载";
             }
-            
+
             Thread hbth = new Thread(new ThreadStart(多线程文件合并));
             hbth.Start();
         }
 
+        public void 通知标签(int 类型,string 内容) 
+        {
+            Label2.Dispatcher.Invoke(new Action(delegate
+            {
+                Label2.Content = 内容;
+                if (类型 == 0) Label2.Foreground = Brushes.Red;
+                if (类型 == 1) Label2.Foreground = Brushes.Green;
+            }));
+        }
+
+        public string 获得标签()
+        {
+            string fanhui = "";
+            Label1.Dispatcher.Invoke(new Action(delegate
+            {
+                fanhui = Label1.Content.ToString();
+            }));
+            return fanhui;
+        }
+
+        public void 通知进度条(Double 数值) 
+        {
+            ProgressBar1.Dispatcher.Invoke(new Action(delegate
+            {
+                ProgressBar1.Value =  数值;
+            }));
+        }
+
+        public void 通知进度条最大值(int 数值)
+        {
+            ProgressBar1.Dispatcher.Invoke(new Action(delegate
+            {
+                ProgressBar1.Maximum = 数值;
+            }));
+        }
+
         public void 多线程文件合并()
         {
-            while (true) 
+            while (true)
             {
                 完成 = true;
                 for (int i = 0; i < 线程数量; i++)
                 {
-                    if (dwfileinfoset.线程状态集合[i] == false) 
+                    if (dwfileinfoset.线程状态集合[i] == false)
                     {
                         完成 = false;
                         Thread.Sleep(100);
                         break;
                     }
                 }
-                if (完成 == true) 
+                if (完成 == true)
                 {
                     Label2.Dispatcher.Invoke(new Action(delegate
                     {
@@ -878,208 +314,369 @@ namespace gw2_pluginUPtool_6
 
         #endregion
 
+        public void 新综合更新代码()
+        {
+            //判断是前置文件夹是否存在
+            if (!Directory.Exists(bin64))
+            {
+                Directory.CreateDirectory(bin64);
+            }
+            // 还要判断 addons目录 
 
+            //赋值初始参数
+            完成 = false;
+            ProgressBar1.Value = 0;
+            Label2.Foreground = Brushes.Green;
 
+            switch (Label1.Content.ToString())
+            {
+                case "主程序":
+                    dwfileinfoset.文件网址 = Properties.Settings.Default.主程序_地址;
+                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
+                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
+                    break;
+                //汉化文本
+                case "汉化文本":
+                    dwfileinfoset.文件网址 = Properties.Settings.Default.汉化文件地址;
+                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
+                    dwfileinfoset.文件保存地址 = Directory.GetCurrentDirectory() + "\\addons\\arcdps\\" + dwfileinfoset.需下载文件名;
+                    break;
+                case "小提示":
+                    dwfileinfoset.文件网址 = Properties.Settings.Default.小提示_地址;
+                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
+                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
+                    break;
+                case "配置板":
+                    dwfileinfoset.文件网址 = Properties.Settings.Default.配置板_地址;
+                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
+                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
+                    break;
+                case "流动输出":
+                    dwfileinfoset.文件网址 = Properties.Settings.Default.流动输出_地址;
+                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
+                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
+                    break;
+                case "团队力学":
+                    dwfileinfoset.文件网址 = Properties.Settings.Default.团队力学_地址;
+                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
+                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
+                    break;
+                case "团队恩赐":
+                    dwfileinfoset.文件网址 = Properties.Settings.Default.团队恩赐_地址;
+                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
+                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
+                    break;
+                case "坐骑插件":
+                    dwfileinfoset.文件网址 = Properties.Settings.Default.坐骑插件_地址;
+                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
+                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
+                    break;
+                case "DX9TO12":
+                    break;
+                case "ReShade滤镜":
+                    dwfileinfoset.文件网址 = Properties.Settings.Default.r滤镜_地址;
+                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
+                    if (Properties.Settings.Default.dx12)
+                    {
+                        dwfileinfoset.文件保存地址 = Directory.GetCurrentDirectory() + "\\" + dwfileinfoset.需下载文件名;
+                        dwfileinfoset.解压模式 = 1;
+                    }
+                    else
+                    {
+                        dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
+                        dwfileinfoset.解压模式 = 2;
+                    }
+                    break;
+                case "Sweet滤镜":
+                    dwfileinfoset.文件网址 = Properties.Settings.Default.s滤镜_地址;
+                    dwfileinfoset.需下载文件名 = Path.GetFileName(dwfileinfoset.文件网址);
+                    dwfileinfoset.文件保存地址 = bin64 + "\\" + dwfileinfoset.需下载文件名;
+                    dwfileinfoset.解压模式 = 2;
+                    break;
+                default:
+                    break;
+            }
+            //根据文件类型选择下载方式
+            if (Properties.Settings.Default.多线程下载)
+            {
+                if (Label1.Content.ToString() == "汉化文本")
+                {
+                    单线程下载();
+                }
+                else
+                {
+                    多线程下载();
+                }
+            }
+            else
+            {
+                单线程下载();
+            }
 
-        ////=======新代码
-        ///
+        }
 
+        public void 单线程下载()
+        {
+            Task.Run(new Action(开始单线程下载));
+        }
 
+        public void 开始单线程下载()
+        {
+            Thread.BeginThreadAffinity();
+            bool 可以下载;
+            if (获得标签() == "主程序")
+            {
+                可以下载 = 是否允许下载(@"http://gw2sy.top/getitnow.txt");
 
+            }
+            else if(获得标签() == "DX9TO12")
+            {
+                可以下载 = 是否允许下载(@"http://gw2sy.top/getdxnow.txt");
+            }
+            else
+            {
+                可以下载 = true;
+            }
 
+            if (可以下载)
+            {
+                //初始化参数
+                HttpWebRequest request = null;
+                HttpWebResponse response = null;
+                Stream st = null;
+                Stream so = null;
+                long totalBytes;
+                long totalBytes2 = 0;
+                string 缓存 = dwfileinfoset.文件保存地址 + ".tmp";
 
+                if (获得标签() == "DX9TO12")
+                {
+                    var wc = new WebClient();
+                    try
+                    {
+                        string html = wc.DownloadString(@"http://gw2sy.top/dx12name6.txt");
+                        if (html != "")
+                        {
+                            string[] 分段 = html.Split('@');
+                            dwfileinfoset.需下载文件名 = 分段[0];
+                            long.TryParse(分段[1], out totalBytes2);
+                            dwfileinfoset.文件保存地址 = Directory.GetCurrentDirectory() + "//" + dwfileinfoset.需下载文件名;
+                            缓存 = dwfileinfoset.文件保存地址 + ".tmp";
+                            dwfileinfoset.文件网址 = @"http://gw2sy.top/" + dwfileinfoset.需下载文件名;
+                            Properties.Settings.Default.dx12文件名 = dwfileinfoset.需下载文件名;
+                            Properties.Settings.Default.Save();
+                        }
+                        else
+                        {
+                            通知标签(0, "获取服务器文件信息失败!");
+                            完成 = true;
+                            return;
+                        }
+                    }
+                    catch (Exception )
+                    {
+                        通知标签(0, "尝试获取文件名失败");
+                        完成 = true;
+                        return;
+                    }
+                    finally
+                    {
+                        wc.Dispose();
+                    }
+                }
+                
+                try
+                {
+                    //读取文件大小
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    通知标签(1, dwfileinfoset.需下载文件名 + "尝试链接");
+                    request = (HttpWebRequest)WebRequest.Create(dwfileinfoset.文件网址);
+                    response = (HttpWebResponse)request.GetResponse();
+                    totalBytes = response.ContentLength;
+                    if (totalBytes > 0)
+                    {
+                        通知标签(1, dwfileinfoset.需下载文件名 + "读取成功");
+                        _DateTime = response.LastModified;
+                        通知进度条最大值(100);
+                    }
+                    else
+                    {
+                        通知标签(0, dwfileinfoset.需下载文件名 + "读取失败");
+                        完成 = true;
+                        return;
+                    }
 
+                    if (获得标签() == "DX9TO12" && totalBytes != totalBytes2)
+                    {
+                        通知标签(0, "服务端文件大小和源文件不匹配!请联系神油");
+                        完成 = true;
+                        return;
+                    }
+                    //判断是否需要更新
+                    bool yum = false;
+                    if (File.Exists(dwfileinfoset.文件保存地址))
+                    {
+                        yum = totalBytes.ToString() == File.ReadAllBytes(dwfileinfoset.文件保存地址).Length.ToString();
+                        if (yum)
+                        {
+                            通知标签(1, dwfileinfoset.需下载文件名 + "文件大小相同");
+                        }
+                        else
+                        {
+                            通知标签(1, dwfileinfoset.需下载文件名 + "文件大小不同");
+                        }
+                    }
+                    else
+                    {
+                        if (!File.Exists(dwfileinfoset.文件保存地址))
+                        {
+                            通知标签(1, dwfileinfoset.需下载文件名 + "文件不存在");
+                        }
+                        yum = false;
+                    }
+                    //根据判断开始下载
+                    if (!File.GetLastWriteTime(dwfileinfoset.文件保存地址).DayOfYear.Equals(response.LastModified.DayOfYear) || yum == false)
+                    {
+                        try
+                        {
+                            st = response.GetResponseStream();
+                            so = new FileStream(缓存, FileMode.Create);
+                            long totalDownloadedByte = 0;
+                            byte[] by = new byte[1024];
+                            int osize = st.Read(by, 0, by.Length);
+                            通知标签(1, dwfileinfoset.需下载文件名 + "开始下载");
+                            while (osize > 0)
+                            {
+                                totalDownloadedByte = osize + totalDownloadedByte;
+                                so.Write(by, 0, osize);
 
+                                通知进度条(Math.Round((Double)totalDownloadedByte / (Double)totalBytes * (Double)100, 2) );
+                                osize = st.Read(by, 0, by.Length);
+                            }
+                            if (so != null) so.Close();
+                            if (st != null) st.Close();
 
-        #region 废弃代码
-        //private void 下载4()
-        //{
-        //    Task.Run(new Action(Start4));
-        //}
+                            File.Copy(缓存, dwfileinfoset.文件保存地址, true);
+                            File.SetLastWriteTime(dwfileinfoset.文件保存地址, _DateTime);
 
-        //private void Start4()
-        //{
-        //    Thread.BeginThreadAffinity();
-        //    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-        //    HttpWebRequest request = null;
-        //    HttpWebResponse response = null;
-        //    Stream ResStream = null;
-        //    StreamReader streamReader = null;
-        //    try
-        //    {
-        //        Label2.Content = Label1.Content + "尝试获取文件地址";
-        //        request = (HttpWebRequest)WebRequest.Create(@"https://api.github.com/repos/megai2/d912pxy/releases/latest");
-        //        request.Method = "GET";
-        //        request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
-        //        request.Headers.Add("Accept-Language", "zh-CN,zh;q=0.9");
-        //        request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.26 Safari/537.36 Core/1.63.5977.400 LBBROWSER/10.1.3752.400";
-        //        //request.UnsafeAuthenticatedConnectionSharing = true;
-        //        response = (HttpWebResponse)request.GetResponse();
-        //        ResStream = response.GetResponseStream();
-        //        streamReader = new StreamReader(ResStream);
-        //        string str = string.Empty;
-        //        //循环读取从指定网站获得的数据
-        //        while ((str = streamReader.ReadLine()) != null)
-        //        {
-        //            if (str.IndexOf("browser_download_url") > 0)
-        //            {
-        //                str = str.Replace("browser_download_url\":", "");
-        //                str = str.Replace("\"", "");
-        //                str = str.Replace(" ", "");
-        //                str.Trim();
-        //                下载地址 = str;
-        //                文件名 = Path.GetFileName(str);
-        //                Label2.Content = "尝试获取到:" + 文件名;
-        //            }
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        Label2.Content = Label1.Content + "尝试获取最新文件失败";
-        //    }
-        //    finally
-        //    {
-        //        if (request != null) request.Abort();
-        //        if (response != null) response.Close();
-        //        if (ResStream != null) ResStream.Close();
-        //        if (streamReader != null) streamReader.Close();
-        //    }
+                            通知进度条(100);
+                            通知标签(1, dwfileinfoset.需下载文件名 + "下载完成");
 
-        //    if (文件名 != "" && 下载地址 != "")
-        //    {
-        //        dwfileinfoset.文件保存地址 = Directory.GetCurrentDirectory() + "//" + 文件名;
+                            if (获得标签() == "DX9TO12")
+                            {
+                                解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
+                            }
+                            else
+                            {
+                                if (dwfileinfoset.解压模式 > 0)
+                                {
+                                    if (dwfileinfoset.解压模式 == 2)
+                                    {
+                                        解压当前文件(dwfileinfoset.文件保存地址, bin64);
+                                    }
+                                    else
+                                    {
+                                        解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
+                                    }
+                                }
+                                else
+                                {
+                                    完成 = true;
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            通知标签(0, dwfileinfoset.需下载文件名 + "下载过程中出错");
+                            完成 = true;
+                        }
 
-        //        if (File.Exists(Directory.GetCurrentDirectory() + "//" + 文件名))
-        //        {
-        //            Properties.Settings.Default.dx12文件名 = 文件名;
-        //            Properties.Settings.Default.Save();
-        //            ProgressBar1.Value = ProgressBar1.Maximum;
-        //            Label2.Content = 文件名 + "发现现存文件";
-        //            Label2.Foreground = Brushes.Green;
+                    }
+                    else
+                    {
+                        通知进度条(100);
+                        通知标签(1, dwfileinfoset.需下载文件名 + "无需更新");
+                        if (获得标签() == "DX9TO12")
+                        {
+                            if (!Directory.Exists(Directory.GetCurrentDirectory() + "\\d912pxy") || !File.Exists(Directory.GetCurrentDirectory() + "\\bin64\\d912pxy.dll"))
+                            {
+                                解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
+                            }
+                        }
+                        if (获得标签() == "Sweet滤镜")
+                        {
+                            if (!Directory.Exists(bin64 + "\\SweetFX"))
+                            {
+                                解压当前文件(dwfileinfoset.文件保存地址, bin64);
+                            }
+                        }
+                        if (获得标签() == "ReShade滤镜")
+                        {
+                            if (dwfileinfoset.解压模式 == 2 && !Directory.Exists(bin64 + "\\reshade-shaders"))
+                            {
+                                解压当前文件(dwfileinfoset.文件保存地址, bin64);
+                            }
+                            if (dwfileinfoset.解压模式 == 1 && !Directory.Exists(Directory.GetCurrentDirectory() + "\\reshade-shaders"))
+                            {
+                                解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
+                            }
+                        }
+                        完成 = true;
+                    }
 
-        //            解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
-        //            完成 = true;
-        //            Thread.EndThreadAffinity();
+                }
+                catch (Exception)
+                {
 
-        //        }
-        //        else
-        //        {
-        //            Start5();
-        //        }
-        //    }
-        //}
+                    通知标签(0, "网络读取过程中出错!");
+                    完成 = true;
+                }
+                finally
+                {
+                    if (request != null) request.Abort();
+                    if (response != null) response.Close();
+                    if (so != null) so.Close();
+                    if (st != null) st.Close();
+                    if (File.Exists(缓存)) File.Delete(缓存);
+                }
+            }
+            else
+            {
+                完成 = true;
+            }
+            Thread.EndThreadAffinity();
+        }
 
-        //private void Start5()
-        //{
+        public bool 是否允许下载(string 检测地址) 
+        {
+            bool 允许下载 = false;
+            int a = 0;
+            var wc2 = new WebClient();
+            try
+            {
+                var html = wc2.DownloadString(检测地址);
+                int.TryParse(html, out a);
+                wc2.Dispose();
+            }
+            catch (Exception)
+            {
+                a = 0;
+                通知标签(0, "获取服务器状态失败");
+            }
+            finally
+            {
+                wc2.Dispose();
+            }
+            if (a == 0)
+            {
+                通知标签(0, "服务器更新中,请等会再来");
+            }
+            else
+            {
+                允许下载 = true;
+            }
+            return 允许下载;
+        }
 
-        //    HttpWebRequest request = null;
-        //    HttpWebResponse response = null;
-        //    Stream st = null;
-        //    Stream so = null;
-        //    long totalBytes;
-        //    string 缓存 = dwfileinfoset.文件保存地址 + ".tmp";
-        //    try
-        //    {
-
-        //        Label2.Content = 文件名 + "尝试链接";
-        //        request = (HttpWebRequest)WebRequest.Create(下载地址);
-        //        request.Timeout = 5000;
-        //        response = (HttpWebResponse)request.GetResponse();
-        //        totalBytes = response.ContentLength;
-        //        if (totalBytes > 0)
-        //        {
-        //            Label2.Content = 文件名 + "读取成功";
-        //            _DateTime = response.LastModified;
-        //            ProgressBar1.Maximum = (int)totalBytes;
-        //        }
-        //        else
-        //        {
-        //            Label2.Content = 文件名 + "读取失败";
-        //            Label2.Foreground = Brushes.Red;
-        //            完成 = true;
-        //            return;
-        //        }
-        //        bool yum = false;
-        //        if (File.Exists(Directory.GetCurrentDirectory() + "\\" + Properties.Settings.Default.dx12文件名))
-        //        {
-        //            yum = true;
-        //        }
-        //        if (!Properties.Settings.Default.dx12文件名.Equals(文件名))
-        //        {
-        //            File.Delete(Directory.GetCurrentDirectory() + "\\" + Properties.Settings.Default.dx12文件名);
-        //            Properties.Settings.Default.dx12文件名 = 文件名;
-        //            Properties.Settings.Default.Save();
-        //            yum = false;
-        //        }
-        //        if (!File.Exists(dwfileinfoset.文件保存地址) || yum == false)
-        //        {
-        //            try
-        //            {
-        //                st = response.GetResponseStream();
-        //                so = new FileStream(缓存, FileMode.Create);
-        //                long totalDownloadedByte = 0;
-        //                byte[] by = new byte[1024];
-        //                int osize = st.Read(by, 0, by.Length);
-        //                Label2.Content = 文件名 + "开始下载";
-        //                while (osize > 0)
-        //                {
-        //                    totalDownloadedByte = osize + totalDownloadedByte;
-        //                    so.Write(by, 0, osize);
-        //                    ProgressBar1.Value = (int)totalDownloadedByte;
-        //                    osize = st.Read(by, 0, by.Length);
-        //                }
-        //                ////log.WriteLogFile(Label1.Content + " 关闭缓存流");
-        //                if (so != null) so.Close();
-        //                if (st != null) st.Close();
-        //                ////log.WriteLogFile(Label1.Content + " 拷贝缓存到老文件");
-        //                File.Copy(缓存, dwfileinfoset.文件保存地址, true);
-        //                File.SetLastWriteTime(dwfileinfoset.文件保存地址, _DateTime);
-        //                ////log.WriteLogFile(Label1.Content + " 下载完成");
-        //                ProgressBar1.Value = (int)totalBytes;
-        //                Label2.Content = 文件名 + "下载完成\r\n";
-        //                Label2.Foreground = Brushes.Green;
-        //                解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
-        //            }
-        //            catch (Exception)
-        //            {
-        //                ////log.WriteLogFile(Label1.Content + "下载过程中出错");
-        //                Label2.Content = 文件名 + "下载过程中出错";
-        //                Label2.Foreground = Brushes.Red;
-        //                完成 = true;
-        //            }
-
-        //        }
-        //        else
-        //        {
-        //            ////log.WriteLogFile(Label1.Content + " 无需更新");
-        //            ProgressBar1.Value = (int)totalBytes;
-        //            Label2.Content = 文件名 + "无需更新";
-        //            Label2.Foreground = Brushes.Green;
-        //            if (!Directory.Exists(Directory.GetCurrentDirectory() + "\\d912pxy"))
-        //            {
-        //                解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
-        //            }
-        //            完成 = true;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        ////log.WriteLogFile(Label1.Content + "网络读取过程中出错");
-        //        Label2.Content = 文件名 + "网络读取过程中出错";
-        //        Label2.Foreground = Brushes.Red;
-        //        完成 = true;
-        //    }
-        //    finally
-        //    {
-        //        if (request != null) request.Abort();
-        //        if (response != null) response.Close();
-        //        if (so != null) so.Close();
-        //        if (st != null) st.Close();
-        //        if (File.Exists(缓存)) File.Delete(缓存);
-        //    }
-
-        //    Thread.EndThreadAffinity();
-        //}
-        #endregion
     }
 }

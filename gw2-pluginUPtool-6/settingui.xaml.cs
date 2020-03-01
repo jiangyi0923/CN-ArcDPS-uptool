@@ -48,6 +48,7 @@ namespace gw2_pluginUPtool_6
             cc32.IsChecked = Properties.Settings.Default.跳过_;
             cc33.IsChecked = Properties.Settings.Default.开启_;
             cc34.IsChecked = Properties.Settings.Default.附加_;
+            cc35.IsChecked = Properties.Settings.Default.多线程下载;
             #endregion
             #region 控件解决冲突
             if (cc11.IsChecked.Value)
@@ -162,6 +163,7 @@ namespace gw2_pluginUPtool_6
             Properties.Settings.Default.跳过_ = cc32.IsChecked.Value;
             Properties.Settings.Default.开启_ = cc33.IsChecked.Value;
             Properties.Settings.Default.附加_ = cc34.IsChecked.Value;
+            Properties.Settings.Default.多线程下载 = cc35.IsChecked.Value;
             Properties.Settings.Default.Save();
             Home.Children.Remove(this);
         }
@@ -282,6 +284,8 @@ namespace gw2_pluginUPtool_6
                 case "更新完成启动游戏":
                     break;
                 case "附加加载命令":
+                    break;
+                case "多线程下载":
                     break;
                 default:
                     break;
