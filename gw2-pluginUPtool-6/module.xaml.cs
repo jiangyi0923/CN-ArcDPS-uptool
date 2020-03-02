@@ -531,11 +531,12 @@ namespace gw2_pluginUPtool_6
                         {
                             httpfile[j] = new HttpFile( dwfileinfoset, j);
                             threadk[j] = new Thread(new ThreadStart(httpfile[j].Receive));
+                            threadk[j].IsBackground = true;
                             threadk[j].Start();
-                            
                         }
                         通知标签(1, dwfileinfoset.需下载文件名 + "开始下载");
                         Thread hbth = new Thread(new ThreadStart(多线程文件合并));
+                        hbth.IsBackground = true;
                         hbth.Start();
                     }
                     else

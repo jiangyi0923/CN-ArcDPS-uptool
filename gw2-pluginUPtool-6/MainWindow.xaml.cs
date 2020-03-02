@@ -608,6 +608,7 @@ namespace gw2_pluginUPtool_6
             };
             timer2.Tick += 启动事件;
             timer2.Start();
+         
         }
 
         private void 加载(object sender, RoutedEventArgs e)
