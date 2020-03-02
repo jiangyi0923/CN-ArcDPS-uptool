@@ -1,26 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Path = System.IO.Path;
 
 namespace gw2_pluginUPtool_6
 {
-    public delegate bool 下载完成();
+    
     public delegate void 开始下载();
     /// <summary>
     /// settingui.xaml 的交互逻辑
@@ -32,13 +23,13 @@ namespace gw2_pluginUPtool_6
             InitializeComponent();
         }
 
-        //通用参数
         public class 文件信息参数
         {
             public string 需下载文件名;
             public string 文件网址;
             public string 文件保存地址;
             public int 文件大小;
+            public Double 下载完成大小;
             public string[] 文件线程名集合;
             public int[] 文件线程范围_起;
             public int[] 文件线程范围_终;
@@ -104,11 +95,8 @@ namespace gw2_pluginUPtool_6
         private readonly string bin64 = Directory.GetCurrentDirectory() + "\\bin64";
         private DateTime _DateTime;
 
-        #region 多线程下载
-
         public class HttpFile
         {
-            public ProgressBar PBar;
             public int threadh;//线程代号  
             public string filename;//文件名  
             public string strUrl;//接收文件的URL  
@@ -118,12 +106,12 @@ namespace gw2_pluginUPtool_6
             public byte[] nbytes;//接收缓冲区  
             public int nreadsize;//接收字节数  
             public 文件信息参数 dwfileinfo;
-            public HttpFile(ProgressBar PBarin, 文件信息参数 Dwfilein, int threadhin)//构造方法  
+            public HttpFile( 文件信息参数 Dwfilein, int threadhin)//构造方法  
             {
-                PBar = PBarin;
                 dwfileinfo = Dwfilein;
                 threadh = threadhin;
             }
+
             public void Receive()//接收线程  
             {
                 filename = dwfileinfo.文件线程名集合[threadh];
@@ -142,74 +130,21 @@ namespace gw2_pluginUPtool_6
                     {
                         fs.Write(nbytes, 0, nreadsize);
                         nreadsize = ns.Read(nbytes, 0, nbytes.Length);
-                        PBar.Dispatcher.Invoke(new Action(delegate
-                        {
-                            PBar.Value += nreadsize;
-                        }));
+                        dwfileinfo.下载完成大小 += nreadsize;
                     }
-                    fs.Close();
-                    ns.Close();
-
                 }
                 catch (Exception)
                 {
-                    fs.Close();
+
+                }
+                finally
+                {
+                    if (request != null) request.Abort();
+                    if (ns != null) ns.Close();
+                    if (fs != null) fs.Close();
                 }
                 dwfileinfo.线程状态集合[threadh] = true;
             }
-        }
-
-        public void 多线程下载()
-        {
-            HttpWebRequest request;
-            long filesize = 0;
-            try
-            {
-                request = (HttpWebRequest)HttpWebRequest.Create(dwfileinfoset.文件网址);
-                filesize = request.GetResponse().ContentLength;//取得目标文件的长度  
-                ProgressBar1.Maximum = (int)filesize;
-                request.Abort();
-                Label2.Content = dwfileinfoset.需下载文件名 + "远程大小:" + filesize.ToString();
-            }
-            catch (Exception)
-            {
-                Label2.Content = dwfileinfoset.需下载文件名 + "获取文件失败";
-            }
-            线程数量 = 6;
-            dwfileinfoset.线程状态集合 = new bool[线程数量];
-            dwfileinfoset.文件线程名集合 = new string[线程数量];
-            dwfileinfoset.文件线程范围_起 = new int[线程数量];
-            dwfileinfoset.文件线程范围_终 = new int[线程数量];
-
-            int filethread = (int)filesize / 线程数量;
-            for (int i = 0; i < 线程数量; i++)
-            {
-                dwfileinfoset.线程状态集合[i] = false;
-                dwfileinfoset.文件线程名集合[i] = dwfileinfoset.文件保存地址 + i.ToString() + ".tmp";
-                if (i < 线程数量 - 1)
-                {
-                    dwfileinfoset.文件线程范围_起[i] = filethread * i;
-                    dwfileinfoset.文件线程范围_终[i] = filethread * (i + 1) - 1;
-                }
-                else
-                {
-                    dwfileinfoset.文件线程范围_起[i] = filethread * i;
-                    dwfileinfoset.文件线程范围_终[i] = (int)filesize;
-                }
-            }
-
-            Thread[] threadk = new Thread[线程数量];
-            HttpFile[] httpfile = new HttpFile[线程数量];
-            for (int j = 0; j < 线程数量; j++)
-            {
-                httpfile[j] = new HttpFile(ProgressBar1, dwfileinfoset, j);
-                threadk[j] = new Thread(new ThreadStart(httpfile[j].Receive));
-                threadk[j].Start();
-                Label2.Content = dwfileinfoset.需下载文件名 + "开始下载";
-            }
-
-            Thread hbth = new Thread(new ThreadStart(多线程文件合并));
-            hbth.Start();
         }
 
         public void 通知标签(int 类型,string 内容) 
@@ -259,15 +194,13 @@ namespace gw2_pluginUPtool_6
                     {
                         完成 = false;
                         Thread.Sleep(100);
+                        通知进度条(Math.Round((Double)dwfileinfoset.下载完成大小 / (Double)dwfileinfoset.文件大小 * (Double)100, 2));
                         break;
                     }
                 }
                 if (完成 == true)
                 {
-                    Label2.Dispatcher.Invoke(new Action(delegate
-                    {
-                        Label2.Content = dwfileinfoset.需下载文件名 + "下载线程全部结束";
-                    }));
+                    通知标签(1, dwfileinfoset.需下载文件名 + "下载完成");
                     break;
                 }
             }
@@ -301,26 +234,45 @@ namespace gw2_pluginUPtool_6
                     File.Delete(dwfileinfoset.文件线程名集合[i]);
                 }
             }
+            Thread.Sleep(1000);
 
-            Label2.Dispatcher.Invoke(new Action(delegate
+            File.SetLastWriteTime(dwfileinfoset.文件保存地址, _DateTime);
+
+            if (File.ReadAllBytes(dwfileinfoset.文件保存地址).Length.ToString() != dwfileinfoset.文件大小.ToString())
             {
-                Label2.Content = dwfileinfoset.需下载文件名 + "下载完成";
-            }));
-            ProgressBar1.Dispatcher.Invoke(new Action(delegate
+                通知标签(0, dwfileinfoset.需下载文件名 + "大小不一致,请重新更新");
+            }
+
+            通知进度条(100);
+            通知标签(1, dwfileinfoset.需下载文件名 + "下载完成");
+
+            if (获得标签() == "DX9TO12")
             {
-                ProgressBar1.Value = ProgressBar1.Maximum = 100;
-            }));
+                解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
+            }
+            else
+            {
+                if (dwfileinfoset.解压模式 > 0)
+                {
+                    if (dwfileinfoset.解压模式 == 2)
+                    {
+                        解压当前文件(dwfileinfoset.文件保存地址, bin64);
+                    }
+                    else
+                    {
+                        解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
+                    }
+                }
+                else
+                {
+                    完成 = true;
+                }
+            }
         }
-
-        #endregion
 
         public void 新综合更新代码()
         {
-            //判断是前置文件夹是否存在
-            if (!Directory.Exists(bin64))
-            {
-                Directory.CreateDirectory(bin64);
-            }
+
             // 还要判断 addons目录 
 
             //赋值初始参数
@@ -418,6 +370,223 @@ namespace gw2_pluginUPtool_6
         public void 单线程下载()
         {
             Task.Run(new Action(开始单线程下载));
+        }
+
+        public void 多线程下载()
+        {
+            Task.Run(new Action(开始多线程下载));
+        }
+
+        public void 开始多线程下载() 
+        {
+            Thread.BeginThreadAffinity();
+            bool 可以下载;
+            if (获得标签() == "主程序")
+            {
+                可以下载 = 是否允许下载(@"http://gw2sy.top/getitnow.txt");
+
+            }
+            else if (获得标签() == "DX9TO12")
+            {
+                可以下载 = 是否允许下载(@"http://gw2sy.top/getdxnow.txt");
+            }
+            else
+            {
+                可以下载 = true;
+            }
+
+            if (可以下载)
+            {
+                long totalBytes = 0;
+                long totalBytes2 = 0;
+                string 缓存 = dwfileinfoset.文件保存地址 + ".tmp";
+                if (获得标签() == "DX9TO12")
+                {
+                    var wc = new WebClient();
+                    try
+                    {
+                        string html = wc.DownloadString(@"http://gw2sy.top/dx12name6.txt");
+                        if (html != "")
+                        {
+                            string[] 分段 = html.Split('@');
+                            dwfileinfoset.需下载文件名 = 分段[0];
+                            long.TryParse(分段[1], out totalBytes2);
+                            dwfileinfoset.文件保存地址 = Directory.GetCurrentDirectory() + "//" + dwfileinfoset.需下载文件名;
+                            缓存 = dwfileinfoset.文件保存地址 + ".tmp";
+                            dwfileinfoset.文件网址 = @"http://gw2sy.top/" + dwfileinfoset.需下载文件名;
+                            Properties.Settings.Default.dx12文件名 = dwfileinfoset.需下载文件名;
+                            Properties.Settings.Default.Save();
+                        }
+                        else
+                        {
+                            通知标签(0, "获取服务器文件信息失败!");
+                            完成 = true;
+                            return;
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        通知标签(0, "尝试获取文件名失败");
+                        完成 = true;
+                        return;
+                    }
+                    finally
+                    {
+                        wc.Dispose();
+                    }
+                }
+
+                HttpWebRequest request = null;
+                HttpWebResponse response = null;
+                try
+                {
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    通知标签(1, dwfileinfoset.需下载文件名 + "尝试链接");
+                    request = (HttpWebRequest)WebRequest.Create(dwfileinfoset.文件网址);
+                    response = (HttpWebResponse)request.GetResponse();
+                    totalBytes = response.ContentLength;
+                    if (totalBytes > 0)
+                    {
+                        通知标签(1, dwfileinfoset.需下载文件名 + "读取成功");
+                        _DateTime = response.LastModified;
+                        通知进度条最大值(100);
+                    }
+                    else
+                    {
+                        通知标签(0, dwfileinfoset.需下载文件名 + "读取失败");
+                        完成 = true;
+                        return;
+                    }
+
+                    if (获得标签() == "DX9TO12" && totalBytes != totalBytes2)
+                    {
+                        通知标签(0, "服务端文件大小和源文件不匹配!请联系神油");
+                        完成 = true;
+                        return;
+                    }
+                    //
+                    bool yum = false;
+                    if (File.Exists(dwfileinfoset.文件保存地址))
+                    {
+                        yum = totalBytes.ToString() == File.ReadAllBytes(dwfileinfoset.文件保存地址).Length.ToString();
+                        if (yum)
+                        {
+                            通知标签(1, dwfileinfoset.需下载文件名 + "文件大小相同");
+                        }
+                        else
+                        {
+                            通知标签(1, dwfileinfoset.需下载文件名 + "文件大小不同");
+                        }
+                    }
+                    else
+                    {
+                        if (!File.Exists(dwfileinfoset.文件保存地址))
+                        {
+                            通知标签(1, dwfileinfoset.需下载文件名 + "文件不存在");
+                        }
+                        yum = false;
+                    }
+
+                    if (!File.GetLastWriteTime(dwfileinfoset.文件保存地址).DayOfYear.Equals(response.LastModified.DayOfYear) || yum == false)
+                    {
+                        线程数量 = 6;
+                        dwfileinfoset.线程状态集合 = new bool[线程数量];
+                        dwfileinfoset.文件线程名集合 = new string[线程数量];
+                        dwfileinfoset.文件线程范围_起 = new int[线程数量];
+                        dwfileinfoset.文件线程范围_终 = new int[线程数量];
+                        dwfileinfoset.文件大小 = (int)totalBytes;
+                        int filethread = (int)totalBytes / 线程数量;
+                        for (int i = 0; i < 线程数量; i++)
+                        {
+                            dwfileinfoset.线程状态集合[i] = false;
+                            dwfileinfoset.文件线程名集合[i] = dwfileinfoset.文件保存地址 + i.ToString() + ".tmp";
+                            if (File.Exists(dwfileinfoset.文件线程名集合[i]))
+                            {
+                                try
+                                {
+                                    File.Delete(dwfileinfoset.文件线程名集合[i]);
+                                }
+                                catch (Exception)
+                                {
+                                    通知标签(0,  "缓存文件无法删除");
+                                    完成 = true;
+                                    return;
+                                }
+                            }
+                            if (i < 线程数量 - 1)
+                            {
+                                dwfileinfoset.文件线程范围_起[i] = filethread * i;
+                                dwfileinfoset.文件线程范围_终[i] = filethread * (i + 1) - 1;
+                            }
+                            else
+                            {
+                                dwfileinfoset.文件线程范围_起[i] = filethread * i;
+                                dwfileinfoset.文件线程范围_终[i] = (int)totalBytes;
+                            }
+                        }
+
+                        Thread[] threadk = new Thread[线程数量];
+                        HttpFile[] httpfile = new HttpFile[线程数量];
+                        for (int j = 0; j < 线程数量; j++)
+                        {
+                            httpfile[j] = new HttpFile( dwfileinfoset, j);
+                            threadk[j] = new Thread(new ThreadStart(httpfile[j].Receive));
+                            threadk[j].Start();
+                            
+                        }
+                        通知标签(1, dwfileinfoset.需下载文件名 + "开始下载");
+                        Thread hbth = new Thread(new ThreadStart(多线程文件合并));
+                        hbth.Start();
+                    }
+                    else
+                    {
+                        通知进度条(100);
+                        通知标签(1, dwfileinfoset.需下载文件名 + "无需更新");
+                        if (获得标签() == "DX9TO12")
+                        {
+                            if (!Directory.Exists(Directory.GetCurrentDirectory() + "\\d912pxy") || !File.Exists(Directory.GetCurrentDirectory() + "\\bin64\\d912pxy.dll"))
+                            {
+                                解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
+                            }
+                        }
+                        if (获得标签() == "Sweet滤镜")
+                        {
+                            if (!Directory.Exists(bin64 + "\\SweetFX"))
+                            {
+                                解压当前文件(dwfileinfoset.文件保存地址, bin64);
+                            }
+                        }
+                        if (获得标签() == "ReShade滤镜")
+                        {
+                            if (dwfileinfoset.解压模式 == 2 && !Directory.Exists(bin64 + "\\reshade-shaders"))
+                            {
+                                解压当前文件(dwfileinfoset.文件保存地址, bin64);
+                            }
+                            if (dwfileinfoset.解压模式 == 1 && !Directory.Exists(Directory.GetCurrentDirectory() + "\\reshade-shaders"))
+                            {
+                                解压当前文件(dwfileinfoset.文件保存地址, Directory.GetCurrentDirectory());
+                            }
+                        }
+                        完成 = true;
+                    }
+                }
+                catch (Exception)
+                {
+                    通知标签(0, "网络读取过程中出错!");
+                    完成 = true;
+                }
+                finally
+                {
+                    if (request != null) request.Abort();
+                    if (response != null) response.Close();
+                }
+            }
+            else
+            {
+                完成 = true;
+            }
+            Thread.EndThreadAffinity();
+
         }
 
         public void 开始单线程下载()

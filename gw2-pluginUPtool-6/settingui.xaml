@@ -34,6 +34,7 @@
                 <Label Content="再次提醒:周三周四不要更新插件" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="31" Canvas.Top="292"/>
                 <Label Content="工具有BUG请联系我QQ:375480856" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="17" Canvas.Top="309"/>
                 <Label Content="网站: gw2sy.top" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="65" Canvas.Top="334"/>
+                <Label Content="鼠标移动到插件名称可查看快捷键等信息" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="7" Canvas.Top="359"/>
             </Canvas>
         </Viewbox>
 

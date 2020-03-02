@@ -95,7 +95,7 @@
                         </Style>
                     </ProgressBar.Style>
                 </ProgressBar>
-                <Label x:Name="Label2" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="210" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Canvas.Left="10" Canvas.Top="30" />
+                <Label x:Name="Label2" Content="可以开始更新" HorizontalAlignment="Left" VerticalAlignment="Top" Width="210" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Canvas.Left="10" Canvas.Top="30" />
             </Canvas>
         </Viewbox>
     </Grid>

@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace gw2_pluginUPtool_6
 {
@@ -57,9 +49,6 @@ namespace gw2_pluginUPtool_6
         {
             if (!Directory.Exists(插件路劲))
             {
-
-
-
                 解压(1);
             }
             else
@@ -67,6 +56,7 @@ namespace gw2_pluginUPtool_6
                 解压(2);
             }
         }
+
         public void 解压(int aii)
         {
             if (aii == 1)
@@ -241,6 +231,39 @@ namespace gw2_pluginUPtool_6
             {
                 B_2.IsEnabled = true;
             }
+        }
+        /// <summary>
+        /// 2013
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void B_3_Click(object sender, RoutedEventArgs e)
+        {
+            string 官方网址 = "http://dl.gw2sy.top/vcredist_x64.exe";
+            //log.WriteLogFile("打开了官网");
+            Process.Start(官方网址);
+        }
+        /// <summary>
+        /// 2019
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void B_59_Click(object sender, RoutedEventArgs e)
+        {
+            string 官方网址 = "http://dl.gw2sy.top/vc_redist.x64.exe";
+            //log.WriteLogFile("打开了官网");
+            Process.Start(官方网址);
+        }
+        /// <summary>
+        /// dx
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void B_dx_Click(object sender, RoutedEventArgs e)
+        {
+            string 官方网址 = "http://dl.gw2sy.top/dxwebsetup.exe";
+            //log.WriteLogFile("打开了官网");
+            Process.Start(官方网址);
         }
     }
 }

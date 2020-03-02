@@ -1,39 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace gw2_pluginUPtool_6
 {
     /// <summary>
     /// settingui.xaml 的交互逻辑
     /// </summary>
+    /// 
+    
     public partial class settingui : UserControl
     {
         public settingui()
         {
             InitializeComponent();
             #region 控件赋值
-            cc11.ToolTip = "已经很久没更新了";
-            cc12.ToolTip = "已经很久没更新了";
-            cc13.ToolTip = "已经很久没更新了";
-            cc14.ToolTip = "已经很久没更新了";
-            cc15.ToolTip = "已经很久没更新了";
-            cc16.ToolTip = "已经很久没更新了";
-            cc21.ToolTip = "已经很久没更新了";
-            cc22.ToolTip = "已经很久没更新了";
-            cc23.ToolTip = "已经很久没更新了";
-            cc24.ToolTip = "已经很久没更新了";
+            cc11.ToolTip = "shift + alt + t arcdps设置面板\r\nshift + alt + o 重载arcdps插件\r\nshift + alt + c 打开团队面板\r\nshift + alt + h 隐藏arcdps插件所有面板\r\n不要取消,取消也是勾选,呵呵";
+            cc12.ToolTip = "在pvp和战场可能出现闪退的BUG,\r\n另外请不要开启技能图标设置容易闪退!";
+            cc14.ToolTip = "在地图模式/角色选择模式/地图加载模式下显示游戏内的小提示";
+            cc13.ToolTip = "不定期更新,个人觉得没多少用处";
+            cc15.ToolTip = "shift + alt + L 打开团队力学插件日志 \r\n已经很久没更新了";
+            cc16.ToolTip = "shift + alt + N 打开团队力学插件统计 \r\n已经很久没更新了";
+            cc21.ToolTip = "shift + alt + m 坐骑插件设置面板+鼠标跟随设置\r\nF8 打开关闭的boss计时器\r\nF9 打开或关闭鼠标跟随模块\r\nF10 打开输出循环提示器设置\r\nF7 打开输出循环提示器(可在设置中更改)\r\n详细请看网页介绍";
+            cc22.ToolTip = "2.0版本以后需要清洁安装\r\n首次使用会加载模型这使得第一次进某图缓慢\r\n并且模型缓慢加载是正常现象\r\n具体使用请自己去百度";
+            cc23.ToolTip = "HOME 开启ReShade滤镜设置\r\n需要自行设置\r\n而且很容易报错哦";
+            cc24.ToolTip = "INSERT 开启/关闭SweetFX滤镜\r\n无需设置懒人首选\r\n报错几率小";
+            cc35.ToolTip = "多线程下载模式还不是很完善慎用!\r\n更新页面按钮无法点击的时候关程序会凉";
+            cc32.ToolTip = "每当周三是美服固定更新时间\r\n每当周五是国服固定更新时间\r\n开启此功能避免同步美服插件更新而导致游戏报错";
             cc11.IsChecked = Properties.Settings.Default.主程序;
             cc12.IsChecked = Properties.Settings.Default.流动输出;
             cc13.IsChecked = Properties.Settings.Default.配置板;
@@ -75,7 +68,14 @@ namespace gw2_pluginUPtool_6
             }
             else
             {
-                cc22.IsEnabled = cc23.IsEnabled = true;
+                if (cc21.IsChecked.Value)
+                {
+                    cc22.IsEnabled = cc23.IsEnabled = true;
+                }
+                else
+                {
+                    cc22.IsEnabled = cc23.IsEnabled = false;
+                }
             }
 
             if (cc22.IsChecked.Value || cc23.IsChecked.Value)
@@ -84,7 +84,15 @@ namespace gw2_pluginUPtool_6
             }
             else
             {
-                cc24.IsEnabled = true;
+                if (cc21.IsChecked.Value)
+                {
+                    cc24.IsEnabled = true;
+                }
+                else
+                {
+                    cc24.IsEnabled = false;
+                }
+                
             }
 
             if (cc31.IsChecked.Value)
@@ -103,7 +111,12 @@ namespace gw2_pluginUPtool_6
         /// </summary>
         public Grid Home { get; set; }
 
-        //public WrapPanel HomeWrapP { get; set; }
+        public bool 完成 = false;
+        public bool 设置完成__()
+        {
+            return 完成;
+        }
+
         /// <summary>
         /// 取消按钮
         /// </summary>
@@ -111,6 +124,7 @@ namespace gw2_pluginUPtool_6
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            完成 = true;
             Home.Children.Remove(this);
         }
         /// <summary>
@@ -125,7 +139,6 @@ namespace gw2_pluginUPtool_6
                 Home = Home
             };
             Home.Children.Add(tesui);
-            Home.Children.Remove(this);
         }
         /// <summary>
         /// 卸载按钮
@@ -134,13 +147,16 @@ namespace gw2_pluginUPtool_6
         /// <param name="e"></param>
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            //Masgessui ms = new Masgessui();
-            //for (int i = 0; i < 100; i++)
-            //{
-            //    //ms.BOX.AppendText(i+ " dfdwsf\r\n");
-            //}
-            //ms.Home = Home;
-            //Home.Children.Add(ms);
+            Masgessui masgessui = new Masgessui
+            {
+                Home = Home,
+                卸载按钮数值 = 1
+            };
+            masgessui.label1.Content = "确定卸载所有插件吗?";
+            masgessui.Box_.AppendText("这将卸载游戏目录下所有插件\r\n");
+            masgessui.Box_.AppendText("但会保留addons目录及文件!\r\n");
+            masgessui.Box_.AppendText("此目录不影响你正常玩游戏!\r\n");
+            Home.Children.Add(masgessui);
         }
         /// <summary>
         /// 保存按钮
@@ -164,7 +180,12 @@ namespace gw2_pluginUPtool_6
             Properties.Settings.Default.开启_ = cc33.IsChecked.Value;
             Properties.Settings.Default.附加_ = cc34.IsChecked.Value;
             Properties.Settings.Default.多线程下载 = cc35.IsChecked.Value;
+            if (!cc11.IsChecked.Value && !cc21.IsChecked.Value)
+            {
+                Properties.Settings.Default.主程序 = true;
+            }
             Properties.Settings.Default.Save();
+            完成 = true;
             Home.Children.Remove(this);
         }
 
@@ -209,6 +230,11 @@ namespace gw2_pluginUPtool_6
                     if (checkBox.IsChecked.Value)
                     {
                         cc22.IsEnabled = cc23.IsEnabled = cc24.IsEnabled = true;
+                        if (!cc11.IsChecked.Value)
+                        {
+                            cc11.IsChecked = true;
+                            cc12.IsEnabled = cc13.IsEnabled = cc14.IsEnabled = cc15.IsEnabled = cc16.IsEnabled = true;
+                        }
                     }
                     else
                     {
@@ -277,6 +303,7 @@ namespace gw2_pluginUPtool_6
                     else
                     {
                         cc32.IsEnabled = false;
+                        cc32.IsChecked = false;
                     }
                     break;
                 case "跳过更新":

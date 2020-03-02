@@ -12,6 +12,7 @@
                 <Label x:Name="label1" Content="提示" FontSize="18" Canvas.Left="10" Canvas.Top="10" Height="39" Width="220" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Button Content="确定" Width="75" Canvas.Left="155" Canvas.Top="443" Click="Button_Click"/>
                 <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="371" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="218" Canvas.Left="10" Canvas.Top="54" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Button  x:Name="buttonquxi" Content="取消" Width="75" Canvas.Left="16" Canvas.Top="443" Click="Buttonquxi_Click"/>
             </Canvas>
         </Viewbox>
     </Grid>

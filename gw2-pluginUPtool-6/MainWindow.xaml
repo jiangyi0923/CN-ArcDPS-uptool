@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:gw2_pluginUPtool_6"
         mc:Ignorable="d"
-        Title="激战2插件更新工具"  Height="560" MaxHeight="560" MinHeight="560" Width="240" MaxWidth="240" MinWidth="240"  Icon="Gw2-64_00003.ico" SnapsToDevicePixels="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.IsSharedSizeScope="True" UseLayoutRounding="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" AllowDrop="True" IsTabStop="True" ResizeMode="NoResize">
+        Title="激战2插件更新工具"  Height="560" MaxHeight="560" MinHeight="560" Width="240" MaxWidth="240" MinWidth="240"  Icon="Gw2-64_00003.ico" SnapsToDevicePixels="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.IsSharedSizeScope="True" UseLayoutRounding="True" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" AllowDrop="True" IsTabStop="True" ResizeMode="NoResize" GotFocus="加载" Closing="Window_Closing" >
     <Grid x:Name="Home" Margin="0,0,2,2">
         <Viewbox Stretch=" Uniform">
             <Canvas Width=" 240" Height="560">

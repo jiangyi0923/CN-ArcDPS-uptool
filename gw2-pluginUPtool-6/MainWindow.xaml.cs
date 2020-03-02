@@ -1,21 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace gw2_pluginUPtool_6
@@ -27,6 +14,7 @@ namespace gw2_pluginUPtool_6
     {
         public MainWindow()
         {
+            重置界面 = true;
             InitializeComponent();
             FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(Process.GetCurrentProcess().MainModule.FileName);
             int.TryParse(myFileVersionInfo.FileVersion, out int 本地版本);
@@ -49,19 +37,70 @@ namespace gw2_pluginUPtool_6
                 if (mgui.有新版本() || mgui.有新提醒())
                 {
                     有提示_ = true;
+                    mgui.buttonquxi.IsEnabled = false;
                     Home.Children.Add(mgui);
                 }
             }
-
-            开始监听();
+            
+            
 
         }
 
-        public void 开始监听() 
+        private bool 有提示_;
+        private 开始下载 开始;
+        private Func<bool> 完成;
+        private Func<bool> 设置页面完成;
+        private bool 下载中 = false;
+        private bool 设置中 = false;
+        private int 项目数 = 0;
+        private int 完成个数 = 0;
+        private readonly string bin64 = Directory.GetCurrentDirectory() + "//bin64";
+        private readonly string 目录 = Directory.GetCurrentDirectory();
+        private bool 重置界面 = false;
+        private int 倒计时秒数 = 5;
+        private bool 启动监听状态 = false;
+
+        /// <summary>
+        /// 设置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            settingui sgui = new settingui
+            {
+                Home = Home
+            };
+            设置页面完成 = null;
+            设置页面完成 += sgui.设置完成__;
+            设置中 = true;
+            Home.Children.Add(sgui);
+        }
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            开始更新();
+        }
+
+        /// <summary>
+        /// 启动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            启动游戏程序();
+        }
+
+        private void 开始监听()
         {
             DispatcherTimer timer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(100)
+                Interval = TimeSpan.FromMilliseconds(2)
             };
             timer.Tick += 监听事件;
             timer.Start();
@@ -74,39 +113,13 @@ namespace gw2_pluginUPtool_6
                 执行界面事件();
             }
         }
-
-        /// <summary>
-        /// 设置
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //Panelpad.Children.Add(new module());向画板添加自定义控件集
-            settingui sgui = new settingui
-            {
-                Home = Home
-            };
-            Home.Children.Add(sgui);
-
-        }
-        /// <summary>
-        /// 更新
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void 开始更新()
         {
             有提示_ = false;
-            开始更新();
-        }
-
-        public void 开始更新()
-        {
             if (检测冲突() && !有提示_)
             {
+                按钮开关(0);
                 下载中 = true;
-                //按钮开关(0);
                 开始();
             }
         }
@@ -132,10 +145,15 @@ namespace gw2_pluginUPtool_6
             }
         }
 
-        public bool 检测冲突()
+        private bool 检测冲突()
         {
             testui teui = new testui();
 
+            //判断是前置文件夹是否存在
+            if (!Directory.Exists(bin64))
+            {
+                Directory.CreateDirectory(bin64);
+            }
 
             if (!File.Exists(teui.插件路劲 + "//arcdps_font.ttf") || !File.Exists(teui.插件路劲B + "\\fonts\\arcdps_font.ttf"))
             {
@@ -191,6 +209,13 @@ namespace gw2_pluginUPtool_6
                 }
 
                 if (Properties.Settings.Default.s滤镜)
+                {
+                    if (File.Exists(目录 + "\\dxgi.dll"))
+                    {
+                        File.Delete(目录 + "\\dxgi.dll");
+                    }
+                }
+                else
                 {
                     if (File.Exists(目录 + "\\dxgi.dll"))
                     {
@@ -298,7 +323,7 @@ namespace gw2_pluginUPtool_6
             return true;
         }
 
-        public void 删除文件(string 文件)
+        private void 删除文件(string 文件)
         {
             if (File.Exists(Directory.GetCurrentDirectory() + "\\" + 文件))
             {
@@ -336,171 +361,263 @@ namespace gw2_pluginUPtool_6
             }
         }
 
-
         private void 执行界面事件()
         {
-            if (下载中)
+
+            if (重置界面)
             {
+                重置界面 = false;
+                开始 = null;
+                完成 = null;
+                项目数 = 0;
+                完成个数 = 0;
+                Runbt.Content = "启动";
+                Panelpad.Children.Clear();
+                if (Properties.Settings.Default.主程序)
+                {
+                    module settingui = new module();
+                    settingui.赋值("主程序");
+                    开始 += settingui.新综合更新代码;
+                    完成 += settingui.下载完成__;
+                    Panelpad.Children.Add(settingui);
+                    module settingui2 = new module();
+                    settingui2.赋值("汉化文本");
+                    开始 += settingui2.新综合更新代码;
+                    完成 += settingui2.下载完成__;
+                    Panelpad.Children.Add(settingui2);
+                }
+                if (Properties.Settings.Default.小提示)
+                {
+                    module settingui = new module();
+                    settingui.赋值("小提示");
+                    开始 += settingui.新综合更新代码;
+                    完成 += settingui.下载完成__;
+                    Panelpad.Children.Add(settingui);
+                }
+                if (Properties.Settings.Default.配置板)
+                {
+                    module settingui = new module();
+                    settingui.赋值("配置板");
+                    开始 += settingui.新综合更新代码;
+                    完成 += settingui.下载完成__;
+                    Panelpad.Children.Add(settingui);
+                }
+                if (Properties.Settings.Default.流动输出)
+                {
+                    module settingui = new module();
+                    settingui.赋值("流动输出");
+                    开始 += settingui.新综合更新代码;
+                    完成 += settingui.下载完成__;
+                    Panelpad.Children.Add(settingui);
+                }
+                if (Properties.Settings.Default.团队力学)
+                {
+                    module settingui = new module();
+                    settingui.赋值("团队力学");
+                    开始 += settingui.新综合更新代码;
+                    完成 += settingui.下载完成__;
+                    Panelpad.Children.Add(settingui);
+                }
+                if (Properties.Settings.Default.团队恩赐)
+                {
+                    module settingui = new module();
+                    settingui.赋值("团队恩赐");
+                    开始 += settingui.新综合更新代码;
+                    完成 += settingui.下载完成__;
+                    Panelpad.Children.Add(settingui);
+                }
+                if (Properties.Settings.Default.坐骑插件)
+                {
+                    module settingui = new module();
+                    settingui.赋值("坐骑插件");
+                    开始 += settingui.新综合更新代码;
+                    完成 += settingui.下载完成__;
+                    Panelpad.Children.Add(settingui);
+                }
+                if (Properties.Settings.Default.dx12)
+                {
+                    module settingui = new module();
+                    settingui.赋值("DX9TO12");
+                    开始 += settingui.新综合更新代码;
+                    完成 += settingui.下载完成__;
+                    Panelpad.Children.Add(settingui);
+                }
+                if (Properties.Settings.Default.r滤镜)
+                {
+                    module settingui = new module();
+                    settingui.赋值("ReShade滤镜");
+                    开始 += settingui.新综合更新代码;
+                    完成 += settingui.下载完成__;
+                    Panelpad.Children.Add(settingui);
+                }
+                if (Properties.Settings.Default.s滤镜)
+                {
+                    module settingui = new module();
+                    settingui.赋值("Sweet滤镜");
+                    开始 += settingui.新综合更新代码;
+                    完成 += settingui.下载完成__;
+                    Panelpad.Children.Add(settingui);
+                }
+                项目数 = 开始.GetInvocationList().Count();
+                if (Properties.Settings.Default.启动_)
+                {
+                    if (Properties.Settings.Default.跳过_)
+                    {
+                        string[] Day = new string[] { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+                        string week = Day[Convert.ToInt32(DateTime.Now.DayOfWeek.ToString("d"))].ToString();
+                        if (!week.Equals(Day[3]) && !week.Equals(Day[4]))
+                        {
+                            this.Dispatcher.Invoke(new Action(delegate
+                            {
+                                this.开始更新(); 
+                            }));
+                        }
+                        else
+                        {
+                            下载中 = false;
+                            按钮开关(1);
+                        }
+                    }
+                    else
+                    {
+                        this.Dispatcher.Invoke(new Action(delegate
+                        {
+                            this.开始更新();
+                        }));
+                    }
+                }
                 return;
             }
 
-            开始 = null;
-            完成 = null;
-            项目数 = 0;
-            完成个数 = 0;
-            Runbt.Content = "启动";
-            Panelpad.Children.Clear();
-            if (Properties.Settings.Default.主程序)
+            if (下载中)
             {
-                module settingui = new module();
-                settingui.赋值("主程序");
-                开始 += settingui.新综合更新代码;
-                完成 += settingui.下载完成__;
-                Panelpad.Children.Add(settingui);
-                module settingui2 = new module();
-                settingui2.赋值("汉化文本");
-                开始 += settingui2.新综合更新代码;
-                完成 += settingui2.下载完成__;
-                Panelpad.Children.Add(settingui2);
+                完成个数 = 0;
+                foreach (Func<bool> dd in 完成.GetInvocationList())
+                {
+                    if (dd())
+                    {
+                        完成个数++;
+                        if ((项目数 == 完成个数) && (完成个数 > 0))
+                        {
+                            下载中 = false;
+                            重置界面 = false;
+                            完成个数 = 0;
+                            按钮开关(1);
+                            if ( Properties.Settings.Default.开启_ && !设置中 && !启动监听状态)
+                            {
+                                启动监听();
+                            }
+                        }
+                    }
+                }
+                return;
             }
-            if (Properties.Settings.Default.小提示)
+            else
             {
-                module settingui = new module();
-                settingui.赋值("小提示");
-                开始 += settingui.新综合更新代码;
-                完成 += settingui.下载完成__;
-                Panelpad.Children.Add(settingui);
+                if (设置中)
+                {
+                    foreach (Func<bool> dd in 设置页面完成.GetInvocationList())
+                    {
+                        if (dd())
+                        {
+                            设置中 = false;
+                            重置界面 = true;
+                        }
+                    }
+                }
+                if (Properties.Settings.Default.启动_ &&Properties.Settings.Default.开启_&& !设置中&& !启动监听状态)
+                {
+                    启动监听();
+                }
             }
-            if (Properties.Settings.Default.配置板)
+
+            
+        }
+
+        private void 启动游戏程序()
+        {
+            string 启动代码 = "-maploadinfo";
+            if (!Properties.Settings.Default.附加_)
             {
-                module settingui = new module();
-                settingui.赋值("配置板");
-                开始 += settingui.新综合更新代码;
-                完成 += settingui.下载完成__;
-                Panelpad.Children.Add(settingui);
+                启动代码 = "";
             }
-            if (Properties.Settings.Default.流动输出)
+            if (File.Exists(@".\\GW2Lanucher.exe"))
             {
-                module settingui = new module();
-                settingui.赋值("流动输出");
-                开始 += settingui.新综合更新代码;
-                完成 += settingui.下载完成__;
-                Panelpad.Children.Add(settingui);
+                if (File.Exists(bin64 + "\\d3d9.dll"))
+                {
+                    File.Copy(bin64 + "\\d3d9.dll", 目录 + "\\d3d9.dll", true);
+                }
+                ProcessStartInfo info = new ProcessStartInfo { FileName = @".\\GW2Lanucher.exe", Arguments = 启动代码 };
+#pragma warning disable IDE0067 // 丢失范围之前释放对象
+                Process pro = new Process
+                {
+                    StartInfo = info
+                };
+#pragma warning restore IDE0067 // 丢失范围之前释放对象
+                pro.Start();
+                Close();
             }
-            if (Properties.Settings.Default.团队力学)
+            else if (File.Exists(@".\\Gw2-64.exe"))
             {
-                module settingui = new module();
-                settingui.赋值("团队力学");
-                开始 += settingui.新综合更新代码;
-                完成 += settingui.下载完成__;
-                Panelpad.Children.Add(settingui);
-            }
-            if (Properties.Settings.Default.团队恩赐)
-            {
-                module settingui = new module();
-                settingui.赋值("团队恩赐");
-                开始 += settingui.新综合更新代码;
-                完成 += settingui.下载完成__;
-                Panelpad.Children.Add(settingui);
-            }
-            if (Properties.Settings.Default.坐骑插件)
-            {
-                module settingui = new module();
-                settingui.赋值("坐骑插件");
-                开始 += settingui.新综合更新代码;
-                完成 += settingui.下载完成__;
-                Panelpad.Children.Add(settingui);
-            }
-            if (Properties.Settings.Default.dx12)
-            {
-                module settingui = new module();
-                settingui.赋值("DX9TO12");
-                开始 += settingui.新综合更新代码;
-                完成 += settingui.下载完成__;
-                Panelpad.Children.Add(settingui);
-            }
-            if (Properties.Settings.Default.r滤镜)
-            {
-                module settingui = new module();
-                settingui.赋值("ReShade滤镜");
-                开始 += settingui.新综合更新代码;
-                完成 += settingui.下载完成__;
-                Panelpad.Children.Add(settingui);
-            }
-            if (Properties.Settings.Default.s滤镜)
-            {
-                module settingui = new module();
-                settingui.赋值("Sweet滤镜");
-                开始 += settingui.新综合更新代码;
-                完成 += settingui.下载完成__;
-                Panelpad.Children.Add(settingui);
-            }
-            项目数 = 开始.GetInvocationList().Count();
-            if (Properties.Settings.Default.启动_)
-            {
-                //是否更新();
+                ProcessStartInfo info = new ProcessStartInfo { FileName = @".\\Gw2-64.exe", Arguments = 启动代码 };
+#pragma warning disable IDE0067 // 丢失范围之前释放对象
+                Process pro = new Process
+                {
+                    StartInfo = info
+                };
+#pragma warning restore IDE0067 // 丢失范围之前释放对象
+                pro.Start();
+                Close();
             }
         }
 
-
-        /// <summary>
-        /// 启动
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void 启动事件(object sender, EventArgs e)
         {
-            BingetoTimer();
-        }
-
-        /// <summary>
-        /// 计时器计数
-        /// </summary>
-        private int Runtimer = 3;
-        private bool 有提示_;
-        private 开始下载 开始;
-        private Func<bool> 完成;
-        private bool 下载中 = false;
-        private bool 设置完成_ = true;
-        private int 项目数 = 0;
-        private int 完成个数 = 0;
-        private readonly string bin64 = Directory.GetCurrentDirectory() + "//bin64";
-        private readonly string 目录 = Directory.GetCurrentDirectory();
-        /// <summary>
-        /// 计时器委托
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            Runtimer--;
-            if (Runtimer < 0)
+            if (Properties.Settings.Default.开启_)
             {
-                Panelpad.Children.Add(new module());
-                //停止代码==>
-                DispatcherTimer timer = (DispatcherTimer)sender;
-                timer.Stop();
-                //停止代码==<
+                if (设置中 || 下载中)
+                {
+                    倒计时秒数 = 5;
+                    return;
+                }
+                else
+                {
+                    if (倒计时秒数 < 1)
+                    {
+                        启动游戏程序();
+                        倒计时秒数 = 5;
+                    }
+                    else
+                    {
+                        倒计时秒数--;
+                        Runbt.Dispatcher.Invoke(new Action(delegate
+                        {
+                            Runbt.Content = "启动-" + 倒计时秒数;
+                        }));
+                    }
+                }
             }
         }
 
-
-
-
-
-        /// <summary>
-        /// 开始计时器
-        /// </summary>
-        private void BingetoTimer()
+        private void 启动监听()
         {
-            DispatcherTimer timer = new DispatcherTimer
+            启动监听状态 = true;
+            DispatcherTimer timer2 = new DispatcherTimer
             {
                 Interval = TimeSpan.FromMilliseconds(1000)
             };
-            timer.Tick += Timer_Tick;
-            Runtimer = 3;
-            timer.Start();
+            timer2.Tick += 启动事件;
+            timer2.Start();
         }
 
+        private void 加载(object sender, RoutedEventArgs e)
+        {
+            开始监听();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Process.GetCurrentProcess().Kill();
+        }
     }
 }

@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace gw2_pluginUPtool_6
 {
@@ -29,9 +19,13 @@ namespace gw2_pluginUPtool_6
         }
         public Grid Home { get; set; }
         //public Grid Home { get; set; }
-        public TextBox Box_ { get; set; }
+        public TextBox Box_ { get { return textBox1; } }
 
 
+        public int 卸载按钮数值 { get; set; } = 0;
+
+        private readonly string bin64 = Directory.GetCurrentDirectory() + "//bin64";
+        private readonly string 目录 = Directory.GetCurrentDirectory();
         private readonly string 版本检测网址 = "http://gw2sy.top/wp-content/uploads/1.txt";
         private readonly string 更新说明 = "http://gw2sy.top/wp-content/uploads/2.txt";
         private readonly string 信息检测网址 = "http://gw2sy.top/wp-content/uploads/11.txt";
@@ -132,7 +126,7 @@ namespace gw2_pluginUPtool_6
 
         private string 说明()
         {
-            string a = "";
+            string a;
             try
             {
                 var wc = new WebClient();
@@ -150,7 +144,7 @@ namespace gw2_pluginUPtool_6
 
         private int 信息检测()
         {
-            int a = 0;
+            int a;
             try
             {
                 var wc = new WebClient();
@@ -168,7 +162,7 @@ namespace gw2_pluginUPtool_6
 
         private string 获取信息说明()
         {
-            string a = "";
+            string a;
             try
             {
                 var wc = new WebClient();
@@ -191,7 +185,121 @@ namespace gw2_pluginUPtool_6
         /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
+            if (卸载按钮数值 == 1)
+            {
+                卸载插件();
+            }
+            else
+            {
+                Home.Children.Remove(this);
+            }
+        }
+
+        private void Buttonquxi_Click(object sender, RoutedEventArgs e)
+        {
             Home.Children.Remove(this);
+        }
+
+        private void 卸载插件()
+        {
+            string[] 所有文件名 = new string[26]
+            {   "d3d9.dll",
+                "d3d9_arcdps_buildtemplates.dll",
+                "d3d9_arcdps_extras.dll",
+                "d3d9_arcdps_mechanicschs.dll",
+                "d3d9_arcdps_buildpad.dll",
+                "d3d9_arcdps_ct.dll",
+                "d3d9_chainload.dll",
+                "d3d9_arcdps_tablechs.dll",
+                "d3d9_arcdps_sct.dll",
+                "ReShade64.dll",
+                "ReShade.ini",
+                "DefaultPreset.ini",
+                "d3d9_mchain.dll",
+                "SweetFX readme.txt",
+                "SweetFX_preset.txt",
+                "SweetFX_settings.txt",
+                "dxgi.dll",
+                "d3d9_ReShade641.zip",
+                "d912pxy.dll",
+                "SweetFX.zip",
+                "ReShade.fx",
+                "Sweet.fx",
+                "dxgi.log",
+                "d3d9_mchain.log",
+                "ReShade64.log",
+                Properties.Settings.Default.dx12文件名
+            };
+            for (int i = 0; i < 所有文件名.Length; i++)
+            {
+                if (File.Exists(bin64 + "\\" + 所有文件名[i]))
+                {
+                    File.Delete(bin64 + "\\" + 所有文件名[i]);
+                    textBox1.AppendText("删除" + 所有文件名[i] + "\r\n");
+                }
+            }
+            for (int i = 0; i < 所有文件名.Length; i++)
+            {
+                if (File.Exists(目录 + "\\" + 所有文件名[i]))
+                {
+                    File.Delete(目录 + "\\" + 所有文件名[i]);
+                    textBox1.AppendText("删除" + 所有文件名[i] + "\r\n");
+                }
+            }
+            string didi1 = bin64 + "\\SweetFX";
+            if (Directory.Exists(didi1))
+            {
+                删除目录(didi1);
+                textBox1.AppendText("删除" + didi1 + "\r\n");
+            }
+            string didi2 = bin64 + "\\reshade-shaders";
+            if (Directory.Exists(didi2))
+            {
+                删除目录(didi2);
+                textBox1.AppendText("删除" + didi2 + "\r\n");
+            }
+            string didi3 = 目录 + "\\reshade-shaders";
+            if (Directory.Exists(didi3))
+            {
+                删除目录(didi3);
+                textBox1.AppendText("删除" + didi3 + "\r\n");
+            }
+
+            string didi4 = 目录 + "\\d912pxy";
+            if (Directory.Exists(didi4))
+            {
+                删除目录(didi4);
+                textBox1.AppendText("删除" + didi4 + "\r\n");
+            }
+            卸载按钮数值 = 0;
+        }
+
+        private static void 删除目录(string srcPath)
+        {
+            try
+            {
+                DirectoryInfo dir = new DirectoryInfo(srcPath);
+                FileSystemInfo[] fileinfo = dir.GetFileSystemInfos();  //返回目录中所有文件和子目录
+                foreach (FileSystemInfo i in fileinfo)
+                {
+                    if (i is DirectoryInfo)            //判断是否文件夹
+                    {
+                        DirectoryInfo subdir = new DirectoryInfo(i.FullName);
+                        subdir.Delete(true);          //删除子目录和文件
+                        
+                    }
+                    else
+                    {
+                        File.Delete(i.FullName);      //删除指定文件
+                    }
+                }
+                Directory.Delete(srcPath);
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
             
         }
     }
