@@ -7,13 +7,13 @@ using System.Windows;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("gw2-pluginUPtool-6")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("PlugIn-UpdateTool")]
+[assembly: AssemblyDescription("激战2插件更新工具")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("gw2-pluginUPtool-6")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("泰蜜的克鲁")]
+[assembly: AssemblyProduct("PlugIn-UpdateTool-V6")]
+[assembly: AssemblyCopyright("Copyright ©  2019 激战2玩家 印度神油")]
+[assembly: AssemblyTrademark("维爵爷.7046 QQ:375480856")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 会使此程序集中的类型
@@ -54,3 +54,4 @@ using System.Windows;
 [assembly: AssemblyVersion("600")]
 [assembly: AssemblyFileVersion("601")]
 [assembly: NeutralResourcesLanguage("zh")]
+[assembly: Guid("e6ad6d6b-2e87-4d3a-af21-4b8ef2869f0a")]
