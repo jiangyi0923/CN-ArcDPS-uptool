@@ -34,10 +34,20 @@ namespace gw2_pluginUPtool_6
                 {
                     Home = Home
                 };
-                if (mgui.有新版本() || mgui.有新提醒())
+                bool mg1 = mgui.有新版本();
+                bool mg2 = mgui.有新提醒();
+                if (mg1)
                 {
                     有提示_ = true;
                     mgui.buttonquxi.IsEnabled = false;
+                    mgui.Showtext(0);
+                    Home.Children.Add(mgui);
+                }
+                if (mg2 && !mg1)
+                {
+                    有提示_ = true;
+                    mgui.buttonquxi.IsEnabled = false;
+                    mgui.Showtext(1);
                     Home.Children.Add(mgui);
                 }
             }

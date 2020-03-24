@@ -20,7 +20,7 @@
                 <Button x:Name="B_3" Content="安装VC++2013" Width="139"  Canvas.Top="311" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="50" Click="B_3_Click"/>
                 <Button x:Name="B_59" Content="安装VC++2015-2019" Width="139"  Canvas.Top="338" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="50" Click="B_59_Click"/>
                 <Button x:Name="B_dx" Content="安装DX9.0c" Width="139"  Canvas.Top="365" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Canvas.Left="50" Click="B_dx_Click"/>
-                <Label x:Name="L2" Content="Label" Canvas.Left="10" Canvas.Top="191" />
+                <Label x:Name="L2" Content="Label" Canvas.Left="10" Canvas.Top="191" FontSize="9" />
                 <TextBox x:Name="TX1" Height="50" TextWrapping="Wrap" Text="" Width="220" Canvas.Left="10" Canvas.Top="121"/>
 
             </Canvas>

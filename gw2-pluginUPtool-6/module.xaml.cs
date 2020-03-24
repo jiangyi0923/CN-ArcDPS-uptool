@@ -35,6 +35,7 @@ namespace gw2_pluginUPtool_6
             public int[] 文件线程范围_终;
             public bool[] 线程状态集合;
             public int 解压模式 = 0;
+            public bool 错误 = false;
         }
 
         public void 赋值(string 标签)
@@ -91,10 +92,10 @@ namespace gw2_pluginUPtool_6
 
         public bool 完成 = false;
         public int 线程数量;
-        public 文件信息参数 dwfileinfoset = new 文件信息参数();
+        public 文件信息参数 dwfileinfoset ;
         private readonly string bin64 = Directory.GetCurrentDirectory() + "\\bin64";
         private DateTime _DateTime;
-
+        public Thread[] threadk;
         public class HttpFile
         {
             public int threadh;//线程代号  
@@ -112,6 +113,13 @@ namespace gw2_pluginUPtool_6
                 threadh = threadhin;
             }
 
+            ~HttpFile() {
+                if (request != null) request.Abort();
+                if (ns != null) ns.Close();
+                if (fs != null) fs.Close();
+            }
+
+
             public void Receive()//接收线程  
             {
                 filename = dwfileinfo.文件线程名集合[threadh];
@@ -123,6 +131,7 @@ namespace gw2_pluginUPtool_6
                 try
                 {
                     request = (HttpWebRequest)HttpWebRequest.Create(strUrl);
+                    request.ConnectionGroupName = threadh.ToString()+ dwfileinfo.文件线程范围_起[threadh].ToString();
                     request.AddRange(dwfileinfo.文件线程范围_起[threadh], dwfileinfo.文件线程范围_终[threadh]);
                     ns = request.GetResponse().GetResponseStream();
                     nreadsize = ns.Read(nbytes, 0, nbytes.Length);
@@ -135,7 +144,7 @@ namespace gw2_pluginUPtool_6
                 }
                 catch (Exception)
                 {
-
+                    dwfileinfo.错误 = true;
                 }
                 finally
                 {
@@ -195,12 +204,22 @@ namespace gw2_pluginUPtool_6
                         完成 = false;
                         Thread.Sleep(100);
                         通知进度条(Math.Round((Double)dwfileinfoset.下载完成大小 / (Double)dwfileinfoset.文件大小 * (Double)100, 2));
+                        if (dwfileinfoset.错误)
+                        {
+                            通知标签(0, "多线程下载失败(超时或连接错误),请重试");
+                            for (int y = 0; y < 线程数量; y++)
+                            {
+                                threadk[y].Abort();
+                            }
+                            完成 = true;
+                            return;
+                        }
                         break;
                     }
                 }
                 if (完成 == true)
                 {
-                    通知标签(1, dwfileinfoset.需下载文件名 + "下载完成");
+                    通知标签(1, dwfileinfoset.需下载文件名 + "下载完成,开始合并文件");
                     break;
                 }
             }
@@ -240,11 +259,15 @@ namespace gw2_pluginUPtool_6
 
             if (File.ReadAllBytes(dwfileinfoset.文件保存地址).Length.ToString() != dwfileinfoset.文件大小.ToString())
             {
-                通知标签(0, dwfileinfoset.需下载文件名 + "大小不一致,请重新更新");
+                通知标签(0, "合并的文件大小不一致,请重新更新");
+                File.Delete(dwfileinfoset.文件保存地址);
+                完成 = true;
             }
-
-            通知进度条(100);
-            通知标签(1, dwfileinfoset.需下载文件名 + "下载完成");
+            else
+            {
+                通知进度条(100);
+                通知标签(1, dwfileinfoset.需下载文件名 + "下载完成");
+            }
 
             if (获得标签() == "DX9TO12")
             {
@@ -279,7 +302,7 @@ namespace gw2_pluginUPtool_6
             完成 = false;
             ProgressBar1.Value = 0;
             Label2.Foreground = Brushes.Green;
-
+            dwfileinfoset = new 文件信息参数();
             switch (Label1.Content.ToString())
             {
                 case "主程序":
@@ -367,6 +390,7 @@ namespace gw2_pluginUPtool_6
 
         }
 
+
         public void 单线程下载()
         {
             Task.Run(new Action(开始单线程下载));
@@ -380,6 +404,7 @@ namespace gw2_pluginUPtool_6
         public void 开始多线程下载() 
         {
             Thread.BeginThreadAffinity();
+            通知进度条(0);
             bool 可以下载;
             if (获得标签() == "主程序")
             {
@@ -489,7 +514,7 @@ namespace gw2_pluginUPtool_6
 
                     if (!File.GetLastWriteTime(dwfileinfoset.文件保存地址).DayOfYear.Equals(response.LastModified.DayOfYear) || yum == false)
                     {
-                        线程数量 = 6;
+                        线程数量 = 8;
                         dwfileinfoset.线程状态集合 = new bool[线程数量];
                         dwfileinfoset.文件线程名集合 = new string[线程数量];
                         dwfileinfoset.文件线程范围_起 = new int[线程数量];
@@ -508,7 +533,7 @@ namespace gw2_pluginUPtool_6
                                 }
                                 catch (Exception)
                                 {
-                                    通知标签(0,  "缓存文件无法删除");
+                                    通知标签(0,  "缓存文件无法删除,请重试");
                                     完成 = true;
                                     return;
                                 }
@@ -525,7 +550,7 @@ namespace gw2_pluginUPtool_6
                             }
                         }
 
-                        Thread[] threadk = new Thread[线程数量];
+                        threadk = new Thread[线程数量];
                         HttpFile[] httpfile = new HttpFile[线程数量];
                         for (int j = 0; j < 线程数量; j++)
                         {
@@ -573,7 +598,7 @@ namespace gw2_pluginUPtool_6
                 }
                 catch (Exception)
                 {
-                    通知标签(0, "网络读取过程中出错!");
+                    通知标签(0, "网络读取过程中出错,请重试");
                     完成 = true;
                 }
                 finally
@@ -638,14 +663,14 @@ namespace gw2_pluginUPtool_6
                         }
                         else
                         {
-                            通知标签(0, "获取服务器文件信息失败!");
+                            通知标签(0, "获取服务器文件信息失败,请重试");
                             完成 = true;
                             return;
                         }
                     }
                     catch (Exception )
                     {
-                        通知标签(0, "尝试获取文件名失败");
+                        通知标签(0, "尝试获取文件名失败,请重试");
                         完成 = true;
                         return;
                     }
@@ -661,6 +686,7 @@ namespace gw2_pluginUPtool_6
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                     通知标签(1, dwfileinfoset.需下载文件名 + "尝试链接");
                     request = (HttpWebRequest)WebRequest.Create(dwfileinfoset.文件网址);
+                    request.ConnectionGroupName = 获得标签();
                     response = (HttpWebResponse)request.GetResponse();
                     totalBytes = response.ContentLength;
                     if (totalBytes > 0)
@@ -671,7 +697,7 @@ namespace gw2_pluginUPtool_6
                     }
                     else
                     {
-                        通知标签(0, dwfileinfoset.需下载文件名 + "读取失败");
+                        通知标签(0, "读取服务器文件失败,请重试");
                         完成 = true;
                         return;
                     }
@@ -707,6 +733,7 @@ namespace gw2_pluginUPtool_6
                     //根据判断开始下载
                     if (!File.GetLastWriteTime(dwfileinfoset.文件保存地址).DayOfYear.Equals(response.LastModified.DayOfYear) || yum == false)
                     {
+                        
                         try
                         {
                             st = response.GetResponseStream();
@@ -757,7 +784,7 @@ namespace gw2_pluginUPtool_6
                         }
                         catch (Exception)
                         {
-                            通知标签(0, dwfileinfoset.需下载文件名 + "下载过程中出错");
+                            通知标签(0, "下载过程中出错,请重试");
                             完成 = true;
                         }
 
@@ -798,7 +825,7 @@ namespace gw2_pluginUPtool_6
                 catch (Exception)
                 {
 
-                    通知标签(0, "网络读取过程中出错!");
+                    通知标签(0, "网络读取过程中出错,请重试");
                     完成 = true;
                 }
                 finally
@@ -831,7 +858,7 @@ namespace gw2_pluginUPtool_6
             catch (Exception)
             {
                 a = 0;
-                通知标签(0, "获取服务器状态失败");
+                通知标签(0, "获取服务器状态失败,请重试");
             }
             finally
             {

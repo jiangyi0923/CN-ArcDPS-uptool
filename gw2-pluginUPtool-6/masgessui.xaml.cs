@@ -23,13 +23,62 @@ namespace gw2_pluginUPtool_6
 
 
         public int 卸载按钮数值 { get; set; } = 0;
-
+        public int 最新信息检测 = 0;
         private readonly string bin64 = Directory.GetCurrentDirectory() + "//bin64";
         private readonly string 目录 = Directory.GetCurrentDirectory();
         private readonly string 版本检测网址 = "http://gw2sy.top/wp-content/uploads/1.txt";
         private readonly string 更新说明 = "http://gw2sy.top/wp-content/uploads/2.txt";
         private readonly string 信息检测网址 = "http://gw2sy.top/wp-content/uploads/11.txt";
         private readonly string 信息说明 = "http://gw2sy.top/wp-content/uploads/22.txt";
+
+        public void Showtext(int dts)
+        {
+            switch (dts)
+            {
+                case 0:
+                    string 说明文档 = 说明();
+                    if (说明文档 == "")
+                    {
+                        textBox1.Text += "获取最新版本说明失败,官网暂时无法连接\r\n";
+                    }
+                    else
+                    {
+                        string[] 分段 = 说明文档.Split('&');
+                        for (int i = 0; i < 分段.Length; i++)
+                        {
+                            textBox1.AppendText(分段[i] + "\r\n");
+                        }
+                    }
+                    break;
+                case 1:
+                    string 信息说明文档 = 获取信息说明();
+                    if (信息说明文档 == "")
+                    {
+                        ////log.WriteLogFile("获取最新提醒信息失败,官网暂时无法连接");
+                        textBox1.Text = "获取最新提醒信息失败,官网暂时无法连接\r\n";
+                    }
+                    else
+                    {
+                        label1.Content = "重要提醒!!";
+                        if (最新信息检测 == 2)
+                        {
+                            label1.Foreground = Brushes.Green;
+                        }
+                        if (最新信息检测 == 3)
+                        {
+                            label1.Foreground = Brushes.Red;
+                        }
+                        string[] 分段 = 信息说明文档.Split('&');
+                        for (int i = 0; i < 分段.Length; i++)
+                        {
+                            textBox1.AppendText(分段[i] + "\r\n");
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
 
         public bool 有新版本()
         {
@@ -40,27 +89,14 @@ namespace gw2_pluginUPtool_6
 
             if (最新版本 == 0)
             {
-                textBox1.AppendText("当前版本:V" + myFileVersionInfo.FileVersion + "\r\n");
+                textBox1.AppendText("1当前版本:V" + myFileVersionInfo.FileVersion + "\r\n");
                 textBox1.Text = "获取最新版本说明失败,官网暂时无法连接";
             }
             int.TryParse(myFileVersionInfo.FileVersion, out int 本地版本);
             if (本地版本 < 最新版本)
             {
-                textBox1.AppendText("当前版本:V" + myFileVersionInfo.FileVersion + "\r\n");
-                string 说明文档 = 说明();
+                textBox1.AppendText("2当前版本:V" + myFileVersionInfo.FileVersion + "\r\n");
                 a = true;
-                if (说明文档 == "")
-                {
-                    textBox1.Text += "获取最新版本说明失败,官网暂时无法连接\r\n";
-                }
-                else
-                {
-                    string[] 分段 = 说明文档.Split('&');
-                    for (int i = 0; i < 分段.Length; i++)
-                    {
-                        textBox1.AppendText(分段[i] + "\r\n");
-                    }
-                }
                 label1.Content = "有最新版本V" + 最新版本.ToString();
             }//
             return a;
@@ -69,35 +105,10 @@ namespace gw2_pluginUPtool_6
         public bool 有新提醒()
         {
             bool a = false;
-            int 最新信息检测 = 信息检测();
+            最新信息检测 = 信息检测();
             if (最新信息检测 != 0)
             {
                 a = true;
-                string 信息说明文档 = 获取信息说明();
-                if (信息说明文档 == "")
-                {
-                    ////log.WriteLogFile("获取最新提醒信息失败,官网暂时无法连接");
-                    textBox1.Text = "获取最新提醒信息失败,官网暂时无法连接\r\n";
-                }
-                else
-                {
-                    label1.Content = "重要提醒!!";
-                    if (最新信息检测 == 2)
-                    {
-                        label1.Foreground = Brushes.Green;
-                    }
-                    if (最新信息检测 == 3)
-                    {
-                        label1.Foreground = Brushes.Red;
-                    }
-                    string[] 分段 = 信息说明文档.Split('&');
-                    for (int i = 0; i < 分段.Length; i++)
-                    {
-                        textBox1.AppendText(分段[i] + "\r\n");
-                    }
-                }
-
-
             }
             return a;
         }
