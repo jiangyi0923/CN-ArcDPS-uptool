@@ -207,6 +207,10 @@ namespace gw2_pluginUPtool_6
                     }
                     break;
                 case "SCT流动输出":
+                    if (checkBox.IsChecked.Value)
+                    {
+                        System.Windows.Forms.MessageBox.Show("请注意安装此插件不要打开技能图标选项!!");
+                    }
                     break;
                 case "配置板":
                     break;

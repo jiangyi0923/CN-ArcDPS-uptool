@@ -52,6 +52,6 @@ using System.Windows;
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("600")]
-[assembly: AssemblyFileVersion("602")]
+[assembly: AssemblyFileVersion("603")]
 [assembly: NeutralResourcesLanguage("zh")]
 [assembly: Guid("e6ad6d6b-2e87-4d3a-af21-4b8ef2869f0a")]

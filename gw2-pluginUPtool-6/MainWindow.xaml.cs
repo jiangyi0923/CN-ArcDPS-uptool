@@ -19,7 +19,7 @@ namespace gw2_pluginUPtool_6
             FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(Process.GetCurrentProcess().MainModule.FileName);
             int.TryParse(myFileVersionInfo.FileVersion, out int 本地版本);
             Title = "激战2插件更新工具V6-" + 本地版本.ToString();
-            if (!Properties.Settings.Default.首次运行检测)
+            if (!Properties.Settings.Default.首次运行检测_)
             {
                 testui testui1 = new testui
                 {
@@ -34,20 +34,30 @@ namespace gw2_pluginUPtool_6
                 {
                     Home = Home
                 };
-                bool mg1 = mgui.有新版本();
-                bool mg2 = mgui.有新提醒();
-                if (mg1)
+                 
+
+                if (mgui.检测说明() == 1)
                 {
-                    有提示_ = true;
-                    mgui.buttonquxi.IsEnabled = false;
-                    mgui.Showtext(0);
-                    Home.Children.Add(mgui);
+                    bool mg1 = mgui.有新版本();
+                    bool mg2 = mgui.有新提醒();
+                    if (mg1)
+                    {
+                        有提示_ = true;
+                        mgui.Showtext(0);
+                        Home.Children.Add(mgui);
+                    }
+                    if (mg2 && !mg1)
+                    {
+                        有提示_ = true;
+                        mgui.buttonquxi.IsEnabled = false;
+                        mgui.Showtext(1);
+                        Home.Children.Add(mgui);
+                    }
                 }
-                if (mg2 && !mg1)
+                else
                 {
                     有提示_ = true;
                     mgui.buttonquxi.IsEnabled = false;
-                    mgui.Showtext(1);
                     Home.Children.Add(mgui);
                 }
             }

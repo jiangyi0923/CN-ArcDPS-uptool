@@ -21,40 +21,61 @@ namespace gw2_pluginUPtool_6
         //public Grid Home { get; set; }
         public TextBox Box_ { get { return textBox1; } }
 
+        public bool 有新版本() 
+        {
+            return 新版本;
+        }
+
+        public bool 有新提醒()
+        {
+            return 新提醒;
+        }
 
         public int 卸载按钮数值 { get; set; } = 0;
-        public int 最新信息检测 = 0;
+        
         private readonly string bin64 = Directory.GetCurrentDirectory() + "//bin64";
         private readonly string 目录 = Directory.GetCurrentDirectory();
-        private readonly string 版本检测网址 = "http://gw2sy.top/wp-content/uploads/1.txt";
-        private readonly string 更新说明 = "http://gw2sy.top/wp-content/uploads/2.txt";
-        private readonly string 信息检测网址 = "http://gw2sy.top/wp-content/uploads/11.txt";
-        private readonly string 信息说明 = "http://gw2sy.top/wp-content/uploads/22.txt";
+        private readonly string 信息检测网址 = "http://gw2sy.top/wp-content/uploads/mgs.txt";
+        private int 本地版本 = 0;
+        private int 最新版本 = 0;
+        private bool 新版本 = false;
+        private bool 新提醒 = false;
+        private int 最新信息检测 = 0;
+        private string 版本说明 = "";
+        private string 信息说明 = "";
+
+
+        private void Gotu_Click(object sender, RoutedEventArgs e)
+        {
+            string 官方网址 = "https://gw2sy.top/wp-content/uploads/GW2-Plug-Updatetool.exe";
+            Process.Start(官方网址);
+        }
+
 
         public void Showtext(int dts)
         {
             switch (dts)
             {
                 case 0:
-                    string 说明文档 = 说明();
-                    if (说明文档 == "")
+                    if (版本说明 == "")
                     {
                         textBox1.Text += "获取最新版本说明失败,官网暂时无法连接\r\n";
                     }
                     else
                     {
-                        string[] 分段 = 说明文档.Split('&');
+                        textBox1.AppendText("当前版本:V" + 本地版本 + "\r\n");
+                        string[] 分段 = 版本说明.Split('&');
                         for (int i = 0; i < 分段.Length; i++)
                         {
                             textBox1.AppendText(分段[i] + "\r\n");
                         }
+                        buttonquxi.Content = "前往下载";
+                        buttonquxi.Click += Gotu_Click;
                     }
                     break;
                 case 1:
-                    string 信息说明文档 = 获取信息说明();
-                    if (信息说明文档 == "")
+                    if (信息说明 == "")
                     {
-                        ////log.WriteLogFile("获取最新提醒信息失败,官网暂时无法连接");
                         textBox1.Text = "获取最新提醒信息失败,官网暂时无法连接\r\n";
                     }
                     else
@@ -68,7 +89,8 @@ namespace gw2_pluginUPtool_6
                         {
                             label1.Foreground = Brushes.Red;
                         }
-                        string[] 分段 = 信息说明文档.Split('&');
+                        string[] 分段 = 信息说明.Split('&');
+                        
                         for (int i = 0; i < 分段.Length; i++)
                         {
                             textBox1.AppendText(分段[i] + "\r\n");
@@ -80,95 +102,39 @@ namespace gw2_pluginUPtool_6
             }
         }
 
-        public bool 有新版本()
+        public int 检测说明() 
         {
-            bool a = false;
-            int 最新版本 = 版本();
-
-            FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(Process.GetCurrentProcess().MainModule.FileName);
-
-            if (最新版本 == 0)
+            int a速度去;
+            string 获取说明 = 获取信息说明();
+            if (获取说明 != "aaaaa")
             {
-                textBox1.AppendText("1当前版本:V" + myFileVersionInfo.FileVersion + "\r\n");
-                textBox1.Text = "获取最新版本说明失败,官网暂时无法连接";
+                FileVersionInfo myFileVersionInfo = FileVersionInfo.GetVersionInfo(Process.GetCurrentProcess().MainModule.FileName);
+                int.TryParse(myFileVersionInfo.FileVersion, out 本地版本);
+                string[] 分段1 = 获取说明.Split('#');
+                int.TryParse(分段1[0], out 最新版本);
+                if (本地版本 < 最新版本)
+                {
+                    新版本 = true;
+                    label1.Content = "有最新版本V" + 最新版本.ToString();
+                }
+                string[] 分段2 = 分段1[1].Split('*');
+                版本说明 = 分段2[0];
+                string[] 分段3 = 分段2[1].Split('@');
+                int.TryParse(分段3[0], out 最新信息检测);
+                if (最新信息检测 > 0)
+                {
+                    新提醒 = true;
+                }
+                string[] 分段4 = 分段3[1].Split('%');
+                信息说明 = 分段4[0];
+                a速度去 = 1;
             }
-            int.TryParse(myFileVersionInfo.FileVersion, out int 本地版本);
-            if (本地版本 < 最新版本)
+            else
             {
-                textBox1.AppendText("2当前版本:V" + myFileVersionInfo.FileVersion + "\r\n");
-                a = true;
-                label1.Content = "有最新版本V" + 最新版本.ToString();
-            }//
-            return a;
-        }
-
-        public bool 有新提醒()
-        {
-            bool a = false;
-            最新信息检测 = 信息检测();
-            if (最新信息检测 != 0)
-            {
-                a = true;
+                textBox1.Text = "获取最新信息失败,官网暂时无法连接\r\n";
+                a速度去 = 2;
             }
-            return a;
-        }
-
-        private int 版本()
-        {
-            int a = 0;
-            var wc2 = new WebClient();
-            try
-            {
-
-                var html = wc2.DownloadString(版本检测网址);
-                int.TryParse(html, out a);
-                wc2.Dispose();
-            }
-            catch (Exception)
-            {
-                a = 0;
-            }
-            finally
-            {
-                wc2.Dispose();
-            }
-            return a;
-        }
-
-        private string 说明()
-        {
-            string a;
-            try
-            {
-                var wc = new WebClient();
-                string html = wc.DownloadString(更新说明);
-                a = html;
-                wc.Dispose();
-            }
-            catch (Exception)
-            {
-                a = "";
-            }
-
-            return a;
-        }
-
-        private int 信息检测()
-        {
-            int a;
-            try
-            {
-                var wc = new WebClient();
-                var html = wc.DownloadString(信息检测网址);
-                int.TryParse(html, out a);
-                wc.Dispose();
-            }
-            catch (Exception)
-            {
-                ////log.WriteLogFile("获取最新提醒失败,官网暂时无法连接");
-                a = 0;
-            }
-            return a;
+            return a速度去;
         }
 
         private string 获取信息说明()
@@ -177,15 +143,14 @@ namespace gw2_pluginUPtool_6
             try
             {
                 var wc = new WebClient();
-                string html = wc.DownloadString(信息说明);
+                string html = wc.DownloadString(信息检测网址);
                 a = html;
                 wc.Dispose();
             }
             catch (Exception)
             {
-                a = "";
+                a = "aaaaa";
             }
-
             return a;
         }
 

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:gw2_pluginUPtool_6"
              mc:Ignorable="d" 
-             d:DesignHeight="560" d:DesignWidth="240" Background="White">
+             d:DesignHeight="560" d:DesignWidth="240" Background="White" Loaded="UserControl_Loaded">
     <Grid Margin="0,0,2,2">
         <Viewbox Stretch=" Uniform">
             <Canvas Width=" 240" Height=" 560">

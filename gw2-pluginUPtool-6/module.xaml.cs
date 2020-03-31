@@ -558,6 +558,7 @@ namespace gw2_pluginUPtool_6
                             threadk[j] = new Thread(new ThreadStart(httpfile[j].Receive));
                             threadk[j].IsBackground = true;
                             threadk[j].Start();
+                            
                         }
                         通知标签(1, dwfileinfoset.需下载文件名 + "开始下载");
                         Thread hbth = new Thread(new ThreadStart(多线程文件合并));
@@ -755,6 +756,20 @@ namespace gw2_pluginUPtool_6
 
                             File.Copy(缓存, dwfileinfoset.文件保存地址, true);
                             File.SetLastWriteTime(dwfileinfoset.文件保存地址, _DateTime);
+
+
+                            //if (File.ReadAllBytes(dwfileinfoset.文件保存地址).Length.ToString() != dwfileinfoset.文件大小.ToString())
+                            //{
+                            //    通知标签(0, "合并的文件大小不一致,请重新更新");
+                            //    File.Delete(dwfileinfoset.文件保存地址);
+                            //    完成 = true;
+                            //}
+                            //else
+                            //{
+                            //    通知进度条(100);
+                            //    通知标签(1, dwfileinfoset.需下载文件名 + "下载完成");
+                            //}
+
 
                             通知进度条(100);
                             通知标签(1, dwfileinfoset.需下载文件名 + "下载完成");

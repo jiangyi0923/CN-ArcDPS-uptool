@@ -63,29 +63,9 @@ namespace gw2_pluginUPtool_6.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] arcdps_font {
+        internal static byte[] peizi {
             get {
-                object obj = ResourceManager.GetObject("arcdps_font", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] lang {
-            get {
-                object obj = ResourceManager.GetObject("lang", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   查找 System.Byte[] 类型的本地化资源。
-        /// </summary>
-        internal static byte[] sct {
-            get {
-                object obj = ResourceManager.GetObject("sct", resourceCulture);
+                object obj = ResourceManager.GetObject("peizi", resourceCulture);
                 return ((byte[])(obj));
             }
         }

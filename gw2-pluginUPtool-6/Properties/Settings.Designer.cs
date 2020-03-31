@@ -37,7 +37,7 @@ namespace gw2_pluginUPtool_6.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool 流动输出 {
             get {
                 return ((bool)(this["流动输出"]));
@@ -133,7 +133,7 @@ namespace gw2_pluginUPtool_6.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool s滤镜 {
             get {
                 return ((bool)(this["s滤镜"]));
@@ -194,12 +194,12 @@ namespace gw2_pluginUPtool_6.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool 首次运行检测 {
+        public bool 首次运行检测_ {
             get {
-                return ((bool)(this["首次运行检测"]));
+                return ((bool)(this["首次运行检测_"]));
             }
             set {
-                this["首次运行检测"] = value;
+                this["首次运行检测_"] = value;
             }
         }
         
