@@ -514,6 +514,10 @@ namespace gw2_pluginUPtool_6
 
                     if (!File.GetLastWriteTime(dwfileinfoset.文件保存地址).DayOfYear.Equals(response.LastModified.DayOfYear) || yum == false)
                     {
+                        if (获得标签() == "主程序")
+                        {
+                            备份点d9();
+                        }
                         线程数量 = 8;
                         dwfileinfoset.线程状态集合 = new bool[线程数量];
                         dwfileinfoset.文件线程名集合 = new string[线程数量];
@@ -616,6 +620,21 @@ namespace gw2_pluginUPtool_6
 
         }
 
+        public void 备份点d9() 
+        {
+            if (File.Exists(bin64+ "//d3d9.dll"))
+            {
+                string tm = File.GetLastWriteTime(bin64 + "//d3d9.dll").Month + "月" + File.GetLastWriteTime(bin64 + "//d3d9.dll").Day + "日" + File.GetLastWriteTime(bin64 + "//d3d9.dll").Hour;
+                File.Copy(bin64 + "//d3d9.dll", bin64+ "//d3d9_创建时间" + tm + "时.备份", true);
+                File.SetLastWriteTime(bin64 + "//d3d9_创建时间" + tm + "时.备份", File.GetLastWriteTime(bin64 + "//d3d9.dll"));
+                通知标签(1, "备份d3d9.dll完成");
+            }
+            else
+            {
+                通知标签(1, "没有d3d9.dll可备份");
+            }
+        }
+
         public void 开始单线程下载()
         {
             Thread.BeginThreadAffinity();
@@ -680,9 +699,12 @@ namespace gw2_pluginUPtool_6
                         wc.Dispose();
                     }
                 }
-                
+
+
+
                 try
                 {
+
                     //读取文件大小
                     ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                     通知标签(1, dwfileinfoset.需下载文件名 + "尝试链接");
@@ -734,7 +756,10 @@ namespace gw2_pluginUPtool_6
                     //根据判断开始下载
                     if (!File.GetLastWriteTime(dwfileinfoset.文件保存地址).DayOfYear.Equals(response.LastModified.DayOfYear) || yum == false)
                     {
-                        
+                        if (获得标签() == "主程序")
+                        {
+                            备份点d9();
+                        }
                         try
                         {
                             st = response.GetResponseStream();
@@ -864,6 +889,7 @@ namespace gw2_pluginUPtool_6
             bool 允许下载 = false;
             int a = 0;
             var wc2 = new WebClient();
+            通知标签(1, "获取服务器更新状态");
             try
             {
                 var html = wc2.DownloadString(检测地址);

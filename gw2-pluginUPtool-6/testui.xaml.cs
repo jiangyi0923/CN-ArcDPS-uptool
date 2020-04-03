@@ -268,7 +268,7 @@ namespace gw2_pluginUPtool_6
             System.Windows.Forms.MessageBox.Show(
                 "因为微软VC++2015,VC++2017,VC++2019共用一个文件,\r\n" +
                 "导致VC++2015-2019的检测不一定准确,\r\n" +
-                "如果检测失败请自行查看系统\"应用与程序\"列表中\r\n" +
+                "如果检测失败或进游戏报错请自行查看系统\"应用与程序\"列表中\r\n" +
                 "是否存在\"Microsoft Visual C++ 2015-2019\"\r\n" +
                 "如果存在单独的2015,2017,2019请卸载后安装本工具提供的VC2015-2019\r\n" +
                 "或者百度下载最新版本的VC2015-2019运行库\r\n" +
@@ -329,7 +329,14 @@ namespace gw2_pluginUPtool_6
                 {
                     VC2013 = true;
                 }
-                if (software.IndexOf("DirectX x64") > -1)
+                if (software.IndexOf("DirectX") > -1)
+                {
+                    DX90 = true;
+                }
+            }
+            if (!DX90)
+            {
+                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.System) + "//D3DX9_43.dll"))
                 {
                     DX90 = true;
                 }

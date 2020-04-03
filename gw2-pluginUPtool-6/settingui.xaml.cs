@@ -310,7 +310,7 @@ namespace gw2_pluginUPtool_6
                         cc32.IsChecked = false;
                     }
                     break;
-                case "跳过更新":
+                case "跳过周三周四":
                     break;
                 case "更新完成启动游戏":
                     break;

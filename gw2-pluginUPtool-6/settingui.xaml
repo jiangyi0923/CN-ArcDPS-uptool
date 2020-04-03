@@ -27,7 +27,7 @@
                 <CheckBox x:Name="cc24" Content="Sweet滤镜" Canvas.Left="21" Canvas.Top="169" Click="Othck"/>
                 <Label Content="工具设置" Canvas.Left="21" Canvas.Top="215"/>
                 <CheckBox x:Name="cc31" Content="启动更新" Canvas.Left="21" Canvas.Top="245" Click="Tthck"/>
-                <CheckBox x:Name="cc32" Content="跳过更新" Canvas.Left="137" Canvas.Top="245" Click="Tthck"/>
+                <CheckBox x:Name="cc32" Content="跳过周三周四" Canvas.Left="137" Canvas.Top="245" Click="Tthck"/>
                 <CheckBox x:Name="cc33" Content="更新完成启动游戏" Canvas.Left="21" Canvas.Top="265" Click="Tthck"/>
                 <CheckBox x:Name="cc34" Content="附加加载命令" Canvas.Left="137" Canvas.Top="265" Click="Tthck"/>
                 <CheckBox x:Name="cc35" Content="多线程下载" Canvas.Left="137" Canvas.Top="220" Click="Tthck"/>
